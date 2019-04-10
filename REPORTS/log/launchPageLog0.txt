@@ -1,0 +1,330 @@
+log: [ Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.225][Info]: This is a chrome client: false"',
+    timestamp: 1554891644212,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.301][Warning]: TypeError: Cannot read property \'onConnect\' of undefined"',
+    timestamp: 1554891644287,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.317][Warning]: Failed to parse client info data from storageService."',
+    timestamp: 1554891644303,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.318][Error]: Failed to get locale and product info in cookies."',
+    timestamp: 1554891644303,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.321][Warning]: Generating a new Client ID, since previous ID can\'t be found: AgAAAGD3zQdFRdIUduw5zmhyfiU="',
+    timestamp: 1554891644306,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.322][Warning]: launch the html access by IP may generate extra licenses!"',
+    timestamp: 1554891644307,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.904][Debug]: Load translation table for locale: en"',
+    timestamp: 1554891649313,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.904][Debug]: client info init failed:\\n{\\"vendor\\":\\"VMware\\",\\"arch\\":\\"browser\\",\\"product\\":\\"VMware Horizon HTML Access\\",\\"version\\":\\"5.1.0\\",\\"clientID\\":\\"AgAAAGD3zQdFRdIUduw5zmhyfiU=\\",\\"linkModel\\":{\\"helpPages\\":{\\"en\\":\\"https://docs.vmware.com/en/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"de\\":\\"https://docs.vmware.com/de/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"es\\":\\"https://docs.vmware.com/es/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"fr\\":\\"https://docs.vmware.com/fr/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"ja\\":\\"https://docs.vmware.com/jp/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"ko\\":\\"https://docs.vmware.com/kr/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"zh-CN\\":\\"https://docs.vmware.com/cn/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\",\\"zh-TW\\":\\"https://docs.vmware.com/tw/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html\\"},\\"gotoForumPages\\":{\\"en\\":\\"https://communities.vmware.com/community/vmtn/horizon/view\\"},\\"eulaPages\\":{\\"en\\":\\"https://www.vmware.com/download/eula.html\\",\\"de\\":\\"https://www.vmware.com/de/download/eula.html\\",\\"es\\":\\"https://www.vmware.com/es/download/eula.html\\",\\"fr\\":\\"https://www.vmware.com/fr/download/eula.html\\",\\"ja\\":\\"https://www.vmware.com/jp/download/eula.html\\",\\"ko\\":\\"https://www.vmware.com/kr/download/eula.html\\",\\"zh-CN\\":\\"https://www.vmware.com/cn/download/eula.html\\",\\"zh-TW\\":\\"https://www.vmware.com/tw/download/eula.html\\"},\\"patentPages\\":{\\"en\\":\\"https://www.vmware.com/go/patents\\",\\"de\\":\\"https://www.vmware.com/go/patents-de\\",\\"es\\":\\"https://www.vmware.com/go/patents-es\\",\\"fr\\":\\"https://www.vmware.com/go/patents-fr\\",\\"ja\\":\\"https://www.vmware.com/go/patents-jp\\",\\"ko\\":\\"https://www.vmware.com/go/patents-kr\\",\\"zh-CN\\":\\"https://www.vmware.com/go/patents-cn\\",\\"zh-TW\\":\\"https://www.vmware.com/go/patents-tw\\"},\\"oslPages\\":{\\"en\\":\\"https://my.vmware.com/en/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"de\\":\\"https://my.vmware.com/de/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"es\\":\\"https://my.vmware.com/en/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"fr\\":\\"https://my.vmware.com/fr/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"ja\\":\\"https://my.vmware.com/jp/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"ko\\":\\"https://my.vmware.com/kr/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"zh-CN\\":\\"https://my.vmware.com/cn/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\",\\"zh-TW\\":\\"https://my.vmware.com/en/web/vmware/details?downloadGroup=CART20FQ2_CARTANDLINUX_OSS&productId=578\\"}},\\"MIN_VERSION\\":{\\"IE\\":10,\\"Firefox\\":36,\\"Gecko\\":21,\\"Chrome\\":41,\\"Safari\\":7,\\"WebKit\\":536},\\"acceptLanguage\\":\\"en-US,en;q=0.9\\",\\"clientVersion\\":null,\\"logLevel\\":1,\\"ipAddress\\":\\"0.0.0.0\\",\\"rebrandName\\":null,\\"rebrandHelpUrl\\":\\"\\",\\"rebrandGotoForumUrl\\":\\"\\",\\"windowsTimezone\\":null,\\"clientHideDomainList\\":false,\\"clientHideServerInformation\\":false,\\"enableCredentialCleanupForHTMLAccess\\":false,\\"isAnonymousMode\\":false,\\"_clientInfoInitDefer\\":{\\"promise\\":{\\"$$state\\":{\\"status\\":1}}},\\"buildNum\\":\\"22440836\\",\\"nativeInstallerLink\\":\\"https://www.vmware.com/go/viewclients#win64\\",\\"platform\\":\\"Windows\\",\\"isVADC\\":false,\\"os\\":\\"win64\\",\\"osLiteral\\":\\"download_rich_client_os_win64\\",\\"mIsWin32\\":false,\\"mIsWin64\\":true,\\"mIsWinMobile\\":false,\\"mIsLinux32\\":false,\\"mIsLinux64\\":false,\\"mIsMacOS\\":false,\\"mIsIOS\\":false,\\"mIsAndroid\\":false,\\"mIsChromeOS\\":false,\\"mIsIE\\":false,\\"mVersionIE\\":null,\\"mIsEdge\\":false,\\"mIsWebKit\\":false,\\"mVersionWebKit\\":null,\\"mIsOpera\\":false,\\"mVersionOpera\\":null,\\"mIsChrome\\":true,\\"mVersionChrome\\":73,\\"mIsGecko\\":true,\\"mVersionGecko\\":null,\\"mIsIEMobile\\":false,\\"mIsIPhone\\":false,\\"mIsIOSSafari\\":false,\\"mIsSamsungTV\\":false,\\"mIsTouchDevice\\":false,\\"browserName\\":\\"Chr\\",\\"rebrandEnable\\":false,\\"contextPath\\":\\"/portal\\"}"',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:44.905][Debug]: Load translation table for locale: en"',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.321][Debug]: Updating client config to: []"',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.364][Debug]: UI request to JSCDK : {\\"method\\":\\"SetEnvironmentInfo\\",\\"data\\":{\\"IP_Address\\":\\"10.117.173.195\\",\\"Machine_Name\\":\\"10-117-173-195-Chr\\",\\"Client_ID\\":\\"AgAAAGD3zQdFRdIUduw5zmhyfiU=\\",\\"Client_Version\\":\\"5.1.0-22440836\\",\\"Type\\":\\"htmlaccess\\"}}"',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.365][Debug]: Command [SetViewURI] is added."',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.365][Debug]: Command [ConnectToBroker] is added."',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.366][Debug]: Command [SubmitAuthInfo] is added."',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.366][Debug]: Command [ConnectToDesktop] is added."',
+    timestamp: 1554891649314,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.367][Debug]: Command [ConnectToApplication] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.367][Debug]: Command [ReconnectSession] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.367][Debug]: Command [CancelAuthentication] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.368][Debug]: Command [LogoutFromBroker] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.368][Debug]: Command [ResetDesktop] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.368][Debug]: Command [RestartDesktop] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.369][Debug]: Command [KillSession] is added."',
+    timestamp: 1554891649315,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.369][Debug]: Command [RollbackDesktop] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.370][Debug]: Command [GetDesktops] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.370][Debug]: Command [GetLaunchItems] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.370][Debug]: Command [CancelCurrentRequest] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.371][Debug]: Command [HandleURI] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.371][Debug]: Command [GetTunnelConnection] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.372][Debug]: Command [DisconnectSession] is added."',
+    timestamp: 1554891649316,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.372][Debug]: Command [DoLock] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.372][Debug]: Command [GetAuthenticationStatus] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.373][Debug]: Command [SetLastUserActivity] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.373][Debug]: Command [DoUnlock] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.373][Debug]: Command [TimerCtrl] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.374][Debug]: Command [InitRouter] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.374][Debug]: Command [SetUserGlobalPref] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.375][Debug]: Command [GetUserGlobalPref] is added."',
+    timestamp: 1554891649317,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.375][Debug]: Command [SetEnvironmentInfo] is added."',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.376][Info]: User set allow data sharing to : true"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.376][Debug]: UI request to JSCDK : {\\"method\\":\\"ConnectToBroker\\",\\"address\\":\\"10.117.161.109\\",\\"supportedProtocols\\":[\\"BLAST\\"],\\"clientInfo\\":{\\"clientCommonInfo\\":{\\"client-vendor\\":\\"VMware\\",\\"client-product\\":\\"VMware Horizon HTML Access\\",\\"client-version\\":\\"5.1.0-22440836\\",\\"client-arch\\":\\"browser\\",\\"client-build\\":\\"VMware-Horizon-HTML-Access-Windows\\"},\\"clientStats\\":{\\"browser-user-agent\\":\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36\\",\\"browser-core\\":\\"Chrome\\",\\"browser-version\\":\\"73.0.3683.86\\",\\"browser-arch\\":\\"Win64\\",\\"browser-is-handheld\\":\\"false\\"},\\"addClientCommonInfo\\":{\\"entity-type\\":\\"CLIENT\\",\\"data-type\\":\\"configuration\\"},\\"addClientStats\\":{\\"entity-id\\":\\"singleton\\"}},\\"allowDataSharing\\":true}"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.377][Info]: router is null."',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.830][Debug]: jscdkPost with 3 parameters success"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.836][Debug]: set-locale result: ok"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.837][Debug]: set-locale this.content[parsedResult]: {\\"result\\":\\"ok\\"}"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.839][Debug]: set-locale\'s state: done"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.844][Debug]: get-configuration result: ok"',
+    timestamp: 1554891649318,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.845][Debug]: get-configuration this.content[parsedResult]: {\\"result\\":\\"ok\\",\\"screen\\":\\"windows-password\\",\\"domain\\":[\\"*DefaultDomain*\\"],\\"clientConfiguration\\":{\\"clientHideDomainList\\":[\\"true\\"],\\"alwaysSendRdsLicense\\":[\\"true\\"]}}"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.846][Debug]: get-configuration\'s state: done"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.849][Debug]: JSCDK response to UI : { name: WindowsPassword, content: {\\"domains\\":[\\"*DefaultDomain*\\"],\\"domain\\":\\"*DefaultDomain*\\",\\"clientConfig\\":{\\"clientHideDomainList\\":true},\\"brokerUrl\\":\\"https%3A%2F%2F10.117.161.109%2Fbroker%2Fxml\\"}"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:46.851][Debug]: JSCDK response to UI : WindowsPassword"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:47.324][Debug]: Updating client config to: []"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:47.325][Debug]: idleTimeout don\'t exist in the cookie"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:47.326][Debug]: userActivityInterval don\'t exist in the cookie"',
+    timestamp: 1554891649319,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:49.540][Info]: User set allow data sharing to : true"',
+    timestamp: 1554891649525,
+    type: '' },
+  Entry {
+    level: Level { name_: 'INFO', value_: 800 },
+    message:
+     'https://10.117.161.109/portal/webclient/app-htmlaccess.1ebf8022c2cfee9fb3f6.js 228:27 "[2019-04-10T18:20:49.540][Debug]: UI request to JSCDK : {\\"method\\":\\"SubmitAuthInfo\\",\\"type\\":\\"WindowsPassword\\",\\"username\\":\\"pcoip2\\",\\"secret\\":\\"ca$hc0w\\",\\"domain\\":\\"*DefaultDomain*\\",\\"isDesktopReAuth\\":true,\\"allowDataSharing\\":true}"',
+    timestamp: 1554891649526,
+    type: '' } ]
