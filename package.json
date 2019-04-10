@@ -21,7 +21,6 @@
     "typescript": "^3.4.1"
   },
   "devDependencies": {
-    "protractor-cucumber-framework": "^6.1.1",
-    "protractor-jasmine2-screenshot-reporter": "^0.5.0"
+    "protractor-cucumber-framework": "^6.1.1"
   }
 }

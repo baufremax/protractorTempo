@@ -9,6 +9,9 @@ Now start up a server with:
 `webdriver-manager start`
 This will start up a Selenium Server and will output a bunch of info logs.
 
+Install screenshot plugin:
+`npm install --global protractor-screenshoter-plugin`
+
 ## Test
 Open a new command line or terminal window and create a clean folder for testing.
 Run the tests with
@@ -16,3 +19,5 @@ Run the tests with
 
 Before running, you might need to compile the typescript files into js files through
 `npm run tsc`
+
+To check the screenshot report, open ./REPORTS/e2e/index.html in browser.

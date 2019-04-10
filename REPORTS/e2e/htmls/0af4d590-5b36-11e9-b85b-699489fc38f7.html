@@ -1,0 +1,292 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" id="ng-app" ng-app="com.vmware.vdi.client" ng-controller="AppCenterController" class="ng-scope" lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+   <title>VMware Horizon</title>
+
+   <meta charset="utf-8" />
+   <meta name="author" content="VMware, Inc." />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+   <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+   <meta name="viewport" id="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+
+   <link rel="shortcut icon" href="../favicon.ico" />
+
+   <style type="text/css">
+      .ng-hide { display: none !important; }
+   </style>
+<link href="style.app-htmlaccess.1ebf8022c2cfee9fb3f6.css" rel="stylesheet" /></head>
+<body ng-class="{desktopBackground:$root.CLIENT_MODE == 'desktop',showMenuBar:showChromeMenuBar}" class="desktopBackground">
+
+<!-- ngIf: showChromeMenuBar -->
+
+<div ng-class="{marginTopChrome:showChromeMenuBar}">
+   <div id="browserWarning" data-role="page">
+      <noscript>
+         &lt;style&gt;
+            #canvas-container {display:none;}
+         &lt;/style&gt;
+         &lt;div class="ui-content-area login-bg"&gt;
+            &lt;div class="container"&gt;
+               &lt;div class="ui-center-panel ui-widget-home"&gt;
+                  &lt;div class="ui-pattern-logo"&gt;&lt;/div&gt;
+                  &lt;div class="ui-panel-content"&gt;
+                     &lt;div class="ui-browser-warning"&gt;
+                        &lt;p class="top-warning"&gt;&lt;span class="ui-warning-logo"&gt;&lt;/span&gt;There is a problem with this web browser.&lt;/p&gt;
+                        &lt;p&gt;Please enable JavaScript in your browser. Or you could download the native Horizon Client.&lt;/p&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class="ui-panel-footer"&gt;
+                     &lt;a href="https://docs.vmware.com/en/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html" target="_blank" id="helpBtn" title="Help" class="btn btn-default"&gt;Help&lt;/a&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="bottom-logo"&gt;&lt;/div&gt;
+         &lt;/div&gt;
+      </noscript>
+   </div>
+
+
+   <!-- launcher views -->
+   <!-- ngIf: $root.CLIENT_MODE == 'launcher' -->
+
+   <!-- ngIf: $root.isChromeClient -->
+
+   <!-- views -->
+   <!-- ngIf: $root.CLIENT_MODE !== null --><!-- ngView: --><div ng-if="$root.CLIENT_MODE !== null" ng-view="" class="ui-page ui-body showPage"><div id="desktop-controller-place-holder" class="ng-scope"></div></div><!-- end ngIf: $root.CLIENT_MODE !== null -->
+
+   <canvas width="320" id="canvas" height="240" style="display: none;"></canvas>
+   <video id="video" width="0" height="0" autoplay="" style="display: none;"></video>
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' --><div ng-if="$root.CLIENT_MODE == 'desktop'" id="main" class="canvas-view-port ng-scope">
+      <!-- Main application canvas -->
+      <div id="canvas-container"></div>
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'desktop' -->
+
+   <!-- Dialog holder contains resources that are not visible by default -->
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' --><div ng-if="$root.CLIENT_MODE == 'desktop'" id="dialog-holder" class="ng-hide ng-scope">
+      <!-- About, gesture guide dialogs are dynamically added here -->
+      <!-- Load jQuery icons and touch icons upfront for iPad. -->
+      <div id="preLoadImage" class="ui-widget-header">
+         <div class="ui-icon jquery-ui-image"></div>
+         <div class="ui-touch-feedback-icon"></div>
+      </div>
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'desktop' -->
+
+   <!-- Angular container -->
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' --><div ng-if="$root.CLIENT_MODE == 'desktop'" class="ng-scope">
+      <div id="busy-overlay-container">
+         <ajax-busy-overlay class="ng-isolate-scope"><div ng-show="showAjaxBusyOverlay" class="ng-hide"><div class="ajax-busy-overlay"></div><div class="ajax-busy-icon"></div><div></div></div></ajax-busy-overlay>
+      </div>
+
+      <!-- ngIf: !$root.isChromeClient --><div id="sidebar-container" ng-if="!$root.isChromeClient" class="ng-scope">
+         <sidebar class="ng-isolate-scope"><div id="sidebar" class="sidebar-panel unselectable ng-hide" ng-show="showPanel">
+   <div class="head-panel">
+      <div>
+         <div class="horizon-logo-image" title="About VMware Horizon Client" ng-click="aboutClicked()"></div>
+         <div class="head-panel-button-bar">
+            <ul>
+               <li id="keyboard" class="icon-button icon-keyboard-image ng-hide" ng-show="isSupportedMobileDevice()" ng-click="toggleKeyboard()" title="Show Keyboard"></li>
+               <li id="cad" class="icon-button icon-cad-image icon-button-hover disable" ng-class="{'disable': runningItems.length === 0 || isCurrentItemApp === true}" ng-click="runningItems.length !== 0 &amp;&amp; isCurrentItemApp !== true &amp;&amp; ctrlAltDeleteClicked()" title="Send Ctrl+Alt+Delete to current work area"></li>
+               <li id="fileTransfer" class="icon-button icon-file-transfer-image icon-button-hover disable" ng-hide="isMobileTouchDevice()" ng-class="{'disable':isRunningSessionExist() === false || $root.disableFTPanel}" ng-click="isRunningSessionExist() === true &amp;&amp; !$root.disableFTPanel &amp;&amp; openFileTransferPanel()" title="Open File Transfer panel"></li>
+               <li id="clipboard" class="icon-button icon-clipboard-image icon-button-hover clipboardClickable" ng-click="openClipboardClicked()" title="Open Copy &amp; Paste panel" ng-hide="isMobileTouchDevice() || isChromeClient()" ng-class="{'clipboardClickable': enableClipboardNotification &amp;&amp; isSidebarWebPanelFreeClipboard}">
+                  <!-- ngIf: $root.isWebPanelFreeClipboard --><span ng-if="$root.isWebPanelFreeClipboard" id="clipboard-tooltip" class="ng-scope"> </span><!-- end ngIf: $root.isWebPanelFreeClipboard -->
+               </li>
+               <li id="contextMenu" class="icon-button icon-context-menu-image icon-button-hover" ng-click="globalContextMenuClicked($event)" title="Open Menu"></li>
+            </ul>
+         </div>
+      </div>
+      <div class="search-panel">
+         <div class="search-icon"></div>
+         <label for="search-input" class="ng-binding">Search...</label>
+         <input id="search-input" class="search-input ng-pristine ng-untouched ng-valid ng-empty" ng-model="queryText.name" type="search" placeholder="Search..." />
+         <!-- ngIf: queryText.name !== '' -->
+      </div>
+      <div class="separator"></div>
+   </div>
+   <div class="apps-panel" style="max-height: 790px;">
+      <div class="running-title-panel">
+         <span class="running-title ng-binding">Running</span>
+         <div class="performance-tracker-bar">
+            <!-- ngIf: perfTrackerItem -->
+         </div>
+      </div>
+      <div ng-show="!runningItems || runningItems.length === 0" class="no-items-label ng-binding">No Running Items</div>
+      <div class="running-content-panel">
+         <!-- ngRepeat: runningItem in runningItems | runningItemsFilter : queryText.name -->
+      </div>
+      <div ng-show="showLaunchPanel" class="separator ng-hide"></div>
+      <div ng-show="showLaunchPanel" class="available-title-panel ng-hide">
+         <span class="running-title ng-binding">Available</span>
+         <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="available-button-bar ng-scope">
+            <div class="icon-button all-apps-button on" ng-class="{'on': !showOnlyFavorites}" ng-click="disableShowOnlyFavorites()" title="Show All"></div>
+            <div class="icon-button favorite-apps-button" ng-class="{'on': showOnlyFavorites}" ng-click="enableShowOnlyFavorites()" title="Show Favorites"></div>
+         </div><!-- end ngIf: $root.showPreference -->
+      </div>
+      <div ng-show="showLaunchPanel" class="available-content-panel ng-hide">
+         <!-- ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) -->
+         <div ng-show="showOnlyFavorites &amp;&amp; filteredEntitledItems.length === 0" class="ng-hide">
+            <div class="no-items-label ng-binding">No Favorites</div>
+         </div>
+      </div>
+   </div>
+</div>
+<vertical-slider id="sidebar-toggler" class="panel-toggle-tab pointer-cursor sidebar-tab-image ng-isolate-scope" on-click="$emit('togglePanel')" on-move="$emit('sliderMoveStart')" element-drag-styles="pointer-cursor resize-cursor" body-drag-styles="resize-cursor" style="top: 412px;">
+</vertical-slider>
+
+<div ng-show="showGlobalContextMenu" class="menu global-context ng-hide">
+   <div class="bubble">
+      <div class="triangle"></div>
+      <div class="triangle-border"></div>
+      <div class="menu-content">
+         <div class="menu-item inactive" title="pcoip2@*DefaultDomain*" ng-click="" id="sidebar-user-info">
+            <div class="menu-item-icon icon-user-image"></div>
+            <div class="menu-item-title unselectable ng-binding">pcoip2</div>
+         </div>
+         <div class="separator"></div>
+         <div class="menu-item" ng-click="settingsClicked()" id="sidebar-settings-button">
+            <div class="menu-item-icon icon-settings-image"></div>
+            <div class="menu-item-title ng-binding">Settings</div>
+         </div>
+         <!-- ngIf: isShowFullscreenBtn() --><div ng-if="isShowFullscreenBtn()" class="menu-item ng-scope" ng-click="fullscreenClicked()" id="sidebar-fullscreen-button">
+               <div class="menu-item-icon icon-fullscreen-image"></div>
+               <div class="menu-item-title ng-binding">Fullscreen</div>
+         </div><!-- end ngIf: isShowFullscreenBtn() -->
+         <!-- ngIf: checkFullscreenBtnClicked && !multimonStarted && isFullscreenEnabled -->
+         <!-- ngIf: checkFullscreenBtnClicked && isFullscreenEnabled -->
+         <!-- ngIf: multimonOptionVisible && multimonStarted -->
+         <!-- ngIf: multimonOptionVisible && !multimonStarted && !checkFullscreenBtnClicked -->
+         <div class="menu-item" ng-click="aboutClicked()" id="sidebar-about-button">
+            <div class="menu-item-icon icon-about-image"></div>
+            <div class="menu-item-title ng-binding">About</div>
+         </div>
+         <div class="menu-item ng-hide" ng-hide="!isUsbEnable()" ng-click="usbClicked()" id="sidebar-usb-button">
+            <div class="menu-item-icon icon-usb-image"></div>
+            <div class="menu-item-title ng-binding">USB</div>
+         </div>
+         <div class="menu-item" ng-click="logoutClicked()" id="sidebar-logout-button">
+            <div class="menu-item-icon icon-logoff-desktop-image"></div>
+            <div class="menu-item-title ng-binding">Log out</div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div ng-show="showItemContextMenu" class="menu item-context ng-hide">
+   <div class="bubble">
+      <div class="triangle"></div>
+      <div class="triangle-border"></div>
+      <div class="menu-content">
+         <div class="menu-item ng-hide" ng-click="logOffDesktop()" ng-show="showLogOffDesktop">
+            <div class="menu-item-icon icon-logoff-desktop-image"></div>
+            <div class="menu-item-title ng-binding">Log off</div>
+         </div>
+         <div class="menu-item ng-hide" ng-click="resetDesktop()" ng-show="showResetDesktop">
+            <div class="menu-item-icon icon-reset-image"></div>
+            <div class="menu-item-title ng-binding">Reset</div>
+         </div>
+         <div class="menu-item ng-hide" ng-click="restartDesktop()" ng-show="showRestartDesktop">
+            <div class="menu-item-icon icon-restart-image"></div>
+            <div class="menu-item-title ng-binding">Restart</div>
+         </div>
+         <div class="menu-item" ng-click="closeRunningApp(contextMenuItem)">
+            <div class="menu-item-icon icon-close-desktop-image"></div>
+            <div class="menu-item-title ng-binding">Close</div>
+         </div>
+      </div>
+   </div>
+</div>
+</sidebar>
+      </div><!-- end ngIf: !$root.isChromeClient -->
+
+      <div id="clipboard-container">
+         <!-- ngIf: !isWebPanelFreeClipboard -->
+         <!-- ngIf: isWebPanelFreeClipboard --><div ng-if="isWebPanelFreeClipboard" class="ng-scope">
+            <div ng-controller="panelFreeClipboardController" class="ng-scope">
+   <div class="clipboard-input-container">
+      <textarea id="clipboard-input"></textarea>
+   </div>
+</div>
+         </div><!-- end ngIf: isWebPanelFreeClipboard -->
+      </div>
+
+      <div id="usb-container">
+         <usb-redirection></usb-redirection>
+      </div>
+
+      <div id="file-transfer-container">
+         <div class="base-panel file-transfer-panel ng-hide ng-scope ui-resizable ui-draggable" ng-controller="fileTransferController" ng-click="focusInput()" ng-show="showFileTransferPanel" style="">
+   <div file-drop="uploadHandler(event)" ng-class="{'file-transfer-focused': focused, 'file-transfer-unfocused': !focused}" class="ng-isolate-scope file-transfer-unfocused">
+      <div class="file-transfer-header file-transfer-handle ui-draggable-handle">
+         <div class="file-transfer-title ng-binding">Transfer Files</div>
+         <div class="file-transfer-icon close" ng-click="toggleFileTransferPanel($event)" title="Close Panel"></div>
+         <div class="file-transfer-icon help" ng-click="openFileTransferHelp()" title="Open File Transfer Help"></div>
+      </div>
+      <div class="file-transfer-input-container">
+         <label for="file-transfer-input-container">file-transfer-container</label>
+         <input id="file-transfer-input-container" ng-focus="ftPanelFocus()" ng-blur="ftPanelBlur()" />
+      </div>
+      <div class="file-content" style="height: 301px;">
+         <div class="file-area">
+            <div class="file-area-header">
+               <!-- ngIf: downloadEnabled --><div ng-if="downloadEnabled" class="file-transfer-tab download-tab ng-binding ng-scope active" ng-click="switchFileTab(PANEL_TAB.DOWNLOAD)" ng-class="{'active': showFileDownload}">Download</div><!-- end ngIf: downloadEnabled -->
+               <!-- ngIf: uploadEnabled --><div ng-if="uploadEnabled" class="file-transfer-tab upload-tab ng-binding ng-scope" ng-click="switchFileTab(PANEL_TAB.UPLOAD)" ng-class="{'active': showFileUpload}">Upload</div><!-- end ngIf: uploadEnabled -->
+            </div>
+            <!-- ngIf: downloadEnabled --><div ng-if="downloadEnabled" ng-show="showFileDownload" class="unselectable file-list-container ng-scope">
+               <ul id="ft-download-list" class="file-content-list ng-hide" ng-show="downloadFiles.length != 0" style="height: 275px;">
+                  <!-- ngRepeat: file in downloadFiles -->
+               </ul>
+               <div id="ft-download-step-hint" class="hint-container file-transfer-handle" ng-show="downloadFiles.length == 0 &amp;&amp; downloadEnabled == true">
+                  <p class="hint-title ng-binding">To Download</p>
+                  <div class="hint-step-container">
+                     <p class="ng-binding">1. Select some files in your remote desktop or application.</p>
+                     <p class="ng-binding">2. Click 'CTRL + c' to begin file transfer.</p>
+                     <p class="ng-binding">3. After transferred, click <span class="file-transfer-hint-icon save-file"></span> to save file to your client machine.</p>
+                  </div>
+               </div>
+               <div id="ft-download-disable-hint" class="hint-container file-transfer-handle ng-hide" ng-show="downloadEnabled == false">
+                  <p class="hint-disable-title ng-binding">File download is disabled for this remote desktop.</p>
+               </div>
+            </div><!-- end ngIf: downloadEnabled -->
+            <!-- ngIf: uploadEnabled --><div ng-if="uploadEnabled" ng-show="showFileUpload" class="unselectable file-list-container ng-scope ng-hide">
+               <ul id="ft-upload-list" class="file-content-list ng-hide" ng-show="uploadFiles.length != 0" style="height: 275px;">
+                  <!-- ngRepeat: file in uploadFiles -->
+                  <div class="btn-hint-container">
+                     <!-- ngIf: !isChromeClient() --><button ng-if="!isChromeClient()" ng-show="uploadFiles.length != 0" onclick="chooseUploadFiles()" class="choose-files-button ng-binding ng-scope ng-hide">Add more files</button><!-- end ngIf: !isChromeClient() -->
+                     <!-- ngIf: isChromeClient() -->
+                    </div>
+               </ul>
+               <div id="ft-upload-step-hint" class="hint-container file-transfer-handle" ng-show="uploadFiles.length == 0 &amp;&amp; uploadEnabled == true">
+                  <p class="hint-title ng-binding">To Upload</p>
+                  <form class="ng-pristine ng-valid">
+                     <label for="upload-file-input">upload-file-input</label>
+                     <input type="file" multiple="multiple" id="upload-file-input" class="upload-file-input ng-isolate-scope" file-change="uploadHandler(event)" />
+                  </form>
+                  <div class="hint-step-container">
+                     <p class="ng-binding">Drag and drop files into this window.</p>
+                     <p class="ng-binding">Or click 'Choose Files' button to choose file to upload.</p>
+                     <p class="ng-binding">The uploaded files will be saved in 'My Documents' folder.</p>
+                  </div>
+                  <!-- ngIf: !isChromeClient() --><button ng-if="!isChromeClient()" onclick="chooseUploadFiles()" class="choose-files-button ng-binding ng-scope">Choose Files</button><!-- end ngIf: !isChromeClient() -->
+                  <!-- ngIf: isChromeClient() -->
+                </div>
+               <div id="ft-upload-disable-hint" class="hint-container file-transfer-handle ng-hide" ng-show="uploadEnabled == false">
+                  <p class="hint-disable-title ng-binding">File upload is disabled for this remote desktop.</p>
+               </div>
+            </div><!-- end ngIf: uploadEnabled -->
+         </div>
+      </div>
+      <div class="file-transfer-footer file-transfer-handle ui-draggable-handle">
+         <span id="ft-clear-upload-list-btn" class="file-transfer-clear ng-binding ng-hide" ng-show="showFileUpload" ng-click="clearUploadList()">Clear List</span>
+         <span id="ft-clear-download-list-btn" class="file-transfer-clear ng-binding" ng-show="showFileDownload" ng-click="clearDownloadList()">Clear List</span>
+      </div>
+   </div>
+
+   <div class="hidden clipboard-notification noselect"></div>
+<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div>
+      </div>
+
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'desktop' -->
+</div>
+
+
+<script type="text/javascript" src="vendor.1ebf8022c2cfee9fb3f6.js"></script><script type="text/javascript" src="app-htmlaccess.1ebf8022c2cfee9fb3f6.js"></script>
+
+</body></html>

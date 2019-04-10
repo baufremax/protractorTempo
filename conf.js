@@ -29,21 +29,21 @@ exports.config = {
   // collisions on the global namespace.
   noGlobals: false,
 
-  // Setup the report before any tests start
-  beforeLaunch: function() {
-    return new Promise(function(resolve){
-      reporter.beforeLaunch(resolve);
-    });
-  },
-  // Assign the test reporter to each running instance
-  onPrepare: function() {
-    jasmine.getEnv().addReporter(reporter);
-  },
+  plugins: [{
+    package: 'protractor-screenshoter-plugin',
+    screenshotPath: './REPORTS/e2e',
+    screenshotOnExpect: 'failure+success',
+    screenshotOnSpec: 'none',
+    withLogs: true,
+    writeReportFreq: 'asap',
+    imageToAscii: 'none',
+    clearFoldersBeforeTest: true
+  }],
 
-  // Close the report after all tests finish
-  afterLaunch: function(exitCode) {
-    return new Promise(function(resolve){
-      reporter.afterLaunch(resolve.bind(this, exitCode));
+  onPrepare: function() {
+    // returning the promise makes protractor wait for the reporter config before executing tests
+    return global.browser.getProcessedConfig().then(function(config) {
+        //it is ok to be empty
     });
   }
 };
