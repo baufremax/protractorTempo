@@ -1,5 +1,6 @@
 import { LoginPage } from '../login/login.po'
 import { LaunchPage } from './launch.po'
+import { browser } from 'protractor';
 
 describe('access apps in launch page: ', function() {
     let page: LaunchPage
@@ -20,6 +21,7 @@ describe('access apps in launch page: ', function() {
     it('page is a launch page after login', () => {
         debugger
         page.navigateTo()
+        browser.pause()
         expect(page.getPageIdText()).toEqual('Search')
     })
 

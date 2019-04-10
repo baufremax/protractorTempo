@@ -1,0 +1,992 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" id="ng-app" ng-app="com.vmware.vdi.client" ng-controller="AppCenterController" class="ng-scope" lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+   <title>VMware Horizon</title>
+
+   <meta charset="utf-8" />
+   <meta name="author" content="VMware, Inc." />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+   <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+   <meta name="viewport" id="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+
+   <link rel="shortcut icon" href="../favicon.ico" />
+
+   <style type="text/css">
+      .ng-hide { display: none !important; }
+   </style>
+<link href="style.app-htmlaccess.1ebf8022c2cfee9fb3f6.css" rel="stylesheet" /></head>
+<body ng-class="{desktopBackground:$root.CLIENT_MODE == 'desktop',showMenuBar:showChromeMenuBar}" class="desktopBackground">
+
+<!-- ngIf: showChromeMenuBar -->
+
+<div ng-class="{marginTopChrome:showChromeMenuBar}">
+   <div id="browserWarning" data-role="page">
+      <noscript>
+         &lt;style&gt;
+            #canvas-container {display:none;}
+         &lt;/style&gt;
+         &lt;div class="ui-content-area login-bg"&gt;
+            &lt;div class="container"&gt;
+               &lt;div class="ui-center-panel ui-widget-home"&gt;
+                  &lt;div class="ui-pattern-logo"&gt;&lt;/div&gt;
+                  &lt;div class="ui-panel-content"&gt;
+                     &lt;div class="ui-browser-warning"&gt;
+                        &lt;p class="top-warning"&gt;&lt;span class="ui-warning-logo"&gt;&lt;/span&gt;There is a problem with this web browser.&lt;/p&gt;
+                        &lt;p&gt;Please enable JavaScript in your browser. Or you could download the native Horizon Client.&lt;/p&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class="ui-panel-footer"&gt;
+                     &lt;a href="https://docs.vmware.com/en/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html" target="_blank" id="helpBtn" title="Help" class="btn btn-default"&gt;Help&lt;/a&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="bottom-logo"&gt;&lt;/div&gt;
+         &lt;/div&gt;
+      </noscript>
+   </div>
+
+
+   <!-- launcher views -->
+   <!-- ngIf: $root.CLIENT_MODE == 'launcher' -->
+
+   <!-- ngIf: $root.isChromeClient -->
+
+   <!-- views -->
+   <!-- ngIf: $root.CLIENT_MODE !== null --><!-- ngView: --><div ng-if="$root.CLIENT_MODE !== null" ng-view="" class="ui-page ui-body showPage"><div id="desktop-controller-place-holder" class="ng-scope"></div></div><!-- end ngIf: $root.CLIENT_MODE !== null -->
+
+   <canvas width="320" id="canvas" height="240" style="display: none;"></canvas>
+   <video id="video" width="0" height="0" autoplay="" style="display: none;"></video>
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' --><div ng-if="$root.CLIENT_MODE == 'desktop'" id="main" class="canvas-view-port ng-scope">
+      <!-- Main application canvas -->
+      <div id="canvas-container"></div>
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'desktop' -->
+
+   <!-- Dialog holder contains resources that are not visible by default -->
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' --><div ng-if="$root.CLIENT_MODE == 'desktop'" id="dialog-holder" class="ng-hide ng-scope">
+      <!-- About, gesture guide dialogs are dynamically added here -->
+      <!-- Load jQuery icons and touch icons upfront for iPad. -->
+      <div id="preLoadImage" class="ui-widget-header">
+         <div class="ui-icon jquery-ui-image"></div>
+         <div class="ui-touch-feedback-icon"></div>
+      </div>
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'desktop' -->
+
+   <!-- Angular container -->
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' --><div ng-if="$root.CLIENT_MODE == 'desktop'" class="ng-scope">
+      <div id="busy-overlay-container">
+         <ajax-busy-overlay class="ng-isolate-scope"><div ng-show="showAjaxBusyOverlay" class="ng-hide"><div class="ajax-busy-overlay"></div><div class="ajax-busy-icon"></div><div></div></div></ajax-busy-overlay>
+      </div>
+
+      <!-- ngIf: !$root.isChromeClient --><div id="sidebar-container" ng-if="!$root.isChromeClient" class="ng-scope">
+         <sidebar class="ng-isolate-scope"><div id="sidebar" class="sidebar-panel unselectable ng-hide" ng-show="showPanel">
+   <div class="head-panel">
+      <div>
+         <div class="horizon-logo-image" title="About VMware Horizon Client" ng-click="aboutClicked()"></div>
+         <div class="head-panel-button-bar">
+            <ul>
+               <li id="keyboard" class="icon-button icon-keyboard-image ng-hide" ng-show="isSupportedMobileDevice()" ng-click="toggleKeyboard()" title="Show Keyboard"></li>
+               <li id="cad" class="icon-button icon-cad-image icon-button-hover disable" ng-class="{'disable': runningItems.length === 0 || isCurrentItemApp === true}" ng-click="runningItems.length !== 0 &amp;&amp; isCurrentItemApp !== true &amp;&amp; ctrlAltDeleteClicked()" title="Send Ctrl+Alt+Delete to current work area"></li>
+               <li id="fileTransfer" class="icon-button icon-file-transfer-image icon-button-hover disable" ng-hide="isMobileTouchDevice()" ng-class="{'disable':isRunningSessionExist() === false || $root.disableFTPanel}" ng-click="isRunningSessionExist() === true &amp;&amp; !$root.disableFTPanel &amp;&amp; openFileTransferPanel()" title="Open File Transfer panel"></li>
+               <li id="clipboard" class="icon-button icon-clipboard-image icon-button-hover clipboardClickable" ng-click="openClipboardClicked()" title="Open Copy &amp; Paste panel" ng-hide="isMobileTouchDevice() || isChromeClient()" ng-class="{'clipboardClickable': enableClipboardNotification &amp;&amp; isSidebarWebPanelFreeClipboard}">
+                  <!-- ngIf: $root.isWebPanelFreeClipboard --><span ng-if="$root.isWebPanelFreeClipboard" id="clipboard-tooltip" class="ng-scope"> </span><!-- end ngIf: $root.isWebPanelFreeClipboard -->
+               </li>
+               <li id="contextMenu" class="icon-button icon-context-menu-image icon-button-hover" ng-click="globalContextMenuClicked($event)" title="Open Menu"></li>
+            </ul>
+         </div>
+      </div>
+      <div class="search-panel">
+         <div class="search-icon"></div>
+         <label for="search-input" class="ng-binding">Search...</label>
+         <input id="search-input" class="search-input ng-pristine ng-untouched ng-valid ng-empty" ng-model="queryText.name" type="search" placeholder="Search..." />
+         <!-- ngIf: queryText.name !== '' -->
+      </div>
+      <div class="separator"></div>
+   </div>
+   <div class="apps-panel" style="max-height: 790px;">
+      <div class="running-title-panel">
+         <span class="running-title ng-binding">Running</span>
+         <div class="performance-tracker-bar">
+            <!-- ngIf: perfTrackerItem -->
+         </div>
+      </div>
+      <div ng-show="!runningItems || runningItems.length === 0" class="no-items-label ng-binding">No Running Items</div>
+      <div class="running-content-panel">
+         <!-- ngRepeat: runningItem in runningItems | runningItemsFilter : queryText.name -->
+      </div>
+      <div ng-show="showLaunchPanel" class="separator ng-hide"></div>
+      <div ng-show="showLaunchPanel" class="available-title-panel ng-hide">
+         <span class="running-title ng-binding">Available</span>
+         <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="available-button-bar ng-scope">
+            <div class="icon-button all-apps-button on" ng-class="{'on': !showOnlyFavorites}" ng-click="disableShowOnlyFavorites()" title="Show All"></div>
+            <div class="icon-button favorite-apps-button" ng-class="{'on': showOnlyFavorites}" ng-click="enableShowOnlyFavorites()" title="Show Favorites"></div>
+         </div><!-- end ngIf: $root.showPreference -->
+      </div>
+      <div ng-show="showLaunchPanel" class="available-content-panel ng-hide">
+         <!-- ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch win2019">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch win2019" id="available-win2019">
+                  <li class="running-app-border">
+                     <img alt="win2019 icon" class="running-app-icon ng-hide" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="" />
+                     <img alt="win2019 icon" class="running-app-icon" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="win2019 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">win2019</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add win2019 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Access 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Access 2016" id="available-Access 2016">
+                  <li class="running-app-border">
+                     <img alt="Access 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/4501d861bb26d2002f2bcadd79467e70.png" />
+                     <img alt="Access 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Access 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Access 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Access 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Calculator">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Calculator" id="available-Calculator">
+                  <li class="running-app-border">
+                     <img alt="Calculator icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/cebb3b66e4344fa8b3b470b3b1109bbb.png" />
+                     <img alt="Calculator icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Calculator icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Calculator</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Calculator to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Calculator">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Calculator" id="available-Calculator">
+                  <li class="running-app-border">
+                     <img alt="Calculator icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/cebb3b66e4344fa8b3b470b3b1109bbb.png" />
+                     <img alt="Calculator icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Calculator icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Calculator</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Calculator to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Character Map">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Character Map" id="available-Character Map">
+                  <li class="running-app-border">
+                     <img alt="Character Map icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/5e67e61ca351be50e6762377c630e097.png" />
+                     <img alt="Character Map icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Character Map icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Character Map</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Character Map to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Command Prompt">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Command Prompt" id="available-Command Prompt">
+                  <li class="running-app-border">
+                     <img alt="Command Prompt icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/b3c1959254a285cc45596124c539d8b2.png" />
+                     <img alt="Command Prompt icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Command Prompt icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Command Prompt</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Command Prompt to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Database Compare 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Database Compare 2016" id="available-Database Compare 2016">
+                  <li class="running-app-border">
+                     <img alt="Database Compare 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/56762ea286afe5fb0afd92d59bf9b937.png" />
+                     <img alt="Database Compare 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Database Compare 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Database Compare 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Database Compare 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Disk Cleanup">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Disk Cleanup" id="available-Disk Cleanup">
+                  <li class="running-app-border">
+                     <img alt="Disk Cleanup icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/328147edd9d8e1cb6915fe8188d9db43.png" />
+                     <img alt="Disk Cleanup icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Disk Cleanup icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Disk Cleanup</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Disk Cleanup to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Excel 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Excel 2016" id="available-Excel 2016">
+                  <li class="running-app-border">
+                     <img alt="Excel 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/b62668edb1ccf31c1e1de0f80299b62d.png" />
+                     <img alt="Excel 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Excel 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Excel 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Excel 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Google Chrome">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Google Chrome" id="available-Google Chrome">
+                  <li class="running-app-border">
+                     <img alt="Google Chrome icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/46e97b40d38bed0a5f7d8f0cb4748e34.png" />
+                     <img alt="Google Chrome icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Google Chrome icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Google Chrome</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Google Chrome to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Internet Explorer">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Internet Explorer" id="available-Internet Explorer">
+                  <li class="running-app-border">
+                     <img alt="Internet Explorer icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/7f89df106b88b40e378028a57193c01f.png" />
+                     <img alt="Internet Explorer icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Internet Explorer icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Internet Explorer</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Internet Explorer to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Internet Explorer">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Internet Explorer" id="available-Internet Explorer">
+                  <li class="running-app-border">
+                     <img alt="Internet Explorer icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/7f89df106b88b40e378028a57193c01f.png" />
+                     <img alt="Internet Explorer icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Internet Explorer icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Internet Explorer</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Internet Explorer to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Math Input Panel">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Math Input Panel" id="available-Math Input Panel">
+                  <li class="running-app-border">
+                     <img alt="Math Input Panel icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/732d4e48aeda368d259276ac9a97a6dc.png" />
+                     <img alt="Math Input Panel icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Math Input Panel icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Math Input Panel</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Math Input Panel to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Microsoft Azure Services">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Microsoft Azure Services" id="available-Microsoft Azure Services">
+                  <li class="running-app-border">
+                     <img alt="Microsoft Azure Services icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/ecbed20f45ad118b1df9dfe613ead6f6.png" />
+                     <img alt="Microsoft Azure Services icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Microsoft Azure Services icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Microsoft Azure Services</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Microsoft Azure Services to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Notepad">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Notepad" id="available-Notepad">
+                  <li class="running-app-border">
+                     <img alt="Notepad icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/89de49cb289c8cbd3668844feffc6826.png" />
+                     <img alt="Notepad icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Notepad icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Notepad</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Notepad to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Notepad++">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Notepad++" id="available-Notepad++">
+                  <li class="running-app-border">
+                     <img alt="Notepad++ icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/dca86e55efd7f729c44100a65fe66ec9.png" />
+                     <img alt="Notepad++ icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Notepad++ icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Notepad++</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Notepad++ to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch ODBC Data Sources (32-bit)">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch ODBC Data Sources (32-bit)" id="available-ODBC Data Sources (32-bit)">
+                  <li class="running-app-border">
+                     <img alt="ODBC Data Sources (32-bit) icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/bc079b79da7678a9ea3a4410a3feea9d.png" />
+                     <img alt="ODBC Data Sources (32-bit) icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="ODBC Data Sources (32-bit) icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">ODBC Data Sources (32-bit)</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add ODBC Data Sources (32-bit) to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch ODBC Data Sources (64-bit)">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch ODBC Data Sources (64-bit)" id="available-ODBC Data Sources (64-bit)">
+                  <li class="running-app-border">
+                     <img alt="ODBC Data Sources (64-bit) icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/bc079b79da7678a9ea3a4410a3feea9d.png" />
+                     <img alt="ODBC Data Sources (64-bit) icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="ODBC Data Sources (64-bit) icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">ODBC Data Sources (64-bit)</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add ODBC Data Sources (64-bit) to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Office 2016 Language Preferences">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Office 2016 Language Preferences" id="available-Office 2016 Language Preferences">
+                  <li class="running-app-border">
+                     <img alt="Office 2016 Language Preferences icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/47e44fc47aa98ded01c3122f013ee4c9.png" />
+                     <img alt="Office 2016 Language Preferences icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Office 2016 Language Preferences icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Office 2016 Language Preferences</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Office 2016 Language Preferences to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Office 2016 Upload Center">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Office 2016 Upload Center" id="available-Office 2016 Upload Center">
+                  <li class="running-app-border">
+                     <img alt="Office 2016 Upload Center icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/33dba75497d6b27be3fa8818d1169435.png" />
+                     <img alt="Office 2016 Upload Center icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Office 2016 Upload Center icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Office 2016 Upload Center</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Office 2016 Upload Center to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch OneNote 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch OneNote 2016" id="available-OneNote 2016">
+                  <li class="running-app-border">
+                     <img alt="OneNote 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/31c417aca2dcc330ea217578ce69c0e9.png" />
+                     <img alt="OneNote 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="OneNote 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">OneNote 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add OneNote 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Outlook 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Outlook 2016" id="available-Outlook 2016">
+                  <li class="running-app-border">
+                     <img alt="Outlook 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/73eb9b652266ad8dca11f82bafae50d1.png" />
+                     <img alt="Outlook 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Outlook 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Outlook 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Outlook 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Paint">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Paint" id="available-Paint">
+                  <li class="running-app-border">
+                     <img alt="Paint icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/aacb62617fa81f47885ce0f6a0556e07.png" />
+                     <img alt="Paint icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Paint icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Paint</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Paint to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Paint">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Paint" id="available-Paint">
+                  <li class="running-app-border">
+                     <img alt="Paint icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/aacb62617fa81f47885ce0f6a0556e07.png" />
+                     <img alt="Paint icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Paint icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Paint</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Paint to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Performance Monitor">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Performance Monitor" id="available-Performance Monitor">
+                  <li class="running-app-border">
+                     <img alt="Performance Monitor icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/f3f920253d2e955ec78d662e8e0ab628.png" />
+                     <img alt="Performance Monitor icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Performance Monitor icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Performance Monitor</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Performance Monitor to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch PowerPoint 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch PowerPoint 2016" id="available-PowerPoint 2016">
+                  <li class="running-app-border">
+                     <img alt="PowerPoint 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/470e110a36f50805a8115e0c045d00e7.png" />
+                     <img alt="PowerPoint 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="PowerPoint 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">PowerPoint 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add PowerPoint 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Print Management">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Print Management" id="available-Print Management">
+                  <li class="running-app-border">
+                     <img alt="Print Management icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/d90b965e604af7ac1370477da512ac19.png" />
+                     <img alt="Print Management icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Print Management icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Print Management</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Print Management to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Publisher 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Publisher 2016" id="available-Publisher 2016">
+                  <li class="running-app-border">
+                     <img alt="Publisher 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/74d4f1c1879df407d9ff4b787b938edc.png" />
+                     <img alt="Publisher 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Publisher 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Publisher 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Publisher 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Recovery Drive">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Recovery Drive" id="available-Recovery Drive">
+                  <li class="running-app-border">
+                     <img alt="Recovery Drive icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/6501796759e2aa48d67476f8678076d7.png" />
+                     <img alt="Recovery Drive icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Recovery Drive icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Recovery Drive</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Recovery Drive to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Registry Editor">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Registry Editor" id="available-Registry Editor">
+                  <li class="running-app-border">
+                     <img alt="Registry Editor icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/627aa484373ae2da410b6a770de52023.png" />
+                     <img alt="Registry Editor icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Registry Editor icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Registry Editor</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Registry Editor to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Remote Desktop Connection">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Remote Desktop Connection" id="available-Remote Desktop Connection">
+                  <li class="running-app-border">
+                     <img alt="Remote Desktop Connection icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/be539be21fa864117987b8597f4994d5.png" />
+                     <img alt="Remote Desktop Connection icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Remote Desktop Connection icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Remote Desktop Connection</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Remote Desktop Connection to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Settings">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Settings" id="available-Settings">
+                  <li class="running-app-border">
+                     <img alt="Settings icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/660060bb3080a63c5ba764d819c1e01d.png" />
+                     <img alt="Settings icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Settings icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Settings</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Settings to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Skype for Business 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Skype for Business 2016" id="available-Skype for Business 2016">
+                  <li class="running-app-border">
+                     <img alt="Skype for Business 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/bb89ed4c3453fae5ba1c032102bbb10b.png" />
+                     <img alt="Skype for Business 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Skype for Business 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Skype for Business 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Skype for Business 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Snipping Tool">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Snipping Tool" id="available-Snipping Tool">
+                  <li class="running-app-border">
+                     <img alt="Snipping Tool icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/435b8298a2d02a1dab90200ef01e6894.png" />
+                     <img alt="Snipping Tool icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Snipping Tool icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Snipping Tool</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Snipping Tool to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Spreadsheet Compare 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Spreadsheet Compare 2016" id="available-Spreadsheet Compare 2016">
+                  <li class="running-app-border">
+                     <img alt="Spreadsheet Compare 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/be56e351e55f75fd0ffa007f662dce14.png" />
+                     <img alt="Spreadsheet Compare 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Spreadsheet Compare 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Spreadsheet Compare 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Spreadsheet Compare 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Steps Recorder">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Steps Recorder" id="available-Steps Recorder">
+                  <li class="running-app-border">
+                     <img alt="Steps Recorder icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/1c0f9d77b81035a4c1477c3ea7c08a53.png" />
+                     <img alt="Steps Recorder icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Steps Recorder icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Steps Recorder</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Steps Recorder to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Task Manager">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Task Manager" id="available-Task Manager">
+                  <li class="running-app-border">
+                     <img alt="Task Manager icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/8f9cb5311c57f981b0661964d9b70c91.png" />
+                     <img alt="Task Manager icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Task Manager icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Task Manager</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Task Manager to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Telemetry Dashboard for Office 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Telemetry Dashboard for Office 2016" id="available-Telemetry Dashboard for Office 2016">
+                  <li class="running-app-border">
+                     <img alt="Telemetry Dashboard for Office 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/7d742292d6d798dc8cd36d5fa2f1b15e.png" />
+                     <img alt="Telemetry Dashboard for Office 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Telemetry Dashboard for Office 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Telemetry Dashboard for Office 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Telemetry Dashboard for Office 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Telemetry Log for Office 2016 ">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Telemetry Log for Office 2016 " id="available-Telemetry Log for Office 2016 ">
+                  <li class="running-app-border">
+                     <img alt="Telemetry Log for Office 2016  icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/92d50297c3df2c1e55a8ee1a70d2efc5.png" />
+                     <img alt="Telemetry Log for Office 2016  icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Telemetry Log for Office 2016  icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Telemetry Log for Office 2016 </li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Telemetry Log for Office 2016  to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows Administrative Tools">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows Administrative Tools" id="available-Windows Administrative Tools">
+                  <li class="running-app-border">
+                     <img alt="Windows Administrative Tools icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/15664a252c20b4c1db082d28c4078076.png" />
+                     <img alt="Windows Administrative Tools icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows Administrative Tools icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows Administrative Tools</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows Administrative Tools to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows Defender Firewall with Advanced Security">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows Defender Firewall with Advanced Security" id="available-Windows Defender Firewall with Advanced Security">
+                  <li class="running-app-border">
+                     <img alt="Windows Defender Firewall with Advanced Security icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/6e1602ea3e8a116857023f1d5e35a689.png" />
+                     <img alt="Windows Defender Firewall with Advanced Security icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows Defender Firewall with Advanced Security icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows Defender Firewall with Advanced Security</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows Defender Firewall with Advanced Security to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows Media Player">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows Media Player" id="available-Windows Media Player">
+                  <li class="running-app-border">
+                     <img alt="Windows Media Player icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/b6c26a9b6b2e0a97b830d4be0cfb977b.png" />
+                     <img alt="Windows Media Player icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows Media Player icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows Media Player</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows Media Player to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows PowerShell">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows PowerShell" id="available-Windows PowerShell">
+                  <li class="running-app-border">
+                     <img alt="Windows PowerShell icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/bb9ec0a934229458b5c12ac4c3ae58d6.png" />
+                     <img alt="Windows PowerShell icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows PowerShell icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows PowerShell</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows PowerShell to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows PowerShell (x86)">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows PowerShell (x86)" id="available-Windows PowerShell (x86)">
+                  <li class="running-app-border">
+                     <img alt="Windows PowerShell (x86) icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/bb9ec0a934229458b5c12ac4c3ae58d6.png" />
+                     <img alt="Windows PowerShell (x86) icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows PowerShell (x86) icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows PowerShell (x86)</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows PowerShell (x86) to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows PowerShell ISE">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows PowerShell ISE" id="available-Windows PowerShell ISE">
+                  <li class="running-app-border">
+                     <img alt="Windows PowerShell ISE icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/c3786a6d02446fe9f8cfd0e182ed2d32.png" />
+                     <img alt="Windows PowerShell ISE icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows PowerShell ISE icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows PowerShell ISE</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows PowerShell ISE to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows PowerShell ISE (x86)">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows PowerShell ISE (x86)" id="available-Windows PowerShell ISE (x86)">
+                  <li class="running-app-border">
+                     <img alt="Windows PowerShell ISE (x86) icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/c3786a6d02446fe9f8cfd0e182ed2d32.png" />
+                     <img alt="Windows PowerShell ISE (x86) icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows PowerShell ISE (x86) icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows PowerShell ISE (x86)</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows PowerShell ISE (x86) to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Windows Speech Recognition">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Windows Speech Recognition" id="available-Windows Speech Recognition">
+                  <li class="running-app-border">
+                     <img alt="Windows Speech Recognition icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/fd068dbf1d0f63451516dad4e1dd1498.png" />
+                     <img alt="Windows Speech Recognition icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Windows Speech Recognition icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Windows Speech Recognition</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Windows Speech Recognition to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch Word 2016">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch Word 2016" id="available-Word 2016">
+                  <li class="running-app-border">
+                     <img alt="Word 2016 icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/a9524bd72c5d3c0b792806d98df79725.png" />
+                     <img alt="Word 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="Word 2016 icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">Word 2016</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add Word 2016 to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch WordPad">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch WordPad" id="available-WordPad">
+                  <li class="running-app-border">
+                     <img alt="WordPad icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/b5c8c1e3c3ef96af9d3a4500f98f1006.png" />
+                     <img alt="WordPad icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="WordPad icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">WordPad</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add WordPad to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) --><div ng-repeat="entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites)" class="ng-scope">
+            <ul class="running-app" title="Launch XPS Viewer">
+               <ul class="icon-and-name-container" ng-click="launchItem(entitledItem)" title="Launch XPS Viewer" id="available-XPS Viewer">
+                  <li class="running-app-border">
+                     <img alt="XPS Viewer icon" class="running-app-icon" src="icons-22440836/default_app_icon.svg" ng-show="util.isApp(entitledItem)" icon-load="/broker/resources/icon/a7e78894378adae4813d38ed082764cb.png" />
+                     <img alt="XPS Viewer icon" class="running-app-icon ng-hide" src="icons-22440836/default_desktop_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; !entitledItem.isShadow" />
+                     <img alt="XPS Viewer icon" class="running-app-icon ng-hide" src="icons-22440836/default_shadow_icon.svg" ng-show="util.isDesktop(entitledItem) &amp;&amp; entitledItem.isShadow" />
+                  </li>
+                  <li class="available-app-name ng-binding">XPS Viewer</li>
+               </ul>
+               <!-- ngIf: $root.showPreference && entitledItem.favorite -->
+               <!-- ngIf: $root.showPreference && !entitledItem.favorite --><li ng-if="$root.showPreference &amp;&amp; !entitledItem.favorite" class="available-app-favorite-button off ng-scope" title="Add XPS Viewer to favorites" ng-click="toggleFavorite(entitledItem)">
+               </li><!-- end ngIf: $root.showPreference && !entitledItem.favorite -->
+            </ul>
+         </div><!-- end ngRepeat: entitledItem in filteredEntitledItems = (entitledItems | availableItemsFilter:queryText.name:showOnlyFavorites) -->
+         <div ng-show="showOnlyFavorites &amp;&amp; filteredEntitledItems.length === 0" class="ng-hide">
+            <div class="no-items-label ng-binding">No Favorites</div>
+         </div>
+      </div>
+   </div>
+</div>
+<vertical-slider id="sidebar-toggler" class="panel-toggle-tab pointer-cursor sidebar-tab-image ng-isolate-scope" on-click="$emit('togglePanel')" on-move="$emit('sliderMoveStart')" element-drag-styles="pointer-cursor resize-cursor" body-drag-styles="resize-cursor" style="top: 412px;">
+</vertical-slider>
+
+<div ng-show="showGlobalContextMenu" class="menu global-context ng-hide">
+   <div class="bubble">
+      <div class="triangle"></div>
+      <div class="triangle-border"></div>
+      <div class="menu-content">
+         <div class="menu-item inactive" title="pcoip2@*DefaultDomain*" ng-click="" id="sidebar-user-info">
+            <div class="menu-item-icon icon-user-image"></div>
+            <div class="menu-item-title unselectable ng-binding">pcoip2</div>
+         </div>
+         <div class="separator"></div>
+         <div class="menu-item" ng-click="settingsClicked()" id="sidebar-settings-button">
+            <div class="menu-item-icon icon-settings-image"></div>
+            <div class="menu-item-title ng-binding">Settings</div>
+         </div>
+         <!-- ngIf: isShowFullscreenBtn() --><div ng-if="isShowFullscreenBtn()" class="menu-item ng-scope" ng-click="fullscreenClicked()" id="sidebar-fullscreen-button">
+               <div class="menu-item-icon icon-fullscreen-image"></div>
+               <div class="menu-item-title ng-binding">Fullscreen</div>
+         </div><!-- end ngIf: isShowFullscreenBtn() -->
+         <!-- ngIf: checkFullscreenBtnClicked && !multimonStarted && isFullscreenEnabled -->
+         <!-- ngIf: checkFullscreenBtnClicked && isFullscreenEnabled -->
+         <!-- ngIf: multimonOptionVisible && multimonStarted -->
+         <!-- ngIf: multimonOptionVisible && !multimonStarted && !checkFullscreenBtnClicked -->
+         <div class="menu-item" ng-click="aboutClicked()" id="sidebar-about-button">
+            <div class="menu-item-icon icon-about-image"></div>
+            <div class="menu-item-title ng-binding">About</div>
+         </div>
+         <div class="menu-item ng-hide" ng-hide="!isUsbEnable()" ng-click="usbClicked()" id="sidebar-usb-button">
+            <div class="menu-item-icon icon-usb-image"></div>
+            <div class="menu-item-title ng-binding">USB</div>
+         </div>
+         <div class="menu-item" ng-click="logoutClicked()" id="sidebar-logout-button">
+            <div class="menu-item-icon icon-logoff-desktop-image"></div>
+            <div class="menu-item-title ng-binding">Log out</div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div ng-show="showItemContextMenu" class="menu item-context ng-hide">
+   <div class="bubble">
+      <div class="triangle"></div>
+      <div class="triangle-border"></div>
+      <div class="menu-content">
+         <div class="menu-item ng-hide" ng-click="logOffDesktop()" ng-show="showLogOffDesktop">
+            <div class="menu-item-icon icon-logoff-desktop-image"></div>
+            <div class="menu-item-title ng-binding">Log off</div>
+         </div>
+         <div class="menu-item ng-hide" ng-click="resetDesktop()" ng-show="showResetDesktop">
+            <div class="menu-item-icon icon-reset-image"></div>
+            <div class="menu-item-title ng-binding">Reset</div>
+         </div>
+         <div class="menu-item ng-hide" ng-click="restartDesktop()" ng-show="showRestartDesktop">
+            <div class="menu-item-icon icon-restart-image"></div>
+            <div class="menu-item-title ng-binding">Restart</div>
+         </div>
+         <div class="menu-item" ng-click="closeRunningApp(contextMenuItem)">
+            <div class="menu-item-icon icon-close-desktop-image"></div>
+            <div class="menu-item-title ng-binding">Close</div>
+         </div>
+      </div>
+   </div>
+</div>
+</sidebar>
+      </div><!-- end ngIf: !$root.isChromeClient -->
+
+      <div id="clipboard-container">
+         <!-- ngIf: !isWebPanelFreeClipboard -->
+         <!-- ngIf: isWebPanelFreeClipboard --><div ng-if="isWebPanelFreeClipboard" class="ng-scope">
+            <div ng-controller="panelFreeClipboardController" class="ng-scope">
+   <div class="clipboard-input-container">
+      <textarea id="clipboard-input"></textarea>
+   </div>
+</div>
+         </div><!-- end ngIf: isWebPanelFreeClipboard -->
+      </div>
+
+      <div id="usb-container">
+         <usb-redirection></usb-redirection>
+      </div>
+
+      <div id="file-transfer-container">
+         <div class="base-panel file-transfer-panel ng-hide ng-scope ui-resizable ui-draggable" ng-controller="fileTransferController" ng-click="focusInput()" ng-show="showFileTransferPanel" style="">
+   <div file-drop="uploadHandler(event)" ng-class="{'file-transfer-focused': focused, 'file-transfer-unfocused': !focused}" class="ng-isolate-scope file-transfer-unfocused">
+      <div class="file-transfer-header file-transfer-handle ui-draggable-handle">
+         <div class="file-transfer-title ng-binding">Transfer Files</div>
+         <div class="file-transfer-icon close" ng-click="toggleFileTransferPanel($event)" title="Close Panel"></div>
+         <div class="file-transfer-icon help" ng-click="openFileTransferHelp()" title="Open File Transfer Help"></div>
+      </div>
+      <div class="file-transfer-input-container">
+         <label for="file-transfer-input-container">file-transfer-container</label>
+         <input id="file-transfer-input-container" ng-focus="ftPanelFocus()" ng-blur="ftPanelBlur()" />
+      </div>
+      <div class="file-content" style="height: 301px;">
+         <div class="file-area">
+            <div class="file-area-header">
+               <!-- ngIf: downloadEnabled --><div ng-if="downloadEnabled" class="file-transfer-tab download-tab ng-binding ng-scope active" ng-click="switchFileTab(PANEL_TAB.DOWNLOAD)" ng-class="{'active': showFileDownload}">Download</div><!-- end ngIf: downloadEnabled -->
+               <!-- ngIf: uploadEnabled --><div ng-if="uploadEnabled" class="file-transfer-tab upload-tab ng-binding ng-scope" ng-click="switchFileTab(PANEL_TAB.UPLOAD)" ng-class="{'active': showFileUpload}">Upload</div><!-- end ngIf: uploadEnabled -->
+            </div>
+            <!-- ngIf: downloadEnabled --><div ng-if="downloadEnabled" ng-show="showFileDownload" class="unselectable file-list-container ng-scope">
+               <ul id="ft-download-list" class="file-content-list ng-hide" ng-show="downloadFiles.length != 0" style="height: 275px;">
+                  <!-- ngRepeat: file in downloadFiles -->
+               </ul>
+               <div id="ft-download-step-hint" class="hint-container file-transfer-handle" ng-show="downloadFiles.length == 0 &amp;&amp; downloadEnabled == true">
+                  <p class="hint-title ng-binding">To Download</p>
+                  <div class="hint-step-container">
+                     <p class="ng-binding">1. Select some files in your remote desktop or application.</p>
+                     <p class="ng-binding">2. Click 'CTRL + c' to begin file transfer.</p>
+                     <p class="ng-binding">3. After transferred, click <span class="file-transfer-hint-icon save-file"></span> to save file to your client machine.</p>
+                  </div>
+               </div>
+               <div id="ft-download-disable-hint" class="hint-container file-transfer-handle ng-hide" ng-show="downloadEnabled == false">
+                  <p class="hint-disable-title ng-binding">File download is disabled for this remote desktop.</p>
+               </div>
+            </div><!-- end ngIf: downloadEnabled -->
+            <!-- ngIf: uploadEnabled --><div ng-if="uploadEnabled" ng-show="showFileUpload" class="unselectable file-list-container ng-scope ng-hide">
+               <ul id="ft-upload-list" class="file-content-list ng-hide" ng-show="uploadFiles.length != 0" style="height: 275px;">
+                  <!-- ngRepeat: file in uploadFiles -->
+                  <div class="btn-hint-container">
+                     <!-- ngIf: !isChromeClient() --><button ng-if="!isChromeClient()" ng-show="uploadFiles.length != 0" onclick="chooseUploadFiles()" class="choose-files-button ng-binding ng-scope ng-hide">Add more files</button><!-- end ngIf: !isChromeClient() -->
+                     <!-- ngIf: isChromeClient() -->
+                    </div>
+               </ul>
+               <div id="ft-upload-step-hint" class="hint-container file-transfer-handle" ng-show="uploadFiles.length == 0 &amp;&amp; uploadEnabled == true">
+                  <p class="hint-title ng-binding">To Upload</p>
+                  <form class="ng-pristine ng-valid">
+                     <label for="upload-file-input">upload-file-input</label>
+                     <input type="file" multiple="multiple" id="upload-file-input" class="upload-file-input ng-isolate-scope" file-change="uploadHandler(event)" />
+                  </form>
+                  <div class="hint-step-container">
+                     <p class="ng-binding">Drag and drop files into this window.</p>
+                     <p class="ng-binding">Or click 'Choose Files' button to choose file to upload.</p>
+                     <p class="ng-binding">The uploaded files will be saved in 'My Documents' folder.</p>
+                  </div>
+                  <!-- ngIf: !isChromeClient() --><button ng-if="!isChromeClient()" onclick="chooseUploadFiles()" class="choose-files-button ng-binding ng-scope">Choose Files</button><!-- end ngIf: !isChromeClient() -->
+                  <!-- ngIf: isChromeClient() -->
+                </div>
+               <div id="ft-upload-disable-hint" class="hint-container file-transfer-handle ng-hide" ng-show="uploadEnabled == false">
+                  <p class="hint-disable-title ng-binding">File upload is disabled for this remote desktop.</p>
+               </div>
+            </div><!-- end ngIf: uploadEnabled -->
+         </div>
+      </div>
+      <div class="file-transfer-footer file-transfer-handle ui-draggable-handle">
+         <span id="ft-clear-upload-list-btn" class="file-transfer-clear ng-binding ng-hide" ng-show="showFileUpload" ng-click="clearUploadList()">Clear List</span>
+         <span id="ft-clear-download-list-btn" class="file-transfer-clear ng-binding" ng-show="showFileDownload" ng-click="clearDownloadList()">Clear List</span>
+      </div>
+   </div>
+
+   <div class="hidden clipboard-notification noselect"></div>
+<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div>
+      </div>
+
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'desktop' -->
+</div>
+
+
+<script type="text/javascript" src="vendor.1ebf8022c2cfee9fb3f6.js"></script><script type="text/javascript" src="app-htmlaccess.1ebf8022c2cfee9fb3f6.js"></script>
+
+</body></html>

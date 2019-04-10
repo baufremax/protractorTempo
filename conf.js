@@ -14,7 +14,6 @@ exports.config = {
     browserName: 'chrome'
   },
   specs: [
-    './login/login.spec.js',
     './launch/launch.spec.js'
   ],
   // to get the baseUrl in protractor, use browser.baseUrl
