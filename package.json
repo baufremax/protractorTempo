@@ -5,7 +5,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "debug": "node --inspect-brk ./node_modules/.bin/protractor conf.js",
+    "debug": "node --inspect-brk ./node_modules/protractor conf.js",
     "pretest": "npm run tsc && npm run webdriver-update",
     "test": "protractor conf.js",
     "tsc": "tsc",

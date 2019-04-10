@@ -18,6 +18,7 @@ describe('access apps in launch page: ', function() {
     })
 
     it('page is a launch page after login', () => {
+        debugger
         page.navigateTo()
         expect(page.getPageIdText()).toEqual('Search')
     })

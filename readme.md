@@ -23,6 +23,55 @@ Before running, you might need to compile the typescript files into js files thr
 To check the screenshot report, open *./REPORTS/e2e/index.html* in browser.
 
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
+## Debug
+-   Add “debugger” keyword to the test case that we want to debug.
+
+    ```javascript
+    it('should greet the named user', async function() {
+        debugger;
+        await browser.get('http://www.angularjs.org');
+
+        await element(by.model('yourName')).sendKeys('Julie');
+
+        var greeting = element(by.binding('yourName'));
+
+        expect(await greeting.getText()).toEqual('Hello Julie!');
+    });
+    ```
+
+-   Start test process with a new argument "inspect-brk", which will enable
+    inspector agent, listen on default address and port (127.0.0.1:9229) and
+    break before user code starts
+
+    Use
+
+    ```
+    npm run debug
+    ```
+
+-   Open chrome inspector: Enter "chrome://inspect/#devices" in browser, find
+    the current running target and click “Inspect”
+
+    ![screenshot](/docs/inspector.png)
+
+-   The test will start and pause at the beginning.
+
+    ![screenshot](/docs/firstBreak.png)
+
+-   We can click F8 (resume script execution), and the test will pause at the
+    first line that has our “debugger” keyword. We can then add breakpoints and
+    debug tests.
+
+    ![screenshot](/docs/breakpoint.png)
+
+-   We can also open chrome development tool on the webdriver controlled browser
+    to check the html elements and do some queries while the test execution is
+    pausing.
+
+    ![screenshot](/docs/chromeDevTool.png)
+
+see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md)
+
 
 ## Resources
 * [Protractor Tutorial](https://www.protractortest.org/#/tutorial)
