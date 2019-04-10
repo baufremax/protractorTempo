@@ -27,5 +27,5 @@ If there are npm or package errors, try delete *node_modules* and *package-lock.
 ## Resources
 * [Protractor Tutorial](https://www.protractortest.org/#/tutorial)
 * [Screenshot Plugin](https://github.com/azachar/protractor-screenshoter-plugin)
-* [Protractor Style Guild](https://www.protractortest.org/#/style-guide)
+* [Protractor Style Guide](https://www.protractortest.org/#/style-guide)
 * [Build your first tests with Protractor](https://blog.cloudboost.io/building-your-first-tests-for-angular5-with-protractor-a48dfc225a75)
