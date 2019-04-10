@@ -1,8 +1,9 @@
 ## Set Up
-
-`npm install -g protractor`
+use `npm install` to install all dependencies.
 
 The `webdriver-manager` is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
+`npm run webdriver-update`
+or
 `webdriver-manager update`
 
 Now start up a server with:
@@ -13,11 +14,13 @@ Install screenshot plugin:
 `npm install --global protractor-screenshoter-plugin`
 
 ## Test
-Open a new command line or terminal window and create a clean folder for testing.
 Run the tests with
+`npm run test` which will automatically call `npm run tsc && npm run webdriver-update`
+
+You can run tests quickly with
 `protractor conf.js`
 
 Before running, you might need to compile the typescript files into js files through
 `npm run tsc`
 
-To check the screenshot report, open ./REPORTS/e2e/index.html in browser.
+To check the screenshot report, open *./REPORTS/e2e/index.html* in browser.

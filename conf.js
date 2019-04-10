@@ -7,11 +7,7 @@
 // description hints.
 //
 // To run this example, run `protractor conf.js`.
-let HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter')
-let reporter = new HtmlScreenshotReporter({
-  dest: 'target/screenshots',
-  filename: 'my-report.html'
-})
+
 exports.config = {
   framework: 'jasmine2',
   capabilities: {
