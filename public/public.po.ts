@@ -17,7 +17,7 @@ export class PublicPage {
         return browser.getCurrentUrl()
     }
 
-   installClient() {
+    installClient() {
         return element(by.id('nativeClient')).click()
     }
 

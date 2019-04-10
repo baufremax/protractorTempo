@@ -1,7 +1,6 @@
 import { PublicPage } from './public.po'
 import { LoginPage } from '../login/login.po'
-import { browser } from 'protractor';
-// import { browser } from 'protractor'
+
 describe('access public page: ', function() {
     let page: PublicPage
     let loginPage: LoginPage

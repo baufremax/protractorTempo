@@ -1,0 +1,629 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" id="ng-app" ng-app="com.vmware.vdi.client" ng-controller="AppCenterController" class="ng-scope" lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+   <title>VMware Horizon</title>
+
+   <meta charset="utf-8" />
+   <meta name="author" content="VMware, Inc." />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+   <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+   <meta name="viewport" id="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+
+   <link rel="shortcut icon" href="../favicon.ico" />
+
+   <style type="text/css">
+      .ng-hide { display: none !important; }
+   </style>
+<link href="style.app-htmlaccess.1ebf8022c2cfee9fb3f6.css" rel="stylesheet" /></head>
+<body ng-class="{desktopBackground:$root.CLIENT_MODE == 'desktop',showMenuBar:showChromeMenuBar}">
+
+<!-- ngIf: showChromeMenuBar -->
+
+<div ng-class="{marginTopChrome:showChromeMenuBar}">
+   <div id="browserWarning" data-role="page">
+      <noscript>
+         &lt;style&gt;
+            #canvas-container {display:none;}
+         &lt;/style&gt;
+         &lt;div class="ui-content-area login-bg"&gt;
+            &lt;div class="container"&gt;
+               &lt;div class="ui-center-panel ui-widget-home"&gt;
+                  &lt;div class="ui-pattern-logo"&gt;&lt;/div&gt;
+                  &lt;div class="ui-panel-content"&gt;
+                     &lt;div class="ui-browser-warning"&gt;
+                        &lt;p class="top-warning"&gt;&lt;span class="ui-warning-logo"&gt;&lt;/span&gt;There is a problem with this web browser.&lt;/p&gt;
+                        &lt;p&gt;Please enable JavaScript in your browser. Or you could download the native Horizon Client.&lt;/p&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class="ui-panel-footer"&gt;
+                     &lt;a href="https://docs.vmware.com/en/VMware-Horizon-HTML-Access/5.1/html-access-user/GUID-20F0C9F6-7DE9-4D3D-8095-391C9F795F54.html" target="_blank" id="helpBtn" title="Help" class="btn btn-default"&gt;Help&lt;/a&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="bottom-logo"&gt;&lt;/div&gt;
+         &lt;/div&gt;
+      </noscript>
+   </div>
+
+
+   <!-- launcher views -->
+   <!-- ngIf: $root.CLIENT_MODE == 'launcher' --><div id="header-container" ng-if="$root.CLIENT_MODE == 'launcher'" class="ng-scope">
+      <!-- ngIf: !header.hide --><header ng-if="!header.hide" class="navbar ui-navbar ng-scope" role="banner" ng-controller="HeaderCtrl">
+   <div class="container">
+      <div class="navbar-header navbar-icon">
+         <a class="navbar-brand ui-brand" tabindex="-1"></a>
+      </div>
+      <div class="search-bar searchFocus" ng-class="{ searchFocus: focus, searchBlur: blur }" ng-show="header.searchbar">
+         <div class="search-content">
+            <span class="search-icon"></span>
+            <label for="header-search" class="ng-binding">Search</label>
+            <input id="header-search" ng-model="header.search" class="search-input ng-pristine ng-untouched ng-valid ng-empty" type="search" placeholder="Search" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;" autofocus="" tabindex="0" />
+            <!-- ngIf: header.search !== '' -->
+         </div>
+      </div>
+      <div class="navbar-header ui-navbar-links header-buttons">
+         <ul class="nav navbar-nav navbar-right">
+            <!-- ngIf: $root.showPreference --><li ng-if="$root.showPreference" class="all-choice first-item ng-scope" tabindex="0" ng-keyup="enterKeypress($event, showAll)">
+               <a id="showAllBtn" ng-click="showAll()" href="" ng-class="showAllStyle" title="Show All" tabindex="-1" class="ng-binding show-all-on">Show All</a>
+            </li><!-- end ngIf: $root.showPreference -->
+            <!-- ngIf: $root.showPreference --><li ng-if="$root.showPreference" class="favorite-choice ng-scope" tabindex="0" ng-keyup="enterKeypress($event, showFavorites)">
+               <a id="showFavoritesBtn" ng-click="showFavorites()" href="" ng-class="showFavStyle" title="Show Favorites" tabindex="-1" class="ng-binding show-fav-off">Show Favorites</a>
+            </li><!-- end ngIf: $root.showPreference -->
+            <li tabindex="0" ng-keyup="enterKeypress($event, showSetting)">
+               <a id="settingsBtn" href="" class="setting ng-binding" title="Settings" ng-click="showSetting()" tabindex="-1">Settings</a>
+            </li>
+            <li tabindex="0" ng-keyup="enterKeypress($event, showHelp)">
+               <a id="helpBtn" href="" ng-click="showHelp()" target="_blank" title="Help" class="help ng-binding" tabindex="-1">Help</a>
+            </li>
+            <li tabindex="0" ng-show="header.logout" ng-keyup="enterKeypress($event, logout)">
+               <a id="logoutBtn" ng-click="logout()" title="Log Out" class="logout ng-binding" tabindex="-1">Log Out</a>
+            </li>
+         </ul>
+      </div>
+   </div>
+</header><!-- end ngIf: !header.hide -->
+   </div><!-- end ngIf: $root.CLIENT_MODE == 'launcher' -->
+
+   <!-- ngIf: $root.isChromeClient -->
+
+   <!-- views -->
+   <!-- ngIf: $root.CLIENT_MODE !== null --><!-- ngView: --><div ng-if="$root.CLIENT_MODE !== null" ng-view="" class="ui-page ui-body showPage"><div class="launch-page ng-scope">
+   <div class="container showPage" ng-class="ajaxBusy ? 'hidePage' : 'showPage'">
+         <ul class="ui-desktop-list" ng-show="showLaunchPanel">
+            <!-- ngRepeat: desktop in desktops | filter:{name:search} | orderBy:'name' --><li ng-show="show(desktop)" ng-repeat="desktop in desktops | filter:{name:search} | orderBy:'name'" id="cn=win2019,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(desktop)" tabindex="0" ng-click="launchDesktop(desktop, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, desktop, true)" ng-focus="highlightItems(desktop, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===desktop}" id="launch-cn=win2019,ou=applications,dc=vdi,dc=vmware,dc=int" title="win2019">
+                  <span class="ui-desktop-icon">
+                     <img src="icons-22440836/default_desktop_icon.svg" alt="win2019 icon" class="ui-desktop-icon" ng-show="true" />
+                     <img src="icons-22440836/default_shadow_icon.svg" alt="desktop icon" class="ui-desktop-icon ng-hide" ng-show="false" />
+                     <span class="desktop-auto-start ng-hide" ng-show=""></span>
+                  </span>
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(desktop,$event);" id="favorite-cn=win2019,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="desktop.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="win2019">win2019</p>
+               </div>
+            </li><!-- end ngRepeat: desktop in desktops | filter:{name:search} | orderBy:'name' -->
+         </ul>
+         <div class="ui-desktop-list-line" ng-show="showLaunchPanel &amp;&amp; (desktops | filter:{name:search}).length &gt; 0 &amp;&amp; (applications  | filter:{name:search}).length &gt; 0 &amp;&amp; showline"></div>
+         <ul class="ui-desktop-list" ng-show="showLaunchPanel">
+            <!-- ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=access_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=access_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Access 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Access 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/8b6394e1da963594a23fc6aa9569661b.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=access_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Access 2016">Access 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=calculator,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=calculator,ou=applications,dc=vdi,dc=vmware,dc=int" title="Calculator">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Calculator icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/4e229a68ae7585f733b0567f5638c9e4.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=calculator,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Calculator">Calculator</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=calculator-1,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=calculator-1,ou=applications,dc=vdi,dc=vmware,dc=int" title="Calculator">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Calculator icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/4e229a68ae7585f733b0567f5638c9e4.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=calculator-1,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Calculator">Calculator</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=character_map,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=character_map,ou=applications,dc=vdi,dc=vmware,dc=int" title="Character Map">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Character Map icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/2654c46a59ad6e25153ccd44c53ca1f4.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=character_map,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Character Map">Character Map</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=command_prompt,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=command_prompt,ou=applications,dc=vdi,dc=vmware,dc=int" title="Command Prompt">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Command Prompt icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/31e57ea6e5727933ea4e327f6cb4944d.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=command_prompt,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Command Prompt">Command Prompt</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=database_compare_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=database_compare_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Database Compare 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Database Compare 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/56762ea286afe5fb0afd92d59bf9b937.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=database_compare_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Database Compare 2016">Database Compare 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=disk_cleanup,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=disk_cleanup,ou=applications,dc=vdi,dc=vmware,dc=int" title="Disk Cleanup">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Disk Cleanup icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/3c8dd81785ab542ad623c8c551e872e3.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=disk_cleanup,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Disk Cleanup">Disk Cleanup</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=excel_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=excel_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Excel 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Excel 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/7d96e7598f3b101bc36f657dd61dea25.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=excel_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Excel 2016">Excel 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=google_chrome-1,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=google_chrome-1,ou=applications,dc=vdi,dc=vmware,dc=int" title="Google Chrome">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Google Chrome icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/bfe1af90eb3a4788230c815ee643ff16.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=google_chrome-1,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Google Chrome">Google Chrome</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=iexplore-1,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=iexplore-1,ou=applications,dc=vdi,dc=vmware,dc=int" title="Internet Explorer">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Internet Explorer icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/3994b4f746a2db0f2f35b21cc513e68f.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=iexplore-1,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Internet Explorer">Internet Explorer</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=iexplore,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=iexplore,ou=applications,dc=vdi,dc=vmware,dc=int" title="Internet Explorer">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Internet Explorer icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/3994b4f746a2db0f2f35b21cc513e68f.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=iexplore,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Internet Explorer">Internet Explorer</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=math_input_panel,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=math_input_panel,ou=applications,dc=vdi,dc=vmware,dc=int" title="Math Input Panel">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Math Input Panel icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/a4b5a4fbd88ca64c2bbaf20513e0ed72.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=math_input_panel,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Math Input Panel">Math Input Panel</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=microsoft_azure_services,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=microsoft_azure_services,ou=applications,dc=vdi,dc=vmware,dc=int" title="Microsoft Azure Services">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Microsoft Azure Services icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/a92401aaacd54fd06c6c63bc23f5e451.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=microsoft_azure_services,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Microsoft Azure Services">Microsoft Azure Services</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=notepad-1,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=notepad-1,ou=applications,dc=vdi,dc=vmware,dc=int" title="Notepad">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Notepad icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/b42380bb56b18afebb01bece64938cf7.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=notepad-1,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Notepad">Notepad</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=notepad,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=notepad,ou=applications,dc=vdi,dc=vmware,dc=int" title="Notepad++">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Notepad++ icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/77ec95dabd8c37085aa0cd2f78d63837.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=notepad,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Notepad++">Notepad++</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=odbc_data_sources_32-bit,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=odbc_data_sources_32-bit,ou=applications,dc=vdi,dc=vmware,dc=int" title="ODBC Data Sources (32-bit)">
+                  <img src="icons-22440836/default_app_icon.svg" alt="ODBC Data Sources (32-bit) icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/b17e586b2ba0a1b635cc8c0e7592a5e3.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=odbc_data_sources_32-bit,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="ODBC Data Sources (32-bit)">ODBC Data Sources (32-bit)</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=odbc_data_sources_64-bit,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=odbc_data_sources_64-bit,ou=applications,dc=vdi,dc=vmware,dc=int" title="ODBC Data Sources (64-bit)">
+                  <img src="icons-22440836/default_app_icon.svg" alt="ODBC Data Sources (64-bit) icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/b17e586b2ba0a1b635cc8c0e7592a5e3.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=odbc_data_sources_64-bit,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="ODBC Data Sources (64-bit)">ODBC Data Sources (64-bit)</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=office_2016_language_preferences,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=office_2016_language_preferences,ou=applications,dc=vdi,dc=vmware,dc=int" title="Office 2016 Language Preferences">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Office 2016 Language Preferences icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/47e44fc47aa98ded01c3122f013ee4c9.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=office_2016_language_preferences,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Office 2016 Language Preferences">Office 2016 Language Preferences</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=office_2016_upload_center,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=office_2016_upload_center,ou=applications,dc=vdi,dc=vmware,dc=int" title="Office 2016 Upload Center">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Office 2016 Upload Center icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/7edaa3257fafde37f2cb92de8f10f19e.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=office_2016_upload_center,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Office 2016 Upload Center">Office 2016 Upload Center</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=onenote_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=onenote_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="OneNote 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="OneNote 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/d5b07ba184adabe20ad375e7656c53ac.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=onenote_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="OneNote 2016">OneNote 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=outlook_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=outlook_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Outlook 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Outlook 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/9f88451e85c736e983cc4f093e51f55a.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=outlook_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Outlook 2016">Outlook 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=paint,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=paint,ou=applications,dc=vdi,dc=vmware,dc=int" title="Paint">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Paint icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/219906c77f4e7c50df32e88acef2783a.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=paint,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Paint">Paint</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=paint-1,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=paint-1,ou=applications,dc=vdi,dc=vmware,dc=int" title="Paint">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Paint icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/219906c77f4e7c50df32e88acef2783a.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=paint-1,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Paint">Paint</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=performance_monitor,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=performance_monitor,ou=applications,dc=vdi,dc=vmware,dc=int" title="Performance Monitor">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Performance Monitor icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/0a577e9230a00763f598bcc7ba9a1a75.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=performance_monitor,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Performance Monitor">Performance Monitor</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=powerpoint_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=powerpoint_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="PowerPoint 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="PowerPoint 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/f3967516ef7d6c6ecef746e0aa488fbf.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=powerpoint_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="PowerPoint 2016">PowerPoint 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=print_management,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=print_management,ou=applications,dc=vdi,dc=vmware,dc=int" title="Print Management">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Print Management icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/d90b965e604af7ac1370477da512ac19.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=print_management,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Print Management">Print Management</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=publisher_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=publisher_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Publisher 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Publisher 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/bd7b46f34e5c098349f9c803139b5782.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=publisher_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Publisher 2016">Publisher 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=recoverydrive,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=recoverydrive,ou=applications,dc=vdi,dc=vmware,dc=int" title="Recovery Drive">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Recovery Drive icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/86e6184b64647a03401b25fac57ba90e.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=recoverydrive,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Recovery Drive">Recovery Drive</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=registry_editor,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=registry_editor,ou=applications,dc=vdi,dc=vmware,dc=int" title="Registry Editor">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Registry Editor icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/1bb7abf29a482b67827388902256bc8e.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=registry_editor,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Registry Editor">Registry Editor</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=remote_desktop_connection,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=remote_desktop_connection,ou=applications,dc=vdi,dc=vmware,dc=int" title="Remote Desktop Connection">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Remote Desktop Connection icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/38f77a1015b0083ca35f1b9e8593a915.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=remote_desktop_connection,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Remote Desktop Connection">Remote Desktop Connection</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=immersive_control_panel,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=immersive_control_panel,ou=applications,dc=vdi,dc=vmware,dc=int" title="Settings">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Settings icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/574ee21fb8bcd3336a7bdd088c76a569.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=immersive_control_panel,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Settings">Settings</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=skype_for_business_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=skype_for_business_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Skype for Business 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Skype for Business 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/f23f3efd8517b24413361c35030c3b81.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=skype_for_business_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Skype for Business 2016">Skype for Business 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=snipping_tool,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=snipping_tool,ou=applications,dc=vdi,dc=vmware,dc=int" title="Snipping Tool">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Snipping Tool icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/c262375c64f68555295acb2f89592d9a.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=snipping_tool,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Snipping Tool">Snipping Tool</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=spreadsheet_compare_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=spreadsheet_compare_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Spreadsheet Compare 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Spreadsheet Compare 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/be56e351e55f75fd0ffa007f662dce14.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=spreadsheet_compare_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Spreadsheet Compare 2016">Spreadsheet Compare 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=steps_recorder,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=steps_recorder,ou=applications,dc=vdi,dc=vmware,dc=int" title="Steps Recorder">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Steps Recorder icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/bbdad59f6da96f07cfb9e834b286997d.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=steps_recorder,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Steps Recorder">Steps Recorder</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=task_manager,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=task_manager,ou=applications,dc=vdi,dc=vmware,dc=int" title="Task Manager">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Task Manager icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/f8d034fcefb21426d7860da597c5ca21.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=task_manager,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Task Manager">Task Manager</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=telemetry_dashboard_for_office_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=telemetry_dashboard_for_office_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Telemetry Dashboard for Office 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Telemetry Dashboard for Office 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/7d742292d6d798dc8cd36d5fa2f1b15e.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=telemetry_dashboard_for_office_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Telemetry Dashboard for Office 2016">Telemetry Dashboard for Office 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=telemetry_log_for_office_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=telemetry_log_for_office_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Telemetry Log for Office 2016 ">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Telemetry Log for Office 2016  icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/92d50297c3df2c1e55a8ee1a70d2efc5.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=telemetry_log_for_office_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Telemetry Log for Office 2016 ">Telemetry Log for Office 2016 </p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=administrative_tools,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=administrative_tools,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows Administrative Tools">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows Administrative Tools icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/975fb86c9765fd4d3366e50075dcb604.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=administrative_tools,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows Administrative Tools">Windows Administrative Tools</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=windows_defender_firewall_with_advanced_security,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=windows_defender_firewall_with_advanced_security,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows Defender Firewall with Advanced Security">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows Defender Firewall with Advanced Security icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/956557925931b63dea0a77d33b737a6a.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=windows_defender_firewall_with_advanced_security,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows Defender Firewall with Advanced Security">Windows Defender Firewall with Advanced Security</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=windows_media_player,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=windows_media_player,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows Media Player">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows Media Player icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/67dd4fc8f0a5a4a5d0be769048e5c252.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=windows_media_player,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows Media Player">Windows Media Player</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=windows_powershell,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=windows_powershell,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows PowerShell">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows PowerShell icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/9a35424139fda617b1602656195473e5.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=windows_powershell,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows PowerShell">Windows PowerShell</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=windows_powershell_x86,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=windows_powershell_x86,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows PowerShell (x86)">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows PowerShell (x86) icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/9a35424139fda617b1602656195473e5.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=windows_powershell_x86,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows PowerShell (x86)">Windows PowerShell (x86)</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=windows_powershell_ise,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=windows_powershell_ise,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows PowerShell ISE">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows PowerShell ISE icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/6d0217fed8b30cf6125dda523f25b9fc.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=windows_powershell_ise,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows PowerShell ISE">Windows PowerShell ISE</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=windows_powershell_ise_x86,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=windows_powershell_ise_x86,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows PowerShell ISE (x86)">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows PowerShell ISE (x86) icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/6d0217fed8b30cf6125dda523f25b9fc.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=windows_powershell_ise_x86,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows PowerShell ISE (x86)">Windows PowerShell ISE (x86)</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=speech_recognition,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=speech_recognition,ou=applications,dc=vdi,dc=vmware,dc=int" title="Windows Speech Recognition">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Windows Speech Recognition icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/f4dad17788ed845a68634437a0892b4b.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=speech_recognition,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Windows Speech Recognition">Windows Speech Recognition</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=word_2016,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=word_2016,ou=applications,dc=vdi,dc=vmware,dc=int" title="Word 2016">
+                  <img src="icons-22440836/default_app_icon.svg" alt="Word 2016 icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/950d802774c1316f4658eacae8220d7b.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=word_2016,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="Word 2016">Word 2016</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=wordpad,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=wordpad,ou=applications,dc=vdi,dc=vmware,dc=int" title="WordPad">
+                  <img src="icons-22440836/default_app_icon.svg" alt="WordPad icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/f8288d47084f6b462162a6a5009c8ed8.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=wordpad,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="WordPad">WordPad</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' --><li ng-show="show(application)" ng-repeat="application in applications  | filter:{name:search} | orderBy:'name'" id="cn=xps_viewer,ou=applications,dc=vdi,dc=vmware,dc=int" scroll-top="isHighlighted(application)" tabindex="0" ng-click="launchApplication(application, $event)" ng-keypress="keypressHandler($event)" ng-keyup="keyboardHandler($event, application, false)" ng-focus="highlightItems(application, $event)" ng-blur="removeHighlight()" class="ng-scope ng-isolate-scope">
+               <div class="ui-btn ui-btn-a ui-desktop-corner" ng-class="{highlight:activeItem===application}" id="launch-cn=xps_viewer,ou=applications,dc=vdi,dc=vmware,dc=int" title="XPS Viewer">
+                  <img src="icons-22440836/default_app_icon.svg" alt="XPS Viewer icon" class="ui-desktop-icon ui-app-icon" icon-load="/broker/resources/icon/97807bfbc45fc1ef5e158dc6640284d3.png" />
+                  <!-- ngIf: $root.showPreference --><div ng-if="$root.showPreference" class="favorite-btn ng-scope">
+                     <a ng-click="makeFavorite(application,$event);" id="favorite-cn=xps_viewer,ou=applications,dc=vdi,dc=vmware,dc=int" ng-class="application.favorite ? 'favorite-on' : 'favorite-off'" title="Mark as Favorite" class="favorite-off"></a>
+                  </div><!-- end ngIf: $root.showPreference -->
+               </div>
+               <div class="ellipsis">
+                  <p class="ui-desktop-name ng-binding" title="XPS Viewer">XPS Viewer</p>
+               </div>
+            </li><!-- end ngRepeat: application in applications  | filter:{name:search} | orderBy:'name' -->
+         </ul>
+      </div>
+      <div class="container ng-hide" ng-show="showNoFavorites(desktops,applications)">
+         <div class="no-favorites"></div>
+         <div class="no-favorites-word ng-binding">You have no Favorites.</div>
+      </div>
+   <div ng-show="ajaxBusy" class="ui-icon-loading ng-hide">
+      <div class="loginLoadingTextForWaiting ng-binding">Loading...</div>
+      <loading-image-animation><!-- ngIf: ajaxBusy --></loading-image-animation>
+   </div>
+</div>
+
+</div><!-- end ngIf: $root.CLIENT_MODE !== null -->
+
+   <canvas width="320" id="canvas" height="240" style="display: none;"></canvas>
+   <video id="video" width="0" height="0" autoplay="" style="display: none;"></video>
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' -->
+
+   <!-- Dialog holder contains resources that are not visible by default -->
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' -->
+
+   <!-- Angular container -->
+   <!-- ngIf: $root.CLIENT_MODE == 'desktop' -->
+</div>
+
+
+<script type="text/javascript" src="vendor.1ebf8022c2cfee9fb3f6.js"></script><script type="text/javascript" src="app-htmlaccess.1ebf8022c2cfee9fb3f6.js"></script>
+
+</body></html>
