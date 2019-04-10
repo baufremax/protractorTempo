@@ -10,9 +10,6 @@ Now start up a server with:
 `webdriver-manager start`
 This will start up a Selenium Server and will output a bunch of info logs.
 
-Install screenshot plugin:
-`npm install --global protractor-screenshoter-plugin`
-
 ## Test
 Run the tests with
 `npm run test` which will automatically call `npm run tsc && npm run webdriver-update`
