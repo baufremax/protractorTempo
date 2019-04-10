@@ -45,7 +45,6 @@ export class LoginPage {
         element(by.model('credential.password')).sendKeys(userinfo.password)
         // element(by.css('[ng-click="myFunction()"]'))
         element(by.css('[ng-click="login(loginForm)"]')).click()
-        browser.driver.sleep(10000)
     }
 
     getPageIdText() {   // equals 'Login'

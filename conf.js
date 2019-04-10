@@ -11,7 +11,11 @@
 exports.config = {
   framework: 'jasmine2',
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome',
+    loggingPrefs: {
+      "driver": "INFO", 
+      "browser": "INFO"
+    }
   },
   specs: [
     './launch/launch.spec.js'

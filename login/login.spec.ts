@@ -6,7 +6,7 @@ describe('login as a user: ', function() {
     let page: LoginPage
     let originalTimeout: number
     let launchUrl: string = new LaunchPage().launchUrl
-
+    let itNum: number = 0
     beforeEach(() => {
         page = new LoginPage()
         // set time out longer so that we can wait for the page to load successfully.
@@ -15,6 +15,7 @@ describe('login as a user: ', function() {
     })
 
     afterEach(() => {
+        itNum ++
         // recover the default value.
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
     })
