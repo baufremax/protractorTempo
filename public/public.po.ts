@@ -9,7 +9,7 @@ export class PublicPage {
         return browser.get(this.url)
     }
 
-    getPageIdText() {   // equals 'VMware Horizon HTML Access'.
+    getPageIdText() {   // equals 'VMware Horizon'.
         return browser.getTitle()
     }
 

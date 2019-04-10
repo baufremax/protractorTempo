@@ -50,10 +50,6 @@ export class LoginPage {
 
     getPageIdText() {   // equals 'Login'
         return element(by.css('[ng-click="login(loginForm)"]')).getText()
-        browser.manage().window().maximize();
-        browser.waitForAngular();
-        
-        return browser.driver.findElement(by.id('loginButton')).getText()
     }
 
     getErrorMsg() {     // equals 'Unknown user name or bad password.'
