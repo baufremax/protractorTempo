@@ -4,7 +4,11 @@
 
 import { LoginPage } from '../po/login.po'
 import { LaunchPage } from '../po/launch.po'
-import { browser } from 'protractor';
+import { browser } from 'protractor'
+import * as chai from 'chai'
+import * as chaiAsPromised from 'chai-as-promised'
+chai.use(chaiAsPromised);
+let expect = chai.expect;
 
 describe('access apps in launch page: ', function() {
     let page: LaunchPage
@@ -16,21 +20,17 @@ describe('access apps in launch page: ', function() {
 
     beforeEach(() => {
         page = new LaunchPage()
-        // set time out longer so that we can wait for the page to load successfully.
-        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000
     })
 
     afterEach(() => {
         itNum ++
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
     })
 
     it('page is a launch page after login', () => {
         debugger
         page.navigateTo()
         browser.manage().logs().get('browser').then(function(browserLog) {
-            expect(browserLog.length).toEqual(0)
+            expect(browserLog.length).equal(0)
             // console.log('log: ' + require('util').inspect(browserLog));
             const logInfo: string = 'log: ' + require('util').inspect(browserLog)
             fs.writeFile(baseLogUrl + '/launchPageLog' + itNum + '.txt', logInfo, err => {
@@ -49,7 +49,7 @@ describe('access apps in launch page: ', function() {
         //     })
         // })
         
-        expect(page.getPageIdText()).toEqual('Search')
+        expect(page.getPageIdText()).equal('Search')
     })
 
 })

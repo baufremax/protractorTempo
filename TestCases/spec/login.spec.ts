@@ -4,7 +4,11 @@
 
 import { LoginPage } from '../po/login.po'
 import { LaunchPage } from '../po/launch.po'
-import { browser } from 'protractor'
+import * as protractor from 'protractor'
+import * as chai from 'chai'
+import * as chaiAsPromised from 'chai-as-promised'
+chai.use(chaiAsPromised);
+let expect = chai.expect;
 
 describe('login as a user: ', function() { 
     let page: LoginPage
@@ -23,26 +27,21 @@ describe('login as a user: ', function() {
 
     beforeEach(() => {
         page = new LoginPage()
-        // set time out longer so that we can wait for the page to load successfully.
-        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000
     })
 
     afterEach(() => {
         itNum ++
-        // recover the default value.
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
     })
 
     it('page is login page', () => {
         page.navigateTo()
-        expect<any>(page.getPageIdText()).toEqual('Login')
+        expect(page.getPageIdText()).equal('Login')
     })
 
     it('user login with wrong credentials, should stay on login page and see error msg', () => {
         page.navigateTo()
         page.Login(page.anInvalidUser)
-        expect<any>(page.getPageIdText()).toEqual('Login')
+        expect(page.getPageIdText()).equal('Login')
         
         // might need to trim space. use this.toString().replace(/^\s+|\s+$/g, ''); or something like trim().
         // expect<any>(page.getErrorMsg()).toEqual('Unknown user name or bad password') 
@@ -51,6 +50,6 @@ describe('login as a user: ', function() {
     it('user login successfully, should go to the launch page', () => {
         page.navigateTo()
         page.Login(page.aValidUser)
-        expect(page.getCurrentUrl()).toEqual(launchUrl)
+        expect(page.getCurrentUrl()).equal(launchUrl)
     })
 })

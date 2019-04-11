@@ -4,6 +4,10 @@
 
 import { PublicPage } from '../po/public.po'
 import { LoginPage } from '../po/login.po'
+import * as chai from 'chai'
+import * as chaiAsPromised from 'chai-as-promised'
+chai.use(chaiAsPromised);
+let expect = chai.expect;
 
 describe('access public page: ', function() {
    let page: PublicPage
@@ -16,12 +20,12 @@ describe('access public page: ', function() {
 
    it('when browse homepage should see the default page', () => {
       page.navigateTo()
-      expect<any>(page.getPageIdText()).toEqual('VMware Horizon')
+      expect(page.getPageIdText()).equal('VMware Horizon')
    })
 
    it('by click the access area should access to login page', () => {
       page.navigateTo()
       page.accessClient()
-      expect(page.getCurrentUrl()).toEqual(loginPage.url)
+      expect(page.getCurrentUrl()).equal(loginPage.url)
    })
 })

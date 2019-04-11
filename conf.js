@@ -3,7 +3,7 @@
  *********************************************************/
 
 exports.config = {
-   framework: 'jasmine2',
+   framework: 'mocha',
    capabilities: {
       browserName: 'chrome',
       loggingPrefs: {
