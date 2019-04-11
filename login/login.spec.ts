@@ -1,12 +1,22 @@
 import { LoginPage } from './login.po'
 import { LaunchPage } from '../launch/launch.po'
-import { browser } from 'protractor'
+import * as protractor from 'protractor'
 
 describe('login as a user: ', function() { 
     let page: LoginPage
     let originalTimeout: number
     let launchUrl: string = new LaunchPage().launchUrl
     let itNum: number = 0
+    let EC = protractor.ExpectedConditions
+    let anyTextToBePresentInElement = function(elementFinder: protractor.ElementFinder) {
+        let hasText = function() {
+          return elementFinder.getText().then(function(actualText) {
+            return actualText;
+          });
+        };
+        return EC.and(EC.presenceOf(elementFinder), hasText);
+    }
+
     beforeEach(() => {
         page = new LoginPage()
         // set time out longer so that we can wait for the page to load successfully.
@@ -28,7 +38,6 @@ describe('login as a user: ', function() {
     it('user login with wrong credentials, should stay on login page and see error msg', () => {
         page.navigateTo()
         page.Login(page.anInvalidUser)
-        browser.driver.sleep(10000)  // wait for the login failure process.
         expect<any>(page.getPageIdText()).toEqual('Login')
         
         // might need to trim space. use this.toString().replace(/^\s+|\s+$/g, ''); or something like trim().

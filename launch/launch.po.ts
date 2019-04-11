@@ -1,5 +1,6 @@
 import { browser, by, element } from 'protractor'
 import { LoginPage } from '../login/login.po'
+require('../waitReady.js')
 
 export class LaunchPage {
 
@@ -17,7 +18,12 @@ export class LaunchPage {
     }
 
     getPageIdText() {   // equals to 'Search'.
-        return element(by.css('label[for="header-search"]')).getAttribute('textContent')
+        let searchBtnElm = element(by.css('label[for="header-search"]'))
+        let idText: string
+        searchBtnElm.waitReady().then(() => {
+            idText = searchBtnElm.getAttribute('textContent').toString()
+        })
+        return idText
     }
 
     // searchItem(name: string | null) {

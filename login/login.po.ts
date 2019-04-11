@@ -1,5 +1,5 @@
-import { browser, by, element } from 'protractor';
-
+import { browser, element, by, ExpectedConditions } from 'protractor'
+import * as protractor from 'protractor'
 
 interface UserInfo {
     subject?: string,
@@ -28,10 +28,18 @@ export class LoginPage {
         password: 'ca$hc0w'
     }
 
+    anyTextToBePresentInElement(elementFinder: protractor.ElementFinder) {
+        let EC = ExpectedConditions
+        let hasText = function() {
+          return elementFinder.getText().then(function(actualText) {
+            return actualText;
+          });
+        };
+        return EC.and(EC.presenceOf(elementFinder), hasText);
+    }
+
     navigateTo() {
         browser.get(this.url)
-        // wait for the page to be loaded!!!!!!555
-        browser.driver.sleep(5000)
     }
 
     getCurrentUrl() {
@@ -41,17 +49,28 @@ export class LoginPage {
     Login(userinfo: UserInfo | null) {
         userinfo = userinfo || this.defaultUserInfo
         // ng-model = 'xx' ==> by.model('xx')
+        let EC = ExpectedConditions
+        let usernameElem = element(by.model('credential.username'))
+        let passwordElem = element(by.model('credential.password'))
+        let loginFormElem = element(by.css('[ng-click="login(loginForm)"]'))
+        // wait for the elements being visible。
+        browser.wait(EC.visibilityOf(usernameElem), 5000)
+        browser.wait(EC.visibilityOf(passwordElem), 5000)
         element(by.model('credential.username')).sendKeys(userinfo.username)
         element(by.model('credential.password')).sendKeys(userinfo.password)
-        // element(by.css('[ng-click="myFunction()"]'))
-        element(by.css('[ng-click="login(loginForm)"]')).click()
+        browser.wait(EC.elementToBeClickable(loginFormElem), 5000)
+        loginFormElem.click()
     }
 
     getPageIdText() {   // equals 'Login'
-        return element(by.css('[ng-click="login(loginForm)"]')).getText()
+        let loginFormElem = element(by.css('[ng-click="login(loginForm)"]'))
+        browser.wait(this.anyTextToBePresentInElement(loginFormElem), 5000);
+        return loginFormElem.getText()
     }
 
     getErrorMsg() {     // equals 'Unknown user name or bad password.'
-        return element(by.css('[ng-click="cancel()"]')).getText()
+        let errorMsgElem = element(by.css('[ng-click="cancel()"]'))
+        browser.wait(this.anyTextToBePresentInElement(errorMsgElem), 5000)
+        return errorMsgElem.getText()
     }
 }

@@ -40,7 +40,7 @@ browser.manage().logs().get('browser').then(function(browserLog) {
 To capture different levels of logs, change the capabilities of browser in *conf.js*: capabilities: { loggingPrefs: {'browser': 'INFO'} } to *INFO*, *DEBUG*, *WARNING*, *SEVERE* or simply *ALL*.
 ### Protractor Debugger
 see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md)
--   Add “debugger” keyword to the test case that we want to debug.
+<!-- -   Add “debugger” keyword to the test case that we want to debug.
 
     ```javascript
     it('should greet the named user', async function() {
@@ -86,7 +86,7 @@ see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/mast
 
     ![screenshot](/docs/chromeDevTool.png)
 
-
+ -->
 
 
 ## Resources
@@ -94,7 +94,7 @@ see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/mast
 * [Screenshot Plugin](https://github.com/azachar/protractor-screenshoter-plugin)
 * [Protractor Style Guide](https://www.protractortest.org/#/style-guide)
 * [Build your first tests with Protractor](https://blog.cloudboost.io/building-your-first-tests-for-angular5-with-protractor-a48dfc225a75)
-
+* [ExpectedConditions](http://www.protractortest.org/#/api?view=ProtractorExpectedConditions)
 ## Other Issues
 * [Protractor-Console](https://github.com/Updater/protractor-console) might be useful, but still don't know how to use.
 * [protractor-console-plugin](https://github.com/angular/protractor-console-plugin) is a *Chrome Only* console plugin.
