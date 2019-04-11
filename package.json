@@ -21,7 +21,7 @@
     "typescript": "^3.4.1"
   },
   "devDependencies": {
-    "protractor-cucumber-framework": "^6.1.1",
+    "protractor-console": "^3.0.0",
     "protractor-screenshoter-plugin": "^0.10.3"
   }
 }

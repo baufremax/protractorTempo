@@ -28,16 +28,18 @@ exports.config = {
   // collisions on the global namespace.
   noGlobals: false,
 
-  plugins: [{
-    package: 'protractor-screenshoter-plugin',
-    screenshotPath: './REPORTS/e2e',
-    screenshotOnExpect: 'failure+success',
-    screenshotOnSpec: 'none',
-    withLogs: true,
-    writeReportFreq: 'asap',
-    imageToAscii: 'none',
-    clearFoldersBeforeTest: true
-  }],
+  plugins: [
+    {
+      package: 'protractor-screenshoter-plugin',
+      screenshotPath: './REPORTS/e2e',
+      screenshotOnExpect: 'failure+success',
+      screenshotOnSpec: 'none',
+      withLogs: true,
+      writeReportFreq: 'asap',
+      imageToAscii: 'none',
+      clearFoldersBeforeTest: true
+    }
+  ],
 
   onPrepare: function() {
     // returning the promise makes protractor wait for the reporter config before executing tests

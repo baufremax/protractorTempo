@@ -24,6 +24,21 @@ To check the screenshot report, open *./REPORTS/e2e/index.html* in browser.
 
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
 ## Debug
+### Capture Console.log
+see usage in file *./launch/launch.spec.ts*
+```javascript
+browser.manage().logs().get('browser').then(function(browserLog) {
+    // browserLogs is an array of objects with level and message fields
+    browserLog.forEach(function(log){
+        if (log.level.value > 900) { // it's an error log
+        console.log('Browser console error!');
+        console.log(log.message);
+        }
+    })
+})
+```
+### Protractor Debugger
+see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md)
 -   Add “debugger” keyword to the test case that we want to debug.
 
     ```javascript
@@ -70,7 +85,7 @@ If there are npm or package errors, try delete *node_modules* and *package-lock.
 
     ![screenshot](/docs/chromeDevTool.png)
 
-see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md)
+
 
 
 ## Resources
@@ -78,3 +93,7 @@ see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/mast
 * [Screenshot Plugin](https://github.com/azachar/protractor-screenshoter-plugin)
 * [Protractor Style Guide](https://www.protractortest.org/#/style-guide)
 * [Build your first tests with Protractor](https://blog.cloudboost.io/building-your-first-tests-for-angular5-with-protractor-a48dfc225a75)
+
+## Other Issues
+* [Protractor-Console](https://github.com/Updater/protractor-console) might be useful, but still don't know how to use.
+* [protractor-console-plugin](https://github.com/angular/protractor-console-plugin) is a *Chrome Only* console plugin.
