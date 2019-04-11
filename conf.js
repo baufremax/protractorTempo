@@ -15,7 +15,7 @@ exports.config = {
    suites: {
       smoke: 'build/smoke/*.js',
       regression: '',
-      performance: '',
+      performance: ''
       //TODO: function
    },
 
