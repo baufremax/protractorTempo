@@ -1,3 +1,7 @@
+/*********************************************************
+ * Copyright (C) 2019 VMware, Inc. All rights reserved.
+ *********************************************************/
+
 import { LoginPage } from '../po/login.po'
 import { LaunchPage } from '../po/launch.po'
 import { browser } from 'protractor'
