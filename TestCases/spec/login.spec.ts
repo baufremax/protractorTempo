@@ -1,5 +1,5 @@
-import { LoginPage } from './login.po'
-import { LaunchPage } from '../launch/launch.po'
+import { LoginPage } from '../po/login.po'
+import { LaunchPage } from '../po/launch.po'
 import { browser } from 'protractor'
 
 describe('login as a user: ', function() { 

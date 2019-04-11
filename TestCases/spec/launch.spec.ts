@@ -1,5 +1,5 @@
-import { LoginPage } from '../login/login.po'
-import { LaunchPage } from './launch.po'
+import { LoginPage } from '../po/login.po'
+import { LaunchPage } from '../po/launch.po'
 import { browser } from 'protractor';
 
 describe('access apps in launch page: ', function() {

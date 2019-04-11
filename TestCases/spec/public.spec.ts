@@ -1,5 +1,5 @@
 import { PublicPage } from '../po/public.po'
-import { LoginPage } from '../../login/login.po'
+import { LoginPage } from '../po/login.po'
 
 describe('access public page: ', function() {
     let page: PublicPage

@@ -1,3 +1,4 @@
-TestCases/*.js
+node_modules/*
+TestCases/*/*.js
 .DS_Store
 package-lock.json

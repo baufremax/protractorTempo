@@ -1,5 +1,5 @@
 import { browser, by, element } from 'protractor'
-import { LoginPage } from '../login/login.po'
+import { LoginPage } from './login.po'
 
 export class LaunchPage {
 
