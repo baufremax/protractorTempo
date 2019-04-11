@@ -6,7 +6,7 @@
    "scripts": {
       "debug": "node --inspect-brk ./node_modules/protractor conf.js",
       "pretest": "npm run tsc",
-      "test": "protractor conf.js",
+      "test": "protractor conf.js --suite smoke",
       "tsc": "tsc",
       "webdriver-update": "webdriver-manager update --standalone=false --gecko=false"
    },
@@ -16,6 +16,7 @@
       "@types/node": "^11.13.0",
       "jasmine": "^3.3.1",
       "protractor": "^5.1.1",
+      "protractor-cli": "^1.1.1",
       "ts-node": "^8.0.3",
       "typescript": "^3.4.1"
    },

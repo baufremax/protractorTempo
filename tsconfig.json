@@ -9,7 +9,6 @@
       "outDir": "build"
    },
    "exclude": [
-      "node_modules",
-      "plugins.ts"
+      "node_modules"
    ]
 }

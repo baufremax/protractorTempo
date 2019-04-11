@@ -19,6 +19,10 @@ exports.config = {
       //TODO: function
    },
 
+   // You could set no globals to true to avoid jQuery '$' and protractor '$'
+   // collisions on the global namespace.
+   noGlobals: false,
+
    //TODO: remove this, should pass by command.
    baseUrl: 'https://10.117.161.109',
    directConnect: true,
