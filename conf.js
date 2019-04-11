@@ -13,7 +13,7 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     loggingPrefs: {
-      "driver": "INFO", 
+      "driver": "INFO",
       "browser": "INFO"
     }
   },

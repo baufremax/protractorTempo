@@ -37,6 +37,7 @@ browser.manage().logs().get('browser').then(function(browserLog) {
     })
 })
 ```
+To capture different levels of logs, change the capabilities of browser in *conf.js*: capabilities: { loggingPrefs: {'browser': 'INFO'} } to *INFO*, *DEBUG*, *WARNING*, *SEVERE* or simply *ALL*.
 ### Protractor Debugger
 see [Debugging Protractor Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md)
 -   Add “debugger” keyword to the test case that we want to debug.
