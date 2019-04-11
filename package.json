@@ -15,14 +15,15 @@
       "protractor": "^5.1.1",
       "protractor-cli": "^1.1.1",
       "ts-node": "^8.0.3",
-      "typescript": "^3.4.1"
-   },
-   "devDependencies": {
+      "typescript": "^3.4.1",
       "@types/chai": "^4.1.7",
       "@types/chai-as-promised": "^7.1.0",
       "@types/mocha": "^5.2.6",
       "chai": "^4.2.0",
       "chai-as-promised": "^7.1.1",
+      "mocha": "^6.1.2"
+   },
+   "devDependencies": {
       "protractor-console": "^3.0.0",
       "protractor-screenshoter-plugin": "^0.10.3"
    }

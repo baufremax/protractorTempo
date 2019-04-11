@@ -15,15 +15,6 @@ describe('login as a user: ', function() {
    let originalTimeout: number
    let launchUrl: string = new LaunchPage().launchUrl
    let itNum: number = 0
-   let EC = protractor.ExpectedConditions
-   let anyTextToBePresentInElement = function(elementFinder: protractor.ElementFinder) {
-      let hasText = function() {
-         return elementFinder.getText().then(function(actualText) {
-         return actualText;
-         });
-      };
-      return EC.and(EC.presenceOf(elementFinder), hasText);
-   }
 
    beforeEach(() => {
       page = new LoginPage()
