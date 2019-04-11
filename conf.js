@@ -18,7 +18,7 @@ exports.config = {
     }
   },
   specs: [
-    './launch/launch.spec.js'
+    './public/*.spec.js'
   ],
   // to get the baseUrl in protractor, use browser.baseUrl
   baseUrl: 'https://10.117.161.109',
