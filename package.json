@@ -5,7 +5,7 @@
    "author": "cn-dev-web@vmware.com",
    "scripts": {
       "debug": "node --inspect-brk ./node_modules/protractor conf.js",
-      "pretest": "npm run tsc",
+      "pretest": "npm run tsc && npm run webdriver-update",
       "test": "protractor conf.js --suite smoke",
       "tsc": "tsc",
       "webdriver-update": "webdriver-manager update --standalone=false --gecko=false"
