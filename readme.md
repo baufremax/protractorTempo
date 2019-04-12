@@ -19,7 +19,7 @@ You can run tests quickly with
 Before running, you might need to compile the typescript files into js files through
 `npm run tsc`
 
-To check the screenshot report, open *./REPORTS/e2e/index.html* in browser.
+To check the screenshot report, open *./REPORTS/screenshot/index.html* in browser.
 
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
 ## Debug
