@@ -10,22 +10,23 @@ chai.use(chaiAsPromised);
 let expect = chai.expect;
 
 describe('access public page: ', function() {
+   this.timeout(10000) // all tests in this suite get 10 seconds before timeout
    let page: PublicPage
    let loginPage: LoginPage
 
-   beforeEach(() => {
+   beforeEach(function() {
       page = new PublicPage()
       loginPage = new LoginPage()
    })
 
-   it('when browse homepage should see the default page', () => {
+   it('when browse homepage should see the default page', function() {
       page.navigateTo()
-      expect(page.getPageIdText()).equal('VMware Horizon')
+      expect(page.getPageIdText()).to.eventually.equal('VMware Horizon')
    })
 
-   it('by click the access area should access to login page', () => {
+   it('by click the access area should access to login page', function() {
       page.navigateTo()
       page.accessClient()
-      expect(page.getCurrentUrl()).equal(loginPage.url)
+      expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
    })
 })

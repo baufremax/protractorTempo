@@ -11,6 +11,7 @@ chai.use(chaiAsPromised);
 let expect = chai.expect;
 
 describe('access apps in launch page: ', function() {
+   this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LaunchPage
    let loginPage: LoginPage
    let originalTimeout: number
@@ -18,19 +19,19 @@ describe('access apps in launch page: ', function() {
    const baseLogUrl: string = './REPORTS/log'
    let itNum: number = 0
 
-   beforeEach(() => {
+   beforeEach(function() {
       page = new LaunchPage()
    })
 
-   afterEach(() => {
+   afterEach(function() {
       itNum ++
    })
 
-   it('page is a launch page after login', () => {
+   it('page is a launch page after login', function() {
       debugger
       page.navigateTo()
       browser.manage().logs().get('browser').then(function(browserLog) {
-         expect(browserLog.length).equal(0)
+         expect(browserLog.length).to.equal(0)
          // console.log('log: ' + require('util').inspect(browserLog));
          const logInfo: string = 'log: ' + require('util').inspect(browserLog)
          fs.writeFile(baseLogUrl + '/launchPageLog' + itNum + '.txt', logInfo, err => {
@@ -49,7 +50,7 @@ describe('access apps in launch page: ', function() {
       //     })
       // })
       
-      expect(page.getPageIdText()).equal('Search')
+      expect(page.getPageIdText()).to.eventually.equal('Search')
    })
 
 })

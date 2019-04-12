@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor'
+import { browser, by, element, ExpectedConditions } from 'protractor'
 import { LoginPage } from './login.po'
 
 export class LaunchPage {
@@ -17,11 +17,11 @@ export class LaunchPage {
    }
 
    getPageIdText() {   // equals to 'Search'.
+      let EC = ExpectedConditions
       let searchBtnElm = element(by.css('label[for="header-search"]'))
       let idText: string
-      searchBtnElm.waitReady().then(() => {
-         idText = searchBtnElm.getAttribute('textContent').toString()
-      })
+      browser.wait(EC.visibilityOf(searchBtnElm), 5000)
+      idText = searchBtnElm.getAttribute('textContent').toString()
       return idText
    }
 
