@@ -11,7 +11,7 @@ Or you can change the *directConnect* in *conf.js* to *true* which will enable c
 
 ## Test
 Run the tests with
-`npm run test` which will automatically call `npm run tsc && npm run webdriver-update`
+`npm run test` which will automatically call `npm run tsc` before testing.
 
 You can run tests quickly with
 `protractor conf.js`

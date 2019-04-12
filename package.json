@@ -8,7 +8,7 @@
       "pretest": "npm run tsc",
       "test": "protractor conf.js --suite smoke",
       "tsc": "tsc",
-      "webdriver-update": "webdriver-manager update --standalone=false --gecko=false"
+      "webdriver-update": "npx webdriver-manager update --standalone=false --gecko=false"
    },
    "dependencies": {
       "@types/node": "^11.13.0",
