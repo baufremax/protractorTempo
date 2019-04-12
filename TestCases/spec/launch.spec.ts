@@ -14,7 +14,6 @@ describe('access apps in launch page: ', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LaunchPage
    let loginPage: LoginPage
-   let originalTimeout: number
    const fs = require('fs')
    const baseLogUrl: string = './REPORTS/log'
    let itNum: number = 0

@@ -13,7 +13,6 @@ let expect = chai.expect;
 describe('login as a user: ', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LoginPage
-   let originalTimeout: number
    let launchUrl: string = new LaunchPage().launchUrl
    let itNum: number = 0
 

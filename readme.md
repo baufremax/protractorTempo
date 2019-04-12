@@ -19,6 +19,13 @@ You can run tests quickly with
 Before running, you might need to compile the typescript files into js files through
 `npm run tsc`
 
+Protractor has default feature where you are allowed to pass some parameters from command line. For e.g.
+`protractor conf.js --baseUrl <UrlToTest> --suite <SuiteName>`
+can overwrite the *baseUrl* set in *conf.js*.
+You can store different urls in *conf.js - onPrepare* by adding cases in switch, and then pass *--**params**.baseUrl* to command. For e.g
+`protractor conf.js --params.baseUrl firsturl --suite smoke`
+will overwrite the baseUrl with the firsturl set in *conf.js*.
+
 To check the screenshot report, open *./REPORTS/screenshot/index.html* in browser.
 
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
