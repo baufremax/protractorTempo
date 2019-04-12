@@ -24,7 +24,7 @@
       "mocha": "^6.1.2"
    },
    "devDependencies": {
-      "protractor-console": "^3.0.0",
-      "protractor-screenshoter-plugin": "^0.10.3"
+      "mochawesome-screenshots": "^1.6.0",
+      "protractor-console": "^3.0.0"
    }
 }

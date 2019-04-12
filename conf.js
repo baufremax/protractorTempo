@@ -27,16 +27,21 @@ exports.config = {
    baseUrl: 'https://10.117.161.109',
    directConnect: true,
 
-   plugins: [
-      {
-         package: 'protractor-screenshoter-plugin',
-         screenshotPath: './REPORTS/e2e',
-         screenshotOnExpect: 'failure+success',
-         screenshotOnSpec: 'none',
-         withLogs: true,
-         writeReportFreq: 'asap',
-         imageToAscii: 'none',
-         clearFoldersBeforeTest: true
-      }
-   ]
+   mochaOpts: {
+      reporter: 'mochawesome-screenshots',
+      reporterOptions: {
+         reportDir: './REPORTS/screenshot',
+         reportName: 'index',
+         reportTitle: 'screenshot e2e report',
+         reportPageTitle: 'screenshot-e2e',
+         takePassedScreenshot: false,
+         clearOldScreenshots: true,
+         shortScrFileNames: false,
+         jsonReport: false,
+         multiReport: false
+      },
+      timeout: 600000
+   },
+   plugins: []
+
 };
