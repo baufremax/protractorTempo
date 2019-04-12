@@ -103,6 +103,7 @@ If you need to log data to report or custom screenshots to report, see [mochawes
 * [Build your first tests with Protractor](https://blog.cloudboost.io/building-your-first-tests-for-angular5-with-protractor-a48dfc225a75)
 * [ExpectedConditions](http://www.protractortest.org/#/api?view=ProtractorExpectedConditions)
 * [chai-as-promised](https://www.chaijs.com/plugins/chai-as-promised/)
+* [Protractor Mock](https://github.com/atecarlos/protractor-http-mock)
 ## Other Issues
 * [Protractor-Console](https://github.com/Updater/protractor-console) might be useful, but still don't know how to use.
 * [protractor-console-plugin](https://github.com/angular/protractor-console-plugin) is a *Chrome Only* console plugin.

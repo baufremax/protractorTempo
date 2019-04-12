@@ -7,8 +7,8 @@ import { LaunchPage } from '../po/launch.po'
 import { browser } from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-chai.use(chaiAsPromised);
-let expect = chai.expect;
+chai.use(chaiAsPromised)
+let expect = chai.expect
 
 describe('access apps in launch page: ', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout

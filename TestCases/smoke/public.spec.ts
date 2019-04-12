@@ -6,8 +6,10 @@ import { PublicPage } from '../po/public.po'
 import { LoginPage } from '../po/login.po'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-chai.use(chaiAsPromised);
-let expect = chai.expect;
+import { browser } from 'protractor';
+import { beforeEach } from 'mocha';
+chai.use(chaiAsPromised)
+let expect = chai.expect
 
 describe('access public page: ', function() {
    this.timeout(10000) // all tests in this suite get 10 seconds before timeout
