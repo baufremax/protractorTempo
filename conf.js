@@ -23,26 +23,21 @@ exports.config = {
    // collisions on the global namespace.
    noGlobals: false,
 
-   baseUrl: 'https://10.117.161.109',
-
    params: {
-      baseUrl: '',
-      url: ''
+      baseUrl: ''
    },
 
    onPrepare: function(){
       switch(browser.params.baseUrl) {
          case 'firsturl':
-            browser.params.url = 'http://www.firsturl.com'; //replace firsturl with your actual url
-            break;
+            browser.baseUrl = 'http://www.firsturl.com'  //replace firsturl with your actual url
+            break
          case 'secondurl':
-            browser.params.url = 'http://www.secondurl.com';
-            break;
-         // no default. if params.baseUrl is '', we should use baseUrl rather than params.baseUrl
-      }
-      if (browser.params.baseUrl) {
-         // if params.baseUrl is passed through command, then replace baseUrl with params.url.
-         browser.baseUrl = browser.params.url
+            browser.baseUrl = 'http://www.secondurl.com'
+            break
+         default:
+            browser.baseUrl = 'https://10.117.161.109'
+            break
       }
    },
 
