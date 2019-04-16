@@ -21,7 +21,6 @@
       "mocha": "^6.1.2",
       "protractor": "^5.1.1",
       "protractor-cli": "^1.1.1",
-      "protractor-http-mock": "^0.10.0",
       "ts-node": "^8.0.3",
       "typescript": "^3.4.1"
    },

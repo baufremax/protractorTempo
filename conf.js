@@ -27,7 +27,7 @@ exports.config = {
       baseUrl: ''
    },
 
-   baseUrl: 'https://10.117.161.109',
+   baseUrl: 'https://10.117.161.109',  // default value for baseUrl.
 
    onPrepare: function(){
       switch(browser.params.baseUrl) {
@@ -45,19 +45,9 @@ exports.config = {
          // if params.baseUrl is valid, use params.baseUrl rather than baseUrl.
          browser.baseUrl = browser.params.baseUrl
       }
-
-      require('protractor-http-mock').config = {
-         rootDirectory: __dirname, // default value: process.cwd()
-         protractorConfig: 'conf.js' // default value: 'protractor-conf.js'
-      }
    },
 
    directConnect: true,
-
-   mocks: {
-      default: [], // default mocks to load for every test
-      dir: 'TestCases/mocks' // the name of the folder where your mocks will reside. default value: 'mocks'
-   },
 
    mochaOpts: {
       reporter: 'mochawesome-screenshots',
