@@ -27,17 +27,23 @@ exports.config = {
       baseUrl: ''
    },
 
+   baseUrl: 'https://10.117.161.109',
+
    onPrepare: function(){
       switch(browser.params.baseUrl) {
          case 'firsturl':
-            browser.baseUrl = 'http://www.firsturl.com'  //replace firsturl with your actual url
+            browser.params.baseUrl = 'http://www.firsturl.com'  //replace firsturl with your actual url
             break
          case 'secondurl':
-            browser.baseUrl = 'http://www.secondurl.com'
+            browser.params.baseUrl = 'http://www.secondurl.com'
             break
-         default:
-            browser.baseUrl = 'https://10.117.161.109'
+         default: // set params.baseUrl to empty string, so it will not change baseUrl.
+            browser.params.baseUrl = ''
             break
+      }
+      if (browser.params.baseUrl) {
+         // if params.baseUrl is valid, use params.baseUrl rather than baseUrl.
+         browser.baseUrl = browser.params.baseUrl
       }
 
       require('protractor-http-mock').config = {
