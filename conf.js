@@ -39,9 +39,19 @@ exports.config = {
             browser.baseUrl = 'https://10.117.161.109'
             break
       }
+
+      require('protractor-http-mock').config = {
+         rootDirectory: __dirname, // default value: process.cwd()
+         protractorConfig: 'conf.js' // default value: 'protractor-conf.js'
+      }
    },
 
    directConnect: true,
+
+   mocks: {
+      default: [], // default mocks to load for every test
+      dir: 'TestCases/mocks' // the name of the folder where your mocks will reside. default value: 'mocks'
+   },
 
    mochaOpts: {
       reporter: 'mochawesome-screenshots',
@@ -58,6 +68,6 @@ exports.config = {
       },
       timeout: 600000
    },
-   plugins: []
 
+   plugins: []
 };
