@@ -28,16 +28,6 @@ export class LoginPage {
       password: 'ca$hc0w'
    }
 
-   anyTextToBePresentInElement(elementFinder: protractor.ElementFinder) {
-      let EC = ExpectedConditions
-      let hasText = function() {
-         return elementFinder.getText().then(function(actualText) {
-         return actualText;
-         });
-      };
-      return EC.and(EC.presenceOf(elementFinder), hasText);
-   }
-
    navigateTo() {
       browser.get(this.url)
    }
@@ -64,13 +54,22 @@ export class LoginPage {
 
    getPageIdText() {   // equals 'Login'
       let loginFormElem = element(by.css('[ng-click="login(loginForm)"]'))
-      browser.wait(this.anyTextToBePresentInElement(loginFormElem), 5000);
+      let EC = ExpectedConditions
+      browser.wait(EC.visibilityOf(loginFormElem), 5000);
       return loginFormElem.getText()
    }
 
    getErrorMsg() {     // equals 'Unknown user name or bad password.'
       let errorMsgElem = element(by.css('[ng-click="cancel()"]'))
-      browser.wait(this.anyTextToBePresentInElement(errorMsgElem), 5000)
+      let EC = ExpectedConditions
+      browser.wait(EC.visibilityOf(errorMsgElem), 5000)
       return errorMsgElem.getText()
+   }
+
+   getDomainList() {
+      let EC = ExpectedConditions
+      let domainListButton = element(by.id('domain-button'))
+      browser.wait(EC.presenceOf(domainListButton), 5000)
+      return domainListButton
    }
 }

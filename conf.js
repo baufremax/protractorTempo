@@ -14,6 +14,7 @@ exports.config = {
 
    suites: {
       smoke: 'build/smoke/*.js',
+      cookie: 'build/spec/domainList.spec.js',
       regression: '',
       performance: ''
       //TODO: function
@@ -27,12 +28,12 @@ exports.config = {
       baseUrl: ''
    },
 
-   baseUrl: 'https://10.117.161.109',  // default value for baseUrl.
+   baseUrl: 'https://10.117.163.92',  // default value for baseUrl.
 
    onPrepare: function(){
       switch(browser.params.baseUrl) {
          case 'firsturl':
-            browser.params.baseUrl = 'http://www.firsturl.com'  //replace firsturl with your actual url
+            browser.params.baseUrl = 'https://10.117.161.109'  //replace firsturl with your actual url
             break
          case 'secondurl':
             browser.params.baseUrl = 'http://www.secondurl.com'

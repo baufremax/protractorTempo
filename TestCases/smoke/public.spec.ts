@@ -12,7 +12,7 @@ chai.use(chaiAsPromised)
 let expect = chai.expect
 
 describe('access public page: ', function() {
-   this.timeout(10000) // all tests in this suite get 10 seconds before timeout
+   this.timeout(30000) // all tests in this suite get 10 seconds before timeout
    let page: PublicPage
    let loginPage: LoginPage
 
