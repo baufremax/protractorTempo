@@ -49,7 +49,7 @@ describe('access apps in launch page: ', function() {
       //     })
       // })
       
-      expect(page.getPageIdText()).to.eventually.equal('Search')
+      expect(page.getPageIdText()).to.eventually.equal('Log Out')
    })
 
 })

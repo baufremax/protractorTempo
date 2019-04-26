@@ -16,13 +16,11 @@ export class LaunchPage {
       this.loginPage.Login(this.loginPage.aValidUser)
    }
 
-   getPageIdText() {   // equals to 'Search'.
+   getPageIdText() {   // equals to 'Log Out'.
       let EC = ExpectedConditions
-      let searchBtnElm = element(by.css('label[for="header-search"]'))
-      let idText: string
-      browser.wait(EC.visibilityOf(searchBtnElm), 5000)
-      idText = searchBtnElm.getAttribute('textContent').toString()
-      return idText
+      let logoutBtn = element(by.id('logoutBtn'))
+      browser.wait(EC.visibilityOf(logoutBtn), 5000)
+      return logoutBtn.getText()
    }
 
    // searchItem(name: string | null) {
