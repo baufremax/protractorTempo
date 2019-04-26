@@ -9,7 +9,7 @@ import * as chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
-describe('login as a user: ', function() {
+describe('test for domainlist cookie: ', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LoginPage
 
