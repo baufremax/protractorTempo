@@ -25,7 +25,7 @@ describe('test for domainlist cookie: ', function() {
    afterEach(function() {
       // this will NOT delete httpOnly cookies.
       protractor.browser.manage().deleteAllCookies()
-  })
+   })
 
    it ('domainList is invisible when cookie not set', function() {
       page.navigateTo()
