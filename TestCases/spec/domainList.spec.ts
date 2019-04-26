@@ -22,20 +22,23 @@ describe('test for domainlist cookie: ', function() {
       page = new LoginPage()
    })
 
+   afterEach(function() {
+      // this will NOT delete httpOnly cookies.
+      protractor.browser.manage().deleteAllCookies()
+  })
+
    it ('domainList is invisible when cookie not set', function() {
       page.navigateTo()
-      expect(page.getDomainList().isDisplayed()).to.eventually.be.false
-      // protractor.browser.sleep(3000000)
-      // protractor.browser.manage().getCookie('TestCase').then(function(cookie) {
-      //    console.log('well... ' + cookie.name + ' ' + cookie.value)
-      // })
+      let domainListButton = page.getDomainList()
+      expect(domainListButton.isDisplayed()).to.eventually.be.false
    })
 
    it('domainList is visible when set cookie', function() {
+      this.retries(2)   // retry two times until success.
       page.navigateTo()
       protractor.browser.manage().addCookie(cookie)
-      expect(page.getDomainList().isDisplayed()).to.eventually.be.true
-      protractor.browser.manage().deleteCookie(cookie.name)
+      let domainListButton = page.getDomainList()
+      expect(domainListButton.isDisplayed()).to.eventually.be.true
    })
 
 })
