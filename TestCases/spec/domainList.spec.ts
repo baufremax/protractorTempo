@@ -15,7 +15,7 @@ describe('test for domainlist cookie: ', function() {
 
    let cookie = {
       name: 'TestCase',
-      value: 'domainListOn'
+      value: '1001-0001'   // 1001 is for DomainList test.
    }
 
    beforeEach(function() {
