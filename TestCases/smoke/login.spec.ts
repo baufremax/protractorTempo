@@ -11,7 +11,7 @@ import * as chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
-describe('login as a user: ', function() {
+describe('[1003] login as a user: ', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LoginPage
    let launchPage: LaunchPage
@@ -25,14 +25,16 @@ describe('login as a user: ', function() {
    afterEach(function() {
       // this will NOT delete httpOnly cookies.
       protractor.browser.manage().deleteAllCookies()
+      protractor.browser.executeScript('window.sessionStorage.clear();');
+      protractor.browser.executeScript('window.localStorage.clear();');
    })
 
-   it('page is login page', function() {
+   it('[1003-0001] page is login page', function() {
       page.navigateTo()
       expect(page.getPageIdText()).to.eventually.equal('Login')
    })
 
-   it('user login with wrong credentials, should stay on login page and see error msg', function() {
+   it('[1003-0002] user login with wrong credentials, should stay on login page and see error msg', function() {
       page.navigateTo()
       let cookie = cookieSandbox.getLoginFailCookie()
       protractor.browser.manage().addCookie(cookie)
@@ -40,13 +42,13 @@ describe('login as a user: ', function() {
       expect(page.getPageIdText()).to.eventually.equal('Login')
    })
 
-   it('user login successfully, should go to the launch page', function() {
+   it('[1003-0003] user login successfully, should go to the launch page', function() {
       page.navigateTo()
       page.Login(page.aValidUser)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 
-   it('user login failures reach 3 times, should pop up error', function() {
+   it('[1003-0004] user login failures reach 3 times, should pop up error', function() {
       let cookie = cookieSandbox.getLoginFailCookie()
       for (let i = 0; i < 3; ++i) {
          page.navigateTo()

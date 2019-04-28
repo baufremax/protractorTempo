@@ -23,6 +23,12 @@ export class LaunchPage {
       return logoutBtn.getText()
    }
 
+   logOut() {
+      let EC = ExpectedConditions
+      let logoutBtn = element(by.id('logoutBtn'))
+      browser.wait(EC.visibilityOf(logoutBtn), 5000)
+      logoutBtn.click()
+   }
    // searchItem(name: string | null) {
    //     name = name || this.defaultItem
    //     element(by.model('header.search')).sendKeys(name)
