@@ -64,4 +64,25 @@ describe('[1003] login as a user: ', function() {
       expect(page.getNewPasswordElement().isDisplayed()).to.eventually.equal(true)
       expect(page.getConfirmPasswordElement().isDisplayed()).to.eventually.equal(true)
    })
+
+   it('[1003-0006] RADIUS SecurID 2-Factor Authentication is shown.', function() {
+      Util.setCookie('1003-0006', '0001');
+      page.navigateTo()
+      let secureUserName = page.getSecurUsernameElement()
+      let passcode = page.getPasscodeElement()
+      expect(secureUserName.isDisplayed()).to.eventually.equal(true)
+      expect(passcode.isDisplayed()).to.eventually.equal(true)
+   })
+
+   it('[1003-0007] RADIUS SecurID 2-Factor Authentication failed with unkown user', function() {
+      //reuse the cookie set for 1003-0006
+      Util.setCookie('1003-0006', '0001');
+      page.navigateTo()
+      page.RADISLogin(page.aValidUser)
+      let passcode = page.getPasscodeElement()
+      let btn = page.getLoginButtonBtn()
+      expect(passcode.isDisplayed()).to.eventually.equal(true)
+      expect(btn.getText()).to.eventually.equal('Continue')
+      expect(page.getLogonHint().getText()).to.eventually.equal('Please enroll at https://api-d987d56d.duosecurity.com/portal?code=fdf6c930fd9cfb74&akey=DA0V9XJXLZI2OVKGZIWO')
+   })
 })

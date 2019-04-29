@@ -50,6 +50,15 @@ export class LoginPage {
       loginFormElem.click()
    }
 
+   RADISLogin(userinfo: UserInfo | null) {
+      let secureUserName = this.getSecurUsernameElement()
+      let passcode = this.getPasscodeElement()
+      let btn = this.getSecurLoginButton()
+      secureUserName.sendKeys(userinfo.username)
+      passcode.sendKeys(userinfo.password)
+      btn.click()
+   }
+
    getPageIdText() {   // equals 'Login'
       let loginFormElem = Util.wait(element(by.css('[ng-click="login(loginForm)"]')))
       return loginFormElem.getText()
@@ -71,17 +80,34 @@ export class LoginPage {
    }
 
    getOldPasswordElement() {
-      let e = Util.wait(element(by.id('oldpassword')))
-      return e
+      return Util.wait(element(by.id('oldpassword')))
    }
 
    getNewPasswordElement() {
-      let e = Util.wait(element(by.id('newpassword1')))
-      return e
+      return Util.wait(element(by.id('newpassword1')))
    }
 
    getConfirmPasswordElement() {
-      let e = Util.wait(element(by.id('newpassword2')))
-      return e
+      return Util.wait(element(by.id('newpassword2')))
+   }
+
+   getSecurUsernameElement() {
+      return Util.wait(element(by.id('securUsername')))
+   }
+
+   getPasscodeElement() {
+      return Util.wait(element(by.id('passcode')))
+   }
+
+   getSecurLoginButton() {
+      return Util.wait(element(by.id('securLoginButton')))
+   }
+
+   getLoginButtonBtn() {
+      return Util.wait(element(by.id('loginButton')))
+   }
+
+   getLogonHint() {
+      return Util.wait(element(by.className('ui-login-hint-text')))
    }
 }

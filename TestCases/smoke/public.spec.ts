@@ -2,7 +2,9 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { PublicPage, LoginPage } from '../po/module'
+import { PublicPage, LoginPage, PreLogonPage } from '../po/module'
+import { Util} from '../helper/module'
+
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
 import { beforeEach } from 'mocha';
@@ -28,5 +30,15 @@ describe('[1000] access public page: ', function() {
       page.navigateTo()
       page.accessClient()
       expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
+   })
+
+   it('[1000-0003] Verify pre-login dialog box can be shown as expected', function() {
+      page.navigateTo()
+      Util.setCookie('1000-0006');
+      page.accessClient()
+      let preLogOnPage = new PreLogonPage()
+      expect(preLogOnPage.getAcceptDisclaimerBtn().isDisplayed()).to.eventually.equal(true)
+      expect(preLogOnPage.getCancelDisclaimerBtn().isDisplayed()).to.eventually.equal(true)
+      expect(preLogOnPage.getDisclaimerText()).to.eventually.equal("The alpaca (Vicugna pacos) is a species of South American camelid. It is similar to, and often confused with, the llama. However, alpacas are often noticeably smaller than llamas. The two animals are closely related and can successfully cross-breed. Alpacas and llamas are also closely related to the vicuña, which is believed to be the alpaca's wild ancestor, and to the guanaco. There are two breeds of alpaca: the Suri alpaca and the Huacaya alpaca.")
    })
 })
