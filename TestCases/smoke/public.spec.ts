@@ -2,10 +2,9 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { PublicPage, LoginPage } from '../po/po'
+import { PublicPage, LoginPage } from '../po/module'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-import { browser } from 'protractor';
 import { beforeEach } from 'mocha';
 chai.use(chaiAsPromised)
 let expect = chai.expect

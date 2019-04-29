@@ -2,9 +2,8 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { LoginPage, LaunchPage } from '../po/po'
-import { CookieSandbox } from '../cookieSandbox'
-import { Util } from '../util'
+import { LoginPage, LaunchPage } from '../po/module'
+import { CookieSandbox, Util } from '../helper/module'
 import * as protractor from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
