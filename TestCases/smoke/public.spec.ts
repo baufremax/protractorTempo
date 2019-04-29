@@ -2,8 +2,7 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { PublicPage } from '../po/public.po'
-import { LoginPage } from '../po/login.po'
+import { PublicPage, LoginPage } from '../po/po'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
 import { browser } from 'protractor';

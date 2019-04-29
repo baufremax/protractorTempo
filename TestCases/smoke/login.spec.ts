@@ -2,8 +2,8 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { LoginPage } from '../po/login.po'
-import { LaunchPage } from '../po/launch.po'
+import { LoginPage, LaunchPage } from '../po/po'
+import { Util } from '../util'
 import { CookieSandbox } from '../cookieSandbox'
 import * as protractor from 'protractor'
 import * as chai from 'chai'
@@ -23,10 +23,7 @@ describe('[1003] login as a user: ', function() {
    })
 
    afterEach(function() {
-      // this will NOT delete httpOnly cookies.
-      protractor.browser.manage().deleteAllCookies()
-      protractor.browser.executeScript('window.sessionStorage.clear();');
-      protractor.browser.executeScript('window.localStorage.clear();');
+      Util.clearCookie()
    })
 
    it('[1003-0001] page is login page', function() {
@@ -61,4 +58,12 @@ describe('[1003] login as a user: ', function() {
       }
       expect(page.getExceedAttempErr()).to.eventually.equal('Maximum login attempts exceeded.')
    })
+
+
+//   it('[1003-0005] Verify authentication with policy that password must change at first logon.', function() {
+//      let cookie = cookieSandbox.getFirstLogonUserCookie()
+//      page.navigateTo()
+//      page.Login(page.defaultUserInfo)
+//      expect(page.getExceedAttempErr()).to.eventually.equal('Maximum login attempts exceeded.')
+//   })
 })

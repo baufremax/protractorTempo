@@ -20,5 +20,8 @@ export class CookieSandbox {
       caseNum = caseNum || '0001'
       return createCookie('1002', caseNum)
    }
-   
+
+   getFirstLogonUserCookie(caseNum?: string) {
+      caseNum = caseNum || '1003-0005'
+   }
 }

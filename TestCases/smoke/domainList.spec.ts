@@ -2,9 +2,9 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { LoginPage } from '../po/login.po'
-import { LaunchPage } from '../po/launch.po'
+import { LoginPage, LaunchPage } from '../po/po'
 import { CookieSandbox } from '../cookieSandbox'
+import { Util } from '../util'
 import * as protractor from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
@@ -23,21 +23,18 @@ describe('[1002] test for domainlist cookie: ', function() {
    })
 
    afterEach(function() {
-      // this will NOT delete httpOnly cookies.
-      protractor.browser.manage().deleteAllCookies()
-      protractor.browser.executeScript('window.sessionStorage.clear();');
-      protractor.browser.executeScript('window.localStorage.clear();');
+      Util.clearCookie()
    })
 
-   it ('[1002-0001] domainList is invisible when cookie not set', function() {
+   it ('[1002-0001] domainList is visible when clientHideDomainList = true', function() {
       page.navigateTo()
       let domainListButton = page.getDomainList()
-      expect(domainListButton.isDisplayed()).to.eventually.be.false
+      expect(domainListButton.isDisplayed()).to.eventually.be.true
       page.Login(page.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 
-   it('[1002-0001] domainList is visible when set cookie', function() {
+   it('[1002-0001] domainList is visible when clientHideDomainList = false', function() {
       let cookie = cookieSandbox.getDomainListCookie()
       page.navigateTo()
       protractor.browser.manage().addCookie(cookie)
@@ -46,5 +43,4 @@ describe('[1002] test for domainlist cookie: ', function() {
       page.Login(page.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
-
 })
