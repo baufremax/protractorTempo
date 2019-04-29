@@ -2,6 +2,7 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
+import { element, by } from 'protractor'
 import { LoginPage, LaunchPage } from '../po/module'
 import {Util } from '../helper/module'
 import * as chai from 'chai'
@@ -24,10 +25,10 @@ describe('[1002] test for LoginPage: ', function() {
    })
 
    it ('[1002-0001] domainList is invisible when clientHideDomainList = true', function() {
-      Util.setCookie('1002-0001')
+      this.retries(2)
       page.navigateTo()
-      let domainListButton = page.getDomainList()
-      expect(domainListButton.isDisplayed()).to.eventually.be.true
+      Util.setCookie('1002-0001')
+      expect(element(by.id('domain-button')).isPresent()).to.become(false);
       page.Login(page.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
