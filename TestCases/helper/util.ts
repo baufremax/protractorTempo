@@ -1,7 +1,7 @@
 import { browser, by, element, ElementFinder, ExpectedConditions } from 'protractor'
 
 export class Util {
-   static wait(o: ElementFinder, timeout: number = 5000) : ElementFinder {
+   static wait(o: ElementFinder, timeout: number = 10000) : ElementFinder {
       let EC = ExpectedConditions
       browser.wait(EC.visibilityOf(o), timeout)
       return o
