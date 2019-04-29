@@ -70,6 +70,18 @@ export class LoginPage {
       return exceedAttempErr.getText()
    }
 
-   getChangePassWordUI() {
+   getOldPasswordElement() {
+      let e = Util.wait(element(by.id('oldpassword')))
+      return e
+   }
+
+   getNewPasswordElement() {
+      let e = Util.wait(element(by.id('newpassword1')))
+      return e
+   }
+
+   getConfirmPasswordElement() {
+      let e = Util.wait(element(by.id('newpassword2')))
+      return e
    }
 }

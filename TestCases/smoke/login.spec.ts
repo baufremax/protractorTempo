@@ -56,11 +56,12 @@ describe('[1003] login as a user: ', function() {
       expect(page.getExceedAttempErr()).to.eventually.equal('Maximum login attempts exceeded.')
    })
 
-
-//   it('[1003-0005] Verify authentication with policy that password must change at first logon.', function() {
-//      let cookie = cookieSandbox.getFirstLogonUserCookie()
-//      page.navigateTo()
-//      page.Login(page.defaultUserInfo)
-//      expect(page.getExceedAttempErr()).to.eventually.equal('Maximum login attempts exceeded.')
-//   })
+   it('[1003-0005] Verify authentication with policy that password must change at first logon.', function() {
+      page.navigateTo()
+      Util.setCookie('1003-0005');
+      page.Login(page.defaultUserInfo)
+      expect(page.getOldPasswordElement().isDisplayed()).to.eventually.equal(true)
+      expect(page.getNewPasswordElement().isDisplayed()).to.eventually.equal(true)
+      expect(page.getConfirmPasswordElement().isDisplayed()).to.eventually.equal(true)
+   })
 })
