@@ -24,16 +24,16 @@ export class LaunchPage {
    }
 
    getItemInvisible() {
-      let item = Util.waitInvisible(element(by.class('ui-btn')))
+      let item = Util.waitInvisible(element(by.className('ui-btn')))
       return item
    }
 
    getItem(itemName: string) {
-      let item = Util.wait(element.all(by.class('ui-desktop-name').filter(function(elem) {
+      let item = Util.wait(element.all(by.className('ui-desktop-name')).filter(function(elem) {
          return elem.getText().then(function(itemText) {
             return itemText === itemName
          })
-      })).first())
+      }).first())
       return item
    }
    getPageIdText() {    // equals 'Log Out'
