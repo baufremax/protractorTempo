@@ -1,6 +1,7 @@
 import { browser, by, element, ExpectedConditions } from 'protractor'
 import { Util } from '../helper/util'
 import { LoginPage } from './login.po'
+import { monitorEventLoopDelay } from 'perf_hooks';
 
 export class LaunchPage {
 
@@ -13,6 +14,28 @@ export class LaunchPage {
       this.loginPage.Login(this.loginPage.aValidUser)
    }
 
+   getCurrentUrl() {
+      return browser.getCurrentUrl()
+   }
+
+   searchItem(item: string) {
+      let searchBar = Util.wait(element(by.id('header-search')))
+      searchBar.sendKeys(item)
+   }
+
+   getItemInvisible() {
+      let item = Util.waitInvisible(element(by.class('ui-btn')))
+      return item
+   }
+
+   getItem(itemName: string) {
+      let item = Util.wait(element.all(by.class('ui-desktop-name').filter(function(elem) {
+         return elem.getText().then(function(itemText) {
+            return itemText === itemName
+         })
+      })).first())
+      return item
+   }
    getPageIdText() {    // equals 'Log Out'
       let logoutBtn = Util.wait(element(by.id('logoutBtn')))
       return logoutBtn.getText()
@@ -41,6 +64,16 @@ export class LaunchPage {
    logOut() {
       let logoutBtn = Util.wait(element(by.id('logoutBtn')))
       logoutBtn.click()
+   }
+
+   confirmLogOut() {
+      let confirmBtn = Util.wait(element(by.id('okDialogBtn')))
+      confirmBtn.click()
+   }
+
+   cancelLogOut() {
+      let cancelBtn = Util.wait(element(by.id('cancelDialogBtn')))
+      cancelBtn.click()
    }
 
    showAll() {

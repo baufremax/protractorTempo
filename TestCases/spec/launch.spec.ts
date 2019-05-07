@@ -17,19 +17,13 @@ describe('access apps in launch page: ', function() {
    let loginPage: LoginPage
    const fs = require('fs')
    const baseLogUrl: string = './REPORTS/log'
-   let itNum: number = 0
 
    beforeEach(function() {
       page = new LaunchPage()
-   })
-
-   afterEach(function() {
-      itNum ++
+      page.navigateTo()
    })
 
    it('page is a launch page after login', function() {
-      debugger
-      page.navigateTo()
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
       // method to get logging info: 
       /* browser.manage().logs().get('browser').then(function(browserLog) {
@@ -57,7 +51,6 @@ describe('access apps in launch page: ', function() {
    })
 
    it('setting panel is clickable and closable', function() {
-      page.navigateTo()
       page.showSettings()
       expect(page.getSettingInfo()).to.eventually.equal('Settings')
       page.closeSettings()
@@ -65,12 +58,32 @@ describe('access apps in launch page: ', function() {
    })
 
    it('help panel is clickable and closable', function() {
-      page.navigateTo()
       page.showHelp()
       expect(page.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
       page.closeHelp()
       expect(page.getHelpInvisible().isPresent()).to.become(false)
    })
 
-   
+   it('logout works well', function() {
+      page.logOut()
+      page.confirmLogOut()
+      loginPage = new LoginPage()
+      expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
+   })
+
+   it('logout can be canceled', function() {
+      page.logOut()
+      page.cancelLogOut()
+      expect(page.getPageIdText()).to.eventually.equal('Log Out')
+   })
+
+   it('search bar is available and no item is present when type in strange word', function() {
+      page.searchItem('$')
+      expect(page.getItemInvisible().isPresent()).to.become(false)
+   })
+
+   it('search bar works well when type in available name', function() {
+      page.searchItem('win2019')
+      expect(page.getItem('win2019').isPresent()).to.become(true)
+   })
 })
