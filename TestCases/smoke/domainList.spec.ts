@@ -28,7 +28,7 @@ describe('[1002] test for LoginPage: ', function() {
       this.retries(2)
       page.navigateTo()
       Util.setCookie('1002-0001')
-      expect(element(by.id('domain-button')).isPresent()).to.become(false);
+      expect(page.getDomainListInvisible().isPresent()).to.become(false)
       page.Login(page.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })

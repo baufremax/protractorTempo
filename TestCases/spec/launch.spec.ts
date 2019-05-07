@@ -4,7 +4,8 @@
 
 import { LoginPage } from '../po/login.po'
 import { LaunchPage } from '../po/launch.po'
-import { browser } from 'protractor'
+import { browser, element, by } from 'protractor'
+import * as protractor from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
@@ -29,7 +30,9 @@ describe('access apps in launch page: ', function() {
    it('page is a launch page after login', function() {
       debugger
       page.navigateTo()
-      browser.manage().logs().get('browser').then(function(browserLog) {
+      expect(page.getPageIdText()).to.eventually.equal('Log Out')
+      // method to get logging info: 
+      /* browser.manage().logs().get('browser').then(function(browserLog) {
          expect(browserLog.length).to.equal(0)
          // console.log('log: ' + require('util').inspect(browserLog));
          const logInfo: string = 'log: ' + require('util').inspect(browserLog)
@@ -37,19 +40,37 @@ describe('access apps in launch page: ', function() {
                if (err) throw err
          })
       })
+      */
 
       // alternative method to take advantage of browserLog.
-      // browser.manage().logs().get('browser').then(function(browserLog) {
-      //     // browserLogs is an array of objects with level and message fields
-      //     browserLog.forEach(function(log){
-      //         if (log.level.value > 900) { // it's an error log
-      //         console.log('Browser console error!');
-      //         console.log(log.message);
-      //         }
-      //     })
-      // })
-      
-      expect(page.getPageIdText()).to.eventually.equal('Log Out')
+      /*
+      browser.manage().logs().get('browser').then(function(browserLog) {
+          // browserLogs is an array of objects with level and message fields
+          browserLog.forEach(function(log){
+              if (log.level.value > 900) { // it's an error log
+              console.log('Browser console error!');
+              console.log(log.message);
+              }
+          })
+      })
+      */
    })
 
+   it('setting panel is clickable and closable', function() {
+      page.navigateTo()
+      page.showSettings()
+      expect(page.getSettingInfo()).to.eventually.equal('Settings')
+      page.closeSettings()
+      expect(page.getSettingInvisible().isPresent()).to.become(false)
+   })
+
+   it('help panel is clickable and closable', function() {
+      page.navigateTo()
+      page.showHelp()
+      expect(page.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
+      page.closeHelp()
+      expect(page.getHelpInvisible().isPresent()).to.become(false)
+   })
+
+   
 })

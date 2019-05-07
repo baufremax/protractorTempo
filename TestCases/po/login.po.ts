@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor'
 import * as protractor from 'protractor'
-import { Util } from '../util'
+import { Util } from '../helper/util'
 
 interface UserInfo {
    subject?: string,
@@ -72,6 +72,11 @@ export class LoginPage {
    getDomainList() {
       let domainListButton = Util.wait(element(by.id('domain-button')))
       return domainListButton
+   }
+
+   getDomainListInvisible() {
+      let btn = Util.waitInvisible(element(by.id('domain-button')))
+      return btn
    }
 
    getExceedAttempErr() {  // equals 'Maximum login attempts exceeded.'

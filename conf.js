@@ -14,9 +14,9 @@ exports.config = {
 
    suites: {
       smoke: 'build/smoke/*.js',
-      cookie: 'build/spec/login.spec.js',
       regression: '',
-      performance: ''
+      performance: '',
+      test: 'build/spec/launch.spec.js',
       //TODO: function
    },
 

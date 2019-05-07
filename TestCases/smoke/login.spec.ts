@@ -31,7 +31,7 @@ describe('[1003] login as a user: ', function() {
 
    it('[1003-0002] user login with wrong credentials, should stay on login page and see error msg', function() {
       page.navigateTo()
-      Util.setCookie('1003-0002');
+      Util.setCookie('1003-0002')
       page.Login(page.anInvalidUser)
       expect(page.getPageIdText()).to.eventually.equal('Login')
    })
@@ -47,9 +47,9 @@ describe('[1003] login as a user: ', function() {
       for (let i = 0; i < 3; ++i) {
          page.navigateTo()
          if (i == 2) {
-            Util.setCookie('1003-0004', '0002');
+            Util.setCookie('1003-0004', '0002')
          } else {
-            Util.setCookie('1003-0004', '0001');
+            Util.setCookie('1003-0004', '0001')
          }
          page.Login(page.anInvalidUser)
       }
@@ -58,7 +58,7 @@ describe('[1003] login as a user: ', function() {
 
    it('[1003-0005] Verify authentication with policy that password must change at first logon.', function() {
       page.navigateTo()
-      Util.setCookie('1003-0005');
+      Util.setCookie('1003-0005')
       page.Login(page.defaultUserInfo)
       expect(page.getOldPasswordElement().isDisplayed()).to.eventually.equal(true)
       expect(page.getNewPasswordElement().isDisplayed()).to.eventually.equal(true)
@@ -66,7 +66,7 @@ describe('[1003] login as a user: ', function() {
    })
 
    it('[1003-0006] RADIUS SecurID 2-Factor Authentication is shown.', function() {
-      Util.setCookie('1003-0006', '0001');
+      Util.setCookie('1003-0006', '0001')
       page.navigateTo()
       let secureUserName = page.getSecurUsernameElement()
       let passcode = page.getPasscodeElement()
@@ -76,7 +76,7 @@ describe('[1003] login as a user: ', function() {
 
    it('[1003-0007] RADIUS SecurID 2-Factor Authentication failed with unkown user', function() {
       //reuse the cookie set for 1003-0006
-      Util.setCookie('1003-0006', '0001');
+      Util.setCookie('1003-0006', '0001')
       page.navigateTo()
       page.RADISLogin(page.aValidUser)
       let passcode = page.getPasscodeElement()

@@ -7,6 +7,12 @@ export class Util {
       return o
    }
 
+   static waitInvisible(o: ElementFinder, timeout: number = 10000) : ElementFinder {
+      let EC = ExpectedConditions
+      browser.wait(EC.not(EC.visibilityOf(o)), timeout)
+      return o
+   }
+
    static clearCookie() {
       browser.manage().deleteAllCookies()
       browser.executeScript('window.sessionStorage.clear();');
