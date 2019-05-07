@@ -1,5 +1,5 @@
 import { browser, by, element } from 'protractor'
-
+import { Util } from '../helper/util'
 export class PublicPage {
 
    url: string = browser.baseUrl + '/'
@@ -9,8 +9,9 @@ export class PublicPage {
       return browser.get(this.url)
    }
 
-   getPageIdText() {   // equals 'VMware Horizon'.
-      return browser.getTitle()
+   getPageIdText() {   // equals 'Install VMware Horizon Client'.
+      let itemText = Util.wait(element.all(by.className('portal-list-title')).first())
+      return itemText.getText()
    }
 
    getCurrentUrl() {

@@ -8,6 +8,7 @@ import { browser, element, by } from 'protractor'
 import * as protractor from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
+import { PublicPage } from '../po/module';
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
@@ -23,7 +24,7 @@ describe('access apps in launch page: ', function() {
       page.navigateTo()
    })
 
-   it('page is a launch page after login', function() {
+   it('[1004-0001] page is a launch page after login', function() {
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
       // method to get logging info: 
       /* browser.manage().logs().get('browser').then(function(browserLog) {
@@ -50,39 +51,39 @@ describe('access apps in launch page: ', function() {
       */
    })
 
-   it('setting panel is clickable and closable', function() {
+   it('[1004-0002] setting panel is clickable and closable', function() {
       page.showSettings()
       expect(page.getSettingInfo()).to.eventually.equal('Settings')
       page.closeSettings()
       expect(page.getSettingInvisible().isPresent()).to.become(false)
    })
 
-   it('help panel is clickable and closable', function() {
+   it('[1004-0003] help panel is clickable and closable', function() {
       page.showHelp()
       expect(page.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
       page.closeHelp()
       expect(page.getHelpInvisible().isPresent()).to.become(false)
    })
 
-   it('logout works well', function() {
+   it('[1004-0004] logout works well', function() {
       page.logOut()
       page.confirmLogOut()
-      loginPage = new LoginPage()
-      expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
+      let publicPage = new PublicPage()
+      expect(publicPage.getPageIdText()).to.eventually.equal('Install VMware Horizon Client')
    })
 
-   it('logout can be canceled', function() {
+   it('[1004-0005] logout can be canceled', function() {
       page.logOut()
       page.cancelLogOut()
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
    })
 
-   it('search bar is available and no item is present when type in strange word', function() {
+   it('[1004-0006] search bar is available and no item is present when type in strange word', function() {
       page.searchItem('$')
       expect(page.getItemInvisible().isPresent()).to.become(false)
    })
 
-   it('search bar works well when type in available name', function() {
+   it('[1004-0007] search bar works well when type in available name', function() {
       page.searchItem('win2019')
       expect(page.getItem('win2019').isPresent()).to.become(true)
    })

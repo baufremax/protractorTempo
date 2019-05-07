@@ -23,7 +23,7 @@ describe('[1000] access public page: ', function() {
    })
 
    it('[1000-0001] when browse homepage should see the default page', function() {
-      expect(page.getPageIdText()).to.eventually.equal('VMware Horizon')
+      expect(page.getPageIdText()).to.eventually.equal('Install VMware Horizon Client')
    })
 
    it('[1000-0002] by click the access area should access to login page', function() {
