@@ -18,6 +18,7 @@ describe('[1003] login as a user: ', function() {
    beforeEach(function() {
       page = new LoginPage()
       launchPage = new LaunchPage()
+      page.navigateTo()
    })
 
    afterEach(function() {
@@ -25,27 +26,22 @@ describe('[1003] login as a user: ', function() {
    })
 
    it('[1003-0001] page is login page', function() {
-      page.navigateTo()
       expect(page.getPageIdText()).to.eventually.equal('Login')
    })
 
    it('[1003-0002] user login with wrong credentials, should stay on login page and see error msg', function() {
-      page.navigateTo()
       Util.setCookie('1003-0002')
       page.Login(page.anInvalidUser)
       expect(page.getPageIdText()).to.eventually.equal('Login')
    })
 
    it('[1003-0003] user login successfully, should go to the launch page', function() {
-      page.navigateTo()
       page.Login(page.aValidUser)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 
    it('[1003-0004] user login failures reach 3 times, should pop up error', function() {
-
       for (let i = 0; i < 3; ++i) {
-         page.navigateTo()
          if (i == 2) {
             Util.setCookie('1003-0004', '0002')
          } else {
@@ -57,7 +53,6 @@ describe('[1003] login as a user: ', function() {
    })
 
    it('[1003-0005] Verify authentication with policy that password must change at first logon.', function() {
-      page.navigateTo()
       Util.setCookie('1003-0005')
       page.Login(page.defaultUserInfo)
       expect(page.getOldPasswordElement().isDisplayed()).to.eventually.equal(true)
@@ -67,7 +62,6 @@ describe('[1003] login as a user: ', function() {
 
    it('[1003-0006] RADIUS SecurID 2-Factor Authentication is shown.', function() {
       Util.setCookie('1003-0006', '0001')
-      page.navigateTo()
       let secureUserName = page.getSecurUsernameElement()
       let passcode = page.getPasscodeElement()
       expect(secureUserName.isDisplayed()).to.eventually.equal(true)
@@ -77,7 +71,6 @@ describe('[1003] login as a user: ', function() {
    it('[1003-0007] RADIUS SecurID 2-Factor Authentication failed with unkown user', function() {
       //reuse the cookie set for 1003-0006
       Util.setCookie('1003-0006', '0001')
-      page.navigateTo()
       page.RADISLogin(page.aValidUser)
       let passcode = page.getPasscodeElement()
       let btn = page.getLoginButtonBtn()

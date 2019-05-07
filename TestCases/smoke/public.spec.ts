@@ -19,21 +19,19 @@ describe('[1000] access public page: ', function() {
    beforeEach(function() {
       page = new PublicPage()
       loginPage = new LoginPage()
+      page.navigateTo()
    })
 
    it('[1000-0001] when browse homepage should see the default page', function() {
-      page.navigateTo()
       expect(page.getPageIdText()).to.eventually.equal('VMware Horizon')
    })
 
    it('[1000-0002] by click the access area should access to login page', function() {
-      page.navigateTo()
       page.accessClient()
       expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
    })
 
    it('[1000-0003] Verify pre-login dialog box can be shown as expected', function() {
-      page.navigateTo()
       Util.setCookie('1000-0006');
       page.accessClient()
       let preLogOnPage = new PreLogonPage()
