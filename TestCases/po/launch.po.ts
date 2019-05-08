@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor'
 import { Util } from '../helper/module'
-import { LoginPage } from './module'
+import { LoginPage } from './login.po'
 
 export class LaunchPage {
 
@@ -28,11 +28,13 @@ export class LaunchPage {
    }
 
    getItem(itemName: string) {
-      let item = Util.wait(element.all(by.className('ui-desktop-name')).filter(function(elem) {
-         return elem.getText().then(function(itemText) {
+      const filterFunc = function (elem) {
+         return elem.getText().then(function (itemText) {
             return itemText === itemName
          })
-      }).first())
+      }
+      const firstItem = element.all(by.className('ui-desktop-name')).filter(filterFunc).first()
+      let item = Util.wait(firstItem)
       return item
    }
    getPageIdText() {    // equals 'Log Out'

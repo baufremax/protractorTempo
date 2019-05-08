@@ -22,29 +22,6 @@ describe('access apps in launch page: ', function() {
 
    it('[1004-0001] page is a launch page after login', function() {
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
-      // method to get logging info: 
-      /* browser.manage().logs().get('browser').then(function(browserLog) {
-         expect(browserLog.length).to.equal(0)
-         // console.log('log: ' + require('util').inspect(browserLog));
-         const logInfo: string = 'log: ' + require('util').inspect(browserLog)
-         fs.writeFile(baseLogUrl + '/launchPageLog' + itNum + '.txt', logInfo, err => {
-               if (err) throw err
-         })
-      })
-      */
-
-      // alternative method to take advantage of browserLog.
-      /*
-      browser.manage().logs().get('browser').then(function(browserLog) {
-          // browserLogs is an array of objects with level and message fields
-          browserLog.forEach(function(log){
-              if (log.level.value > 900) { // it's an error log
-              console.log('Browser console error!');
-              console.log(log.message);
-              }
-          })
-      })
-      */
    })
 
    it('[1004-0002] setting panel is clickable and closable', function() {
