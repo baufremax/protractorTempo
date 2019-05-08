@@ -13,10 +13,10 @@ Or you can change the *directConnect* in *conf.js* to *true* which will enable c
 Run the tests with
 `npm run test` which will automatically call `npm run tsc` before testing.
 
-You can run tests quickly with
-`protractor conf.js`
+You can run tests specifically with
+`protractor conf.js --suite [which you want to run]`
 
-Before running, you might need to compile the typescript files into js files through
+Before running, you might want to compile the typescript files into js files through
 `npm run tsc`
 
 Protractor has default feature where you are allowed to pass some parameters from command line. For e.g.

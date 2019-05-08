@@ -24,7 +24,7 @@ export class Util {
          name: 'TestCase',
          value: caseNum
       }
-      browser.manage().deleteCookie("TestCase").then(function(cookie) {
+      browser.manage().deleteCookie('TestCase').then(function(cookie) {
          browser.manage().addCookie(testCaseCookie)
       })
 
@@ -33,7 +33,7 @@ export class Util {
             name: 'TestStep',
             value: step
          }
-         browser.manage().deleteCookie("TestStep").then(function(cookie) {
+         browser.manage().deleteCookie('TestStep').then(function(cookie) {
             browser.manage().addCookie(stepCookie)
          })
       }

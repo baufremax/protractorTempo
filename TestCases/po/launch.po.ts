@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor'
 import { Util } from '../helper/module'
-import { LoginPage } from './login.po'
+import { LoginPage } from './module'
 
 export class LaunchPage {
 
