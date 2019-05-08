@@ -80,7 +80,7 @@ describe('access apps in launch page: ', function() {
    })
 
    it('[1004-0007] search bar works well when type in available name', function() {
-      page.searchItem('win2019')
-      expect(page.getItem('win2019').isPresent()).to.become(true)
+      page.searchItem(page.defaultItem)
+      expect(page.getItem(page.defaultItem).isPresent()).to.become(true)
    })
 })
