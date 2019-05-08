@@ -4,7 +4,6 @@
 
 import { PublicPage, LoginPage, PreLogonPage } from '../po/module'
 import { Util } from '../helper/module'
-
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
 import { beforeEach } from 'mocha'

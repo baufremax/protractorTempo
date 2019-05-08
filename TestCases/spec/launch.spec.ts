@@ -3,8 +3,6 @@
  *********************************************************/
 
 import { PublicPage, LoginPage, LaunchPage } from '../po/module'
-import { browser, element, by } from 'protractor'
-import * as protractor from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
