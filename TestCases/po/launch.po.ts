@@ -1,7 +1,6 @@
-import { browser, by, element, ExpectedConditions } from 'protractor'
-import { Util } from '../helper/util'
+import { browser, by, element } from 'protractor'
+import { Util } from '../helper/module'
 import { LoginPage } from './login.po'
-import { monitorEventLoopDelay } from 'perf_hooks';
 
 export class LaunchPage {
 

@@ -1,6 +1,5 @@
 import { browser, element, by } from 'protractor'
-import * as protractor from 'protractor'
-import { Util } from '../helper/util'
+import { Util } from '../helper/module'
 
 interface UserInfo {
    subject?: string,

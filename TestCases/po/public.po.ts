@@ -1,11 +1,11 @@
 import { browser, by, element } from 'protractor'
-import { Util } from '../helper/util'
+import { Util } from '../helper/module'
 export class PublicPage {
 
    url: string = browser.baseUrl + '/'
 
    navigateTo() {
-      browser.waitForAngularEnabled(false);
+      browser.waitForAngularEnabled(false)
       return browser.get(this.url)
    }
 

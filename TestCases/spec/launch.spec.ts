@@ -2,13 +2,11 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { LoginPage } from '../po/login.po'
-import { LaunchPage } from '../po/launch.po'
+import { PublicPage, LoginPage, LaunchPage } from '../po/module'
 import { browser, element, by } from 'protractor'
 import * as protractor from 'protractor'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-import { PublicPage } from '../po/module';
 chai.use(chaiAsPromised)
 let expect = chai.expect
 

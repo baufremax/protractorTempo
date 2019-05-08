@@ -1,5 +1,5 @@
 import { element, by, ElementFinder } from 'protractor'
-import { Util } from '../util'
+import { Util } from '../helper/module'
 
 export class PreLogonPage {
 

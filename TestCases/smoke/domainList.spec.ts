@@ -2,15 +2,14 @@
  * Copyright (C) 2019 VMware, Inc. All rights reserved.
  *********************************************************/
 
-import { element, by } from 'protractor'
 import { LoginPage, LaunchPage } from '../po/module'
-import {Util } from '../helper/module'
+import { Util } from '../helper/module'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
-describe('[1002] test for LoginPage: ', function() {
+describe('[1002] test for DomainList in login page: ', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LoginPage
    let launchPage: LaunchPage

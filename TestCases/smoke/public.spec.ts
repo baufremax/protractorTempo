@@ -3,11 +3,11 @@
  *********************************************************/
 
 import { PublicPage, LoginPage, PreLogonPage } from '../po/module'
-import { Util} from '../helper/module'
+import { Util } from '../helper/module'
 
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-import { beforeEach } from 'mocha';
+import { beforeEach } from 'mocha'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
@@ -22,6 +22,10 @@ describe('[1000] access public page: ', function() {
       page.navigateTo()
    })
 
+   afterEach(function() {
+      Util.clearCookie()
+   })
+
    it('[1000-0001] when browse homepage should see the default page', function() {
       expect(page.getPageIdText()).to.eventually.equal('Install VMware Horizon Client')
    })
@@ -32,7 +36,7 @@ describe('[1000] access public page: ', function() {
    })
 
    it('[1000-0003] Verify pre-login dialog box can be shown as expected', function() {
-      Util.setCookie('1000-0006');
+      Util.setCookie('1000-0006')
       page.accessClient()
       let preLogOnPage = new PreLogonPage()
       expect(preLogOnPage.getAcceptDisclaimerBtn().isDisplayed()).to.eventually.equal(true)
