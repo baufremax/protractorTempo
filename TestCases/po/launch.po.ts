@@ -52,6 +52,11 @@ export class LaunchPage {
       return settingBtn
    }
 
+   getResetButton() {
+      let resetBtn = Util.wait(element(by.className('modal-button-reset')))
+      return resetBtn
+   }
+
    getHelpInfo() {   // equals 'About VMware Horizon Client'
       let helpBtn = Util.wait(element(by.className('dialog-title')))
       return helpBtn.getText()

@@ -30,13 +30,6 @@ describe('access apps in launch page: ', function() {
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
    })
 
-   it('[1004-0002] setting panel is clickable and closable', function() {
-      page.showSettings()
-      expect(page.getSettingInfo()).to.eventually.equal('Settings')
-      page.closeSettings()
-      expect(page.getSettingInvisible().isPresent()).to.become(false)
-   })
-
    it('[1004-0003] help panel is clickable and closable', function() {
       page.showHelp()
       expect(page.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
@@ -74,5 +67,34 @@ describe('access apps in launch page: ', function() {
          browser.get(url)
       })
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
+   })
+})
+
+describe('setting button in launch page', function() {
+   this.timeout(20000) // all tests in this suite get 20 seconds before timeout
+   let page: LaunchPage
+   let loginPage: LoginPage
+   const fs = require('fs')
+   const baseLogUrl: string = './REPORTS/log'
+
+   beforeEach(function() {
+      page = new LaunchPage()
+      page.navigateTo()
+   })
+
+   afterEach(function() {
+      Util.clearCookie()
+   })
+
+   it('[1004-0002] setting panel is clickable and closable', function() {
+      page.showSettings()
+      expect(page.getSettingInfo()).to.eventually.equal('Settings')
+      page.closeSettings()
+      expect(page.getSettingInvisible().isPresent()).to.become(false)
+   })
+
+   it('[Setting - applications reset - confirm] Check the function to reset application from Settings dialog box', function() {
+      page.showSettings()
+      expect(page.getResetButton().isEnabled()).to.become(false)
    })
 })
