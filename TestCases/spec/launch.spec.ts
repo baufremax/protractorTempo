@@ -5,6 +5,8 @@
 import { PublicPage, LoginPage, LaunchPage } from '../po/module'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
+import { browser } from 'protractor';
+import { Util } from '../helper/util';
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
@@ -18,6 +20,10 @@ describe('access apps in launch page: ', function() {
    beforeEach(function() {
       page = new LaunchPage()
       page.navigateTo()
+   })
+
+   afterEach(function() {
+      Util.clearCookie()
    })
 
    it('[1004-0001] page is a launch page after login', function() {
@@ -59,5 +65,14 @@ describe('access apps in launch page: ', function() {
    it('[1004-0007] search bar works well when type in available name', function() {
       page.searchItem(page.defaultItem)
       expect(page.getItem(page.defaultItem).isPresent()).to.become(true)
+   })
+
+   it('[SSO - launch desktop] Desktop is launched successfully, and user is logged in to desktop, no extra authentication is needed', function() {
+      Util.setCookie('1004-0008')
+      browser.getCurrentUrl().then(function(url: string) {
+         // console.log(url)
+         browser.get(url)
+      })
+      expect(page.getPageIdText()).to.eventually.equal('Log Out')
    })
 })
