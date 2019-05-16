@@ -28,13 +28,85 @@ export class SidebarPage {
       }
 
       closeAboutHorizon() {
-         let btn = Util.wait(element(by.id('aboutDialogCloseBtn')))
-         btn.click()
+         Util.click_by_id('aboutDialogCloseBtn')
       }
 
       clickAboutHorizonHelp() {
-         let btn = Util.wait(element(by.id('aboutDialogHelpUrl')))
-         btn.click()
+         Util.click_by_id('aboutDialogHelpUrl')
       }
    }
+
+   searchOption = new class extends SidebarPage {
+      searchItem(itemName: string) {
+         let searchBar = Util.wait(element(by.id('search-input')))
+         searchBar.sendKeys(itemName)
+      }
+
+      getRunningItem(itemName: string) {
+         const filterFunc = Util.itemFilter(itemName)
+         const firstItem = element.all(by.className('running-app-name')).filter(filterFunc).first()
+         let item = Util.wait(firstItem)
+         return item
+      }
+
+      getAvailableItem(itemName: string) {
+         const filterFunc = Util.itemFilter(itemName)
+         const firstItem = element.all(by.className('available-app-name')).filter(filterFunc).first()
+         let item = Util.wait(firstItem)
+         return item
+      }
+
+      clickItem(itemName: string) {
+         this.getAvailableItem(itemName).click()
+      }
+   }
+
+   contextMenuOption = new class extends SidebarPage {
+      clickMenu() {
+         Util.wait(element(by.id('contextMenu'))).click()
+      }
+
+      getUserInfo() {
+         let userInfo = Util.wait(element(by.css('.menu-item-title.unselectable.ng-binding')))
+         return userInfo.getText()
+      }
+
+      showFullscreen() {
+         Util.click_by_id('sidebar-about-button')
+      }
+
+      showAboutInfo() {
+         Util.click_by_id('sidebar-about-button')
+      }
+
+      closeAboutInfo() {
+         Util.click_by_id('aboutDialogCloseBtn')
+      }
+
+      showHelpInfo() {
+         Util.click_by_id('aboutDialogHelpUrl')
+      }
+
+      logout() {
+         Util.click_by_id('sidebar-logout-button')
+         Util.click_by_id('okDialogBtn')
+      }
+
+      cancelLogout() {
+         Util.click_by_id('cancelDialogBtn')
+      }
+
+      showSettings() {
+         Util.click_by_id('sidebar-user-info')
+      }
+
+      closeSettings() {
+         Util.click_by_id('closeSettingsBtn')
+      }
+
+      resetSettings() {
+         Util.wait(element(by.css('.modal-button-reset'))).click()
+      }
+   }
+
 }

@@ -38,4 +38,16 @@ export class Util {
          })
       }
    }
+
+   static click_by_id(idName: string) {
+      Util.wait(element(by.id(idName))).click();
+   }
+
+   static itemFilter(itemName: string) {
+      return function (elem) {
+         return elem.getText().then(function (itemText) {
+            return itemText === itemName;
+         });
+      };
+   }
 }

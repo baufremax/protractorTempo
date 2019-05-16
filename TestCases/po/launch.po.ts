@@ -46,11 +46,7 @@ export class LaunchPage {
       }
 
       getItem(itemName: string) {
-         const filterFunc = function (elem) {
-            return elem.getText().then(function (itemText) {
-               return itemText === itemName
-            })
-         }
+         const filterFunc = Util.itemFilter(itemName)
          const firstItem = element.all(by.className('ui-desktop-name')).filter(filterFunc).first()
          let item = Util.wait(firstItem)
          return item
