@@ -31,33 +31,33 @@ describe('access apps in launch page: ', function() {
    })
 
    it('[1004-0003] help panel is clickable and closable', function() {
-      page.showHelp()
-      expect(page.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
-      page.closeHelp()
-      expect(page.getHelpInvisible().isPresent()).to.become(false)
+      page.helpOption.showHelp()
+      expect(page.helpOption.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
+      page.helpOption.closeHelp()
+      expect(page.helpOption.getHelpInvisible().isPresent()).to.become(false)
    })
 
    it('[1004-0004] logout works well', function() {
-      page.logOut()
-      page.confirmLogOut()
+      page.logoutOption.logout()
+      page.logoutOption.confirmLogout()
       let publicPage = new PublicPage()
       expect(publicPage.getPageIdText()).to.eventually.equal('Install VMware Horizon Client')
    })
 
    it('[1004-0005] logout can be canceled', function() {
-      page.logOut()
-      page.cancelLogOut()
+      page.logoutOption.logout()
+      page.logoutOption.cancelLogout()
       expect(page.getPageIdText()).to.eventually.equal('Log Out')
    })
 
    it('[1004-0006] search bar is available and no item is present when type in strange word', function() {
-      page.searchItem('$')
-      expect(page.getItemInvisible().isPresent()).to.become(false)
+      page.searchOption.searchItem('$')
+      expect(page.searchOption.getItemInvisible().isPresent()).to.become(false)
    })
 
    it('[1004-0007] search bar works well when type in available name', function() {
-      page.searchItem(page.defaultItem)
-      expect(page.getItem(page.defaultItem).isPresent()).to.become(true)
+      page.searchOption.searchItem(page.defaultItem)
+      expect(page.searchOption.getItem(page.defaultItem).isPresent()).to.become(true)
    })
 
    it('[SSO - launch desktop] Desktop is launched successfully, and user is logged in to desktop, no extra authentication is needed', function() {
@@ -87,14 +87,14 @@ describe('setting button in launch page', function() {
    })
 
    it('[1004-0002] setting panel is clickable and closable', function() {
-      page.showSettings()
-      expect(page.getSettingInfo()).to.eventually.equal('Settings')
-      page.closeSettings()
-      expect(page.getSettingInvisible().isPresent()).to.become(false)
+      page.settingOption.showSettings()
+      expect(page.settingOption.getSettingInfo()).to.eventually.equal('Settings')
+      page.settingOption.closeSettings()
+      expect(page.settingOption.getSettingInvisible().isPresent()).to.become(false)
    })
 
    it('[Setting - applications reset - confirm] Check the function to reset application from Settings dialog box', function() {
-      page.showSettings()
-      expect(page.getResetButton().isEnabled()).to.become(false)
+      page.settingOption.showSettings()
+      expect(page.settingOption.getResetButton().isEnabled()).to.become(false)
    })
 })

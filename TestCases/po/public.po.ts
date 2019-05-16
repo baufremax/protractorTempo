@@ -18,11 +18,13 @@ export class PublicPage {
       return browser.getCurrentUrl()
    }
 
-   installClient() {
-      return element(by.id('nativeClient')).click()
-   }
+   clientOption = new class extends PublicPage {
+      installClient() {
+         return element(by.id('nativeClient')).click()
+      }
 
-   accessClient() {
-      return element(by.id('webClient')).click()
+      accessClient() {
+         return element(by.id('webClient')).click()
+      }
    }
 }

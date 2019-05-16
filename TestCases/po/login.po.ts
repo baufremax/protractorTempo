@@ -36,28 +36,6 @@ export class LoginPage {
       return browser.getCurrentUrl()
    }
 
-   Login(userinfo: UserInfo | null) {
-      userinfo = userinfo || this.defaultUserInfo
-      // wait for the elements being visible
-      let usernameElem = Util.wait(element(by.model('credential.username')))
-      let passwordElem = Util.wait(element(by.model('credential.password')))
-      let loginFormElem = Util.wait(element(by.css('[ng-click="login(loginForm)"]')))
-      
-      usernameElem.sendKeys(userinfo.username)
-      passwordElem.sendKeys(userinfo.password)
-      
-      loginFormElem.click()
-   }
-
-   RADISLogin(userinfo: UserInfo | null) {
-      let secureUserName = this.getSecurUsernameElement()
-      let passcode = this.getPasscodeElement()
-      let btn = this.getSecurLoginButton()
-      secureUserName.sendKeys(userinfo.username)
-      passcode.sendKeys(userinfo.password)
-      btn.click()
-   }
-
    getPageIdText() {   // equals 'Login'
       let loginFormElem = Util.wait(element(by.css('[ng-click="login(loginForm)"]')))
       return loginFormElem.getText()
@@ -67,51 +45,81 @@ export class LoginPage {
       let errorMsgElem =  Util.wait(element(by.css('[ng-click="cancel()"]')))
       return errorMsgElem.getText()
    }
+   
+   loginOption = new class extends LoginPage {
+      login(userinfo: UserInfo | null) {
+         userinfo = userinfo || this.defaultUserInfo
+         // wait for the elements being visible
+         let usernameElem = Util.wait(element(by.model('credential.username')))
+         let passwordElem = Util.wait(element(by.model('credential.password')))
+         let loginFormElem = Util.wait(element(by.css('[ng-click="login(loginForm)"]')))
+         
+         usernameElem.sendKeys(userinfo.username)
+         passwordElem.sendKeys(userinfo.password)
+         
+         loginFormElem.click()
+      }
 
-   getDomainList() {
-      let domainListButton = Util.wait(element(by.id('domain-button')))
-      return domainListButton
+      RADISLogin(userinfo: UserInfo | null) {
+         let secureUserName = this.getSecurUsernameElement()
+         let passcode = this.getPasscodeElement()
+         let btn = this.getSecurLoginButton()
+         secureUserName.sendKeys(userinfo.username)
+         passcode.sendKeys(userinfo.password)
+         btn.click()
+      }
+
+      getExceedAttempErr() {  // equals 'Maximum login attempts exceeded.'
+         let exceedAttempErr = Util.wait(element(by.className('session-ops-window-text')))
+         return exceedAttempErr.getText()
+      }
+
+      getLoginButtonBtn() {
+         return Util.wait(element(by.id('loginButton')))
+      }
    }
 
-   getDomainListInvisible() {
-      let btn = Util.waitInvisible(element(by.id('domain-button')))
-      return btn
+   domainListOption = new class extends LoginPage {
+      getDomainList() {
+         let domainListButton = Util.wait(element(by.id('domain-button')))
+         return domainListButton
+      }
+
+      getDomainListInvisible() {
+         let btn = Util.waitInvisible(element(by.id('domain-button')))
+         return btn
+      }
    }
 
-   getExceedAttempErr() {  // equals 'Maximum login attempts exceeded.'
-      let exceedAttempErr = Util.wait(element(by.className('session-ops-window-text')))
-      return exceedAttempErr.getText()
+   passwordOption = new class extends LoginPage {
+      getOldPasswordElement() {
+         return Util.wait(element(by.id('oldpassword')))
+      }
+
+      getNewPasswordElement() {
+         return Util.wait(element(by.id('newpassword1')))
+      }
+
+      getConfirmPasswordElement() {
+         return Util.wait(element(by.id('newpassword2')))
+      }
    }
 
-   getOldPasswordElement() {
-      return Util.wait(element(by.id('oldpassword')))
-   }
+   preLogonOption = new class extends LoginPage {
+      getSecurUsernameElement() {
+         return Util.wait(element(by.id('securUsername')))
+      }
 
-   getNewPasswordElement() {
-      return Util.wait(element(by.id('newpassword1')))
-   }
+      getPasscodeElement() {
+         return Util.wait(element(by.id('passcode')))
+      }
 
-   getConfirmPasswordElement() {
-      return Util.wait(element(by.id('newpassword2')))
-   }
+      getSecurLoginButton() {
+         return Util.wait(element(by.id('securLoginButton')))
+      }
 
-   getSecurUsernameElement() {
-      return Util.wait(element(by.id('securUsername')))
-   }
-
-   getPasscodeElement() {
-      return Util.wait(element(by.id('passcode')))
-   }
-
-   getSecurLoginButton() {
-      return Util.wait(element(by.id('securLoginButton')))
-   }
-
-   getLoginButtonBtn() {
-      return Util.wait(element(by.id('loginButton')))
-   }
-
-   getLogonHint() {
-      return Util.wait(element(by.className('ui-login-hint-text')))
+      getLogonHint() {
+         return Util.wait(element(by.className('ui-login-hint-text')))
+      }
    }
 }

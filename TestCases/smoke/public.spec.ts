@@ -29,13 +29,13 @@ describe('[1000] access public page: ', function() {
    })
 
    it('[1000-0002] by click the access area should access to login page', function() {
-      page.accessClient()
+      page.clientOption.accessClient()
       expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
    })
 
    it('[1000-0003] Verify pre-login dialog box can be shown as expected', function() {
       Util.setCookie('1000-0006')
-      page.accessClient()
+      page.clientOption.accessClient()
       let preLogOnPage = new PreLogonPage()
       expect(preLogOnPage.getAcceptDisclaimerBtn().isDisplayed()).to.eventually.equal(true)
       expect(preLogOnPage.getCancelDisclaimerBtn().isDisplayed()).to.eventually.equal(true)

@@ -30,12 +30,12 @@ describe('[1003] login as a user: ', function() {
 
    it('[1003-0002] user login with wrong credentials, should stay on login page and see error msg', function() {
       Util.setCookie('1003-0002')
-      page.Login(page.anInvalidUser)
+      page.loginOption.login(page.anInvalidUser)
       expect(page.getPageIdText()).to.eventually.equal('Login')
    })
 
    it('[1003-0003] user login successfully, should go to the launch page', function() {
-      page.Login(page.aValidUser)
+      page.loginOption.login(page.aValidUser)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 
@@ -46,23 +46,23 @@ describe('[1003] login as a user: ', function() {
          } else {
             Util.setCookie('1003-0004', '0001')
          }
-         page.Login(page.anInvalidUser)
+         page.loginOption.login(page.anInvalidUser)
       }
-      expect(page.getExceedAttempErr()).to.eventually.equal('Maximum login attempts exceeded.')
+      expect(page.loginOption.getExceedAttempErr()).to.eventually.equal('Maximum login attempts exceeded.')
    })
 
    it('[1003-0005] Verify authentication with policy that password must change at first logon.', function() {
       Util.setCookie('1003-0005')
-      page.Login(page.defaultUserInfo)
-      expect(page.getOldPasswordElement().isDisplayed()).to.eventually.equal(true)
-      expect(page.getNewPasswordElement().isDisplayed()).to.eventually.equal(true)
-      expect(page.getConfirmPasswordElement().isDisplayed()).to.eventually.equal(true)
+      page.loginOption.login(page.defaultUserInfo)
+      expect(page.passwordOption.getOldPasswordElement().isDisplayed()).to.eventually.equal(true)
+      expect(page.passwordOption.getNewPasswordElement().isDisplayed()).to.eventually.equal(true)
+      expect(page.passwordOption.getConfirmPasswordElement().isDisplayed()).to.eventually.equal(true)
    })
 
    it('[1003-0006] RADIUS SecurID 2-Factor Authentication is shown.', function() {
       Util.setCookie('1003-0006', '0001')
-      let secureUserName = page.getSecurUsernameElement()
-      let passcode = page.getPasscodeElement()
+      let secureUserName = page.preLogonOption.getSecurUsernameElement()
+      let passcode = page.preLogonOption.getPasscodeElement()
       expect(secureUserName.isDisplayed()).to.eventually.equal(true)
       expect(passcode.isDisplayed()).to.eventually.equal(true)
    })
@@ -70,11 +70,11 @@ describe('[1003] login as a user: ', function() {
    it('[1003-0007] RADIUS SecurID 2-Factor Authentication failed with unkown user', function() {
       //reuse the cookie set for 1003-0006
       Util.setCookie('1003-0006', '0001')
-      page.RADISLogin(page.aValidUser)
-      let passcode = page.getPasscodeElement()
-      let btn = page.getLoginButtonBtn()
+      page.loginOption.RADISLogin(page.aValidUser)
+      let passcode = page.preLogonOption.getPasscodeElement()
+      let btn = page.loginOption.getLoginButtonBtn()
       expect(passcode.isDisplayed()).to.eventually.equal(true)
       expect(btn.getText()).to.eventually.equal('Continue')
-      expect(page.getLogonHint().getText()).to.eventually.equal('Please enroll at https://api-d987d56d.duosecurity.com/portal?code=fdf6c930fd9cfb74&akey=DA0V9XJXLZI2OVKGZIWO')
+      expect(page.preLogonOption.getLogonHint().getText()).to.eventually.equal('Please enroll at https://api-d987d56d.duosecurity.com/portal?code=fdf6c930fd9cfb74&akey=DA0V9XJXLZI2OVKGZIWO')
    })
 })

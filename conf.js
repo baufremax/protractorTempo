@@ -16,7 +16,7 @@ exports.config = {
       smoke: 'build/smoke/*.js',
       regression: '',
       performance: '',
-      test: 'build/spec/launch.spec.js',
+      test: 'build/smoke/public.spec.js',
       //TODO: function
    },
 
