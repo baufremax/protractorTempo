@@ -60,15 +60,6 @@ export class LoginPage {
          loginFormElem.click()
       }
 
-      RADISLogin(userinfo: UserInfo | null) {
-         let secureUserName = this.getSecurUsernameElement()
-         let passcode = this.getPasscodeElement()
-         let btn = this.getSecurLoginButton()
-         secureUserName.sendKeys(userinfo.username)
-         passcode.sendKeys(userinfo.password)
-         btn.click()
-      }
-
       getExceedAttempErr() {  // equals 'Maximum login attempts exceeded.'
          let exceedAttempErr = Util.wait(element(by.className('session-ops-window-text')))
          return exceedAttempErr.getText()
@@ -120,6 +111,15 @@ export class LoginPage {
 
       getLogonHint() {
          return Util.wait(element(by.className('ui-login-hint-text')))
+      }
+      
+      RADISLogin(userinfo: UserInfo | null) {
+         let secureUserName = this.getSecurUsernameElement()
+         let passcode = this.getPasscodeElement()
+         let btn = this.getSecurLoginButton()
+         secureUserName.sendKeys(userinfo.username)
+         passcode.sendKeys(userinfo.password)
+         btn.click()
       }
    }
 }

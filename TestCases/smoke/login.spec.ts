@@ -70,7 +70,7 @@ describe('[1003] login as a user: ', function() {
    it('[1003-0007] RADIUS SecurID 2-Factor Authentication failed with unkown user', function() {
       //reuse the cookie set for 1003-0006
       Util.setCookie('1003-0006', '0001')
-      page.loginOption.RADISLogin(page.aValidUser)
+      page.preLogonOption.RADISLogin(page.aValidUser)
       let passcode = page.preLogonOption.getPasscodeElement()
       let btn = page.loginOption.getLoginButtonBtn()
       expect(passcode.isDisplayed()).to.eventually.equal(true)
