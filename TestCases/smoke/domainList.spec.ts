@@ -27,16 +27,16 @@ describe('[1002] test for DomainList in login page: ', function() {
       this.retries(2)
       page.navigateTo()
       Util.setCookie('1002-0001')
-      expect(page.getDomainListInvisible().isPresent()).to.become(false)
-      page.Login(page.defaultUserInfo)
+      expect(page.domainListOption.getDomainListInvisible().isPresent()).to.become(false)
+      page.loginOption.login(page.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 
    it('[1002-0002] domainList is visible when clientHideDomainList = false', function() {
       page.navigateTo()
-      let domainListButton = page.getDomainList()
+      let domainListButton = page.domainListOption.getDomainList()
       expect(domainListButton.isDisplayed()).to.eventually.be.true
-      page.Login(page.defaultUserInfo)
+      page.loginOption.login(page.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 })
