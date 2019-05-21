@@ -15,8 +15,8 @@ export class Util {
 
    static clearCookie() {
       browser.manage().deleteAllCookies()
-      // browser.executeScript('window.sessionStorage.clear();');
-      // browser.executeScript('window.localStorage.clear();');
+      browser.executeScript('window.sessionStorage.clear();');
+      browser.executeScript('window.localStorage.clear();');
    }
 
    static setCookie(caseNum: string, step: string = '') {
