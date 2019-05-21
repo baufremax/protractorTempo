@@ -21,7 +21,7 @@ export class SidebarPage {
       searchInput.sendKeys(item)
    }
 
-   aboutHozironOption = new class extends SidebarPage {
+   aboutHorizonOption = new class {
       clickHorizonLogo() {
          let logo = Util.wait(element(by.className('horizon-logo-image')))
          logo.click()
@@ -36,7 +36,7 @@ export class SidebarPage {
       }
    }
 
-   searchOption = new class extends SidebarPage {
+   searchOption = new class {
       searchItem(itemName: string) {
          let searchBar = Util.wait(element(by.id('search-input')))
          searchBar.sendKeys(itemName)
@@ -61,7 +61,7 @@ export class SidebarPage {
       }
    }
 
-   contextMenuOption = new class extends SidebarPage {
+   contextMenuOption = new class {
       clickMenu() {
          Util.wait(element(by.id('contextMenu'))).click()
       }

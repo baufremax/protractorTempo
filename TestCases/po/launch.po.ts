@@ -34,7 +34,7 @@ export class LaunchPage {
       favorBtn.click()
    }
 
-   searchOption = new class extends LaunchPage {
+   searchOption = new class {
       searchItem(item: string) {
          let searchBar = Util.wait(element(by.id('header-search')))
          searchBar.sendKeys(item)
@@ -57,7 +57,7 @@ export class LaunchPage {
       }
    }
 
-   settingOption = new class extends LaunchPage {
+   settingOption = new class {
       getSettingInfo() {   // equals 'settings'
          let settingBtn = Util.wait(element(by.className('dialog-title')))
          return settingBtn.getText()
@@ -84,7 +84,7 @@ export class LaunchPage {
       }
    }
 
-   helpOption = new class extends LaunchPage {
+   helpOption = new class {
       getHelpInfo() {   // equals 'About VMware Horizon Client'
          let helpBtn = Util.wait(element(by.className('dialog-title')))
          return helpBtn.getText()
@@ -106,7 +106,7 @@ export class LaunchPage {
       }
    }
 
-   logoutOption = new class extends LaunchPage {
+   logoutOption = new class {
       logout() {
          let logoutBtn = Util.wait(element(by.id('logoutBtn')))
          logoutBtn.click()

@@ -28,7 +28,7 @@ describe('[1002] test for DomainList in login page: ', function() {
       page.navigateTo()
       Util.setCookie('1002-0001')
       expect(page.domainListOption.getDomainListInvisible().isPresent()).to.become(false)
-      page.loginOption.login(page.defaultUserInfo)
+      page.loginOption.login(page.loginOption.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 
@@ -36,7 +36,7 @@ describe('[1002] test for DomainList in login page: ', function() {
       page.navigateTo()
       let domainListButton = page.domainListOption.getDomainList()
       expect(domainListButton.isDisplayed()).to.eventually.be.true
-      page.loginOption.login(page.defaultUserInfo)
+      page.loginOption.login(page.loginOption.defaultUserInfo)
       expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
    })
 })

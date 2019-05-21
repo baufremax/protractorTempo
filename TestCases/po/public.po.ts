@@ -18,7 +18,7 @@ export class PublicPage {
       return browser.getCurrentUrl()
    }
 
-   clientOption = new class extends PublicPage {
+   clientOption = new class {
       installClient() {
          return element(by.id('nativeClient')).click()
       }

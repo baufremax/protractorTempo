@@ -11,10 +11,7 @@ export class LoginPage {
 
    url: string = browser.baseUrl + '/portal/webclient/index.html#/'
 
-   defaultUserInfo: UserInfo = {
-      username: 'pcoip2',
-      password: 'ca$hc0w'
-   }
+   
 
    anInvalidUser: UserInfo = {
       subject: 'this is an invalid user credential',
@@ -46,7 +43,11 @@ export class LoginPage {
       return errorMsgElem.getText()
    }
    
-   loginOption = new class extends LoginPage {
+   loginOption = new class {
+      defaultUserInfo: UserInfo = {
+         username: 'pcoip2',
+         password: 'ca$hc0w'
+      }
       login(userinfo: UserInfo | null) {
          userinfo = userinfo || this.defaultUserInfo
          // wait for the elements being visible
@@ -70,7 +71,7 @@ export class LoginPage {
       }
    }
 
-   domainListOption = new class extends LoginPage {
+   domainListOption = new class {
       getDomainList() {
          let domainListButton = Util.wait(element(by.id('domain-button')))
          return domainListButton
@@ -82,7 +83,7 @@ export class LoginPage {
       }
    }
 
-   passwordOption = new class extends LoginPage {
+   passwordOption = new class {
       getOldPasswordElement() {
          return Util.wait(element(by.id('oldpassword')))
       }
@@ -96,7 +97,7 @@ export class LoginPage {
       }
    }
 
-   preLogonOption = new class extends LoginPage {
+   preLogonOption = new class {
       getSecurUsernameElement() {
          return Util.wait(element(by.id('securUsername')))
       }
