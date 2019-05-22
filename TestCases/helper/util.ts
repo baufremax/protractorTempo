@@ -39,6 +39,15 @@ export class Util {
       }
    }
 
+   static setCookieFunc(cookieName: string, cookieValue: string = null) {
+      let cookie = {
+         name: cookieName,
+         value: cookieValue
+      }
+      browser.manage().deleteCookie(cookieName).then(function() {
+         browser.manage().addCookie(cookie)
+      })
+   }
    static click_by_id(idName: string) {
       Util.wait(element(by.id(idName))).click();
    }

@@ -88,12 +88,9 @@ describe('[1003] prelogin: ', function() {
    let launchPage: LaunchPage
    it('[1003-0008] Verify that launching desktop through RSA secure id with user-generated PIN successfully', function() {
       page = new PreLogonPage()
-      
-      browser.waitForAngularEnabled(false)
-      browser.get(browser.baseUrl)
-      // Util.setCookie('1003-0008')
-      Util.setCookie('1003-0008', '0001')
       publicPage = new PublicPage()
+      publicPage.navigateTo()
+      Util.setCookie('1003-0008', '0001')
       // here we are in public page.
       publicPage.clientOption.accessClient()
       page.getAcceptDisclaimerBtn().click()
