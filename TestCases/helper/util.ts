@@ -6,7 +6,11 @@ export class Util {
       browser.wait(EC.visibilityOf(o), timeout)
       return o
    }
-
+   static waitPresence(o: ElementFinder, timeout: number = 100000) : ElementFinder {
+      let EC = ExpectedConditions
+      browser.wait(EC.presenceOf(o), timeout)
+      return o
+   }
    static waitInvisible(o: ElementFinder, timeout: number = 10000) : ElementFinder {
       let EC = ExpectedConditions
       browser.wait(EC.not(EC.visibilityOf(o)), timeout)
@@ -19,27 +23,7 @@ export class Util {
       browser.executeScript('window.localStorage.clear();');
    }
 
-   static setCookie(caseNum: string, step: string = '') {
-      let testCaseCookie = {
-         name: 'TestCase',
-         value: caseNum
-      }
-      browser.manage().deleteCookie('TestCase').then(function(cookie) {
-         browser.manage().addCookie(testCaseCookie)
-      })
-
-      if (step !== '') {
-         let stepCookie = {
-            name: 'TestStep',
-            value: step
-         }
-         browser.manage().deleteCookie('TestStep').then(function(cookie) {
-            browser.manage().addCookie(stepCookie)
-         })
-      }
-   }
-
-   static setCookieFunc(cookieName: string, cookieValue: string = null) {
+   static addCookie(cookieName: string, cookieValue: string) {
       let cookie = {
          name: cookieName,
          value: cookieValue
@@ -48,6 +32,20 @@ export class Util {
          browser.manage().addCookie(cookie)
       })
    }
+
+   static setCookie(caseNum: string, step: string = '') {
+      Util.addCookie('TestCase', caseNum)
+      if (step !== '') {
+         Util.addCookie('TestStep', step)
+      }
+   }
+
+   static setCookieFunc(fileName: string, funcName: string, funcValue: string = null) {
+     Util.addCookie('EditXML', fileName)
+     Util.addCookie('TestFunc', funcName)
+     Util.addCookie('TestValue', funcValue)
+   }
+   
    static click_by_id(idName: string) {
       Util.wait(element(by.id(idName))).click();
    }
@@ -55,7 +53,9 @@ export class Util {
    static itemFilter(itemName: string) {
       return function (elem) {
          return elem.getText().then(function (itemText) {
-            return itemText === itemName;
+            // remove space from itemText
+            console.log('ss'+ itemText + ' ' + itemName)
+            return itemText.replace(/\s/g, '') === itemName
          });
       };
    }

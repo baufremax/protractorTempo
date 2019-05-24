@@ -15,8 +15,6 @@ describe('access apps in launch page: ', function() {
    let page: LaunchPage
    let publicPage: PublicPage
    let loginPage: LoginPage
-   const fs = require('fs')
-   const baseLogUrl: string = './REPORTS/log'
 
    beforeEach(function() {
       page = new LaunchPage()
@@ -80,14 +78,18 @@ describe('access apps in launch page: ', function() {
       // in our test we set the timeout to 5 seconds.
       publicPage = new PublicPage()
       publicPage.navigateTo()
-      Util.setCookieFunc('EditXML', 'do-submit-authentication')
-      Util.setCookieFunc('TestFunc', 'set_idle_time')
-      Util.setCookieFunc('TestValue', '5')
+      Util.setCookieFunc('do-submit-authentication', 'set_idle_time', '5')
       page.navigateTo()
       browser.sleep(6000)
       browser.refresh()
       loginPage = new LoginPage()
       expect(loginPage.getPageIdText()).to.eventually.equal('Login')
+   })
+
+   it('[Desktop and Applcaiton- launch desktoop and apps] Verify desktop is able to be launched from Launcher', function() {
+      page.navigateTo()
+      page.searchOption.clickItem('win2019')
+
    })
 })
 
