@@ -16,6 +16,10 @@ export class SidebarPage {
       return browser.getCurrentUrl()
    }
 
+   getToggler() {
+      return Util.wait(element(by.id('sidebar-toggler')))
+   }
+
    searchItem(item: string) {
       let searchInput = Util.wait(element(by.id('search-input')))
       searchInput.sendKeys(item)
@@ -45,18 +49,14 @@ export class SidebarPage {
       getRunningItem(itemName: string) {
          const filterFunc = Util.itemFilter(itemName)
          const firstItem = element.all(by.className('running-app-name')).filter(filterFunc).first()
-         firstItem.getText().then(function(text) {
-            console.log(text)
-         })
          let item = Util.wait(firstItem)
          return item
       }
 
       getAvailableItem(itemName: string) {
-         const filterFunc = Util.itemFilter(itemName)
-         const firstItem = element.all(by.className('available-app-name')).filter(filterFunc).first()
-         let item = Util.wait(firstItem)
-         return item
+         let filterFunc = Util.itemFilter(itemName)
+         let firstItem = element.all(by.css('.available-app-name')).filter(filterFunc).first()
+         return firstItem
       }
 
       clickItem(itemName: string) {

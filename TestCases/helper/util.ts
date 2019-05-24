@@ -45,18 +45,18 @@ export class Util {
      Util.addCookie('TestFunc', funcName)
      Util.addCookie('TestValue', funcValue)
    }
-   
+
    static click_by_id(idName: string) {
       Util.wait(element(by.id(idName))).click();
    }
 
    static itemFilter(itemName: string) {
       return function (elem) {
-         return elem.getText().then(function (itemText) {
+         return elem.getAttribute('innerHTML').then(function (itemText) {
             // remove space from itemText
             console.log('ss'+ itemText + ' ' + itemName)
             return itemText.replace(/\s/g, '') === itemName
-         });
-      };
+         })
+      }
    }
 }
