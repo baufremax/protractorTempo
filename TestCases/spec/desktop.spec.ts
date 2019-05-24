@@ -34,7 +34,7 @@ describe('access apps in launch page: ', function() {
       sidebarPage.getToggler().click()
       /** NOTE: the sidebar elements are hidden when toggler not clicked, but even if the toggler is clikced,
        * sometimes the elements in the sidebar are still hidden.
-       * THUS, this case might fail when the sidebar were not unfolded.
+       * THUS, this case would fail when the sidebar were not unfolded.
        * NEED alternative method to deal with this test case, i.e., how to get items when they are hidden. **/
       let runningApp = sidebarPage.searchOption.getAvailableItem(page.defaultItem)
       expect(runningApp.getAttribute('innerHTML')).to.eventually.equal(page.defaultItem)

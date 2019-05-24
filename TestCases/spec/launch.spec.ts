@@ -85,12 +85,6 @@ describe('access apps in launch page: ', function() {
       loginPage = new LoginPage()
       expect(loginPage.getPageIdText()).to.eventually.equal('Login')
    })
-
-   it('[Desktop and Applcaiton- launch desktoop and apps] Verify desktop is able to be launched from Launcher', function() {
-      page.navigateTo()
-      page.searchOption.clickItem('win2019')
-
-   })
 })
 
 describe('setting button in launch page', function() {
