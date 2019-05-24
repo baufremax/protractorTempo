@@ -45,6 +45,9 @@ export class SidebarPage {
       getRunningItem(itemName: string) {
          const filterFunc = Util.itemFilter(itemName)
          const firstItem = element.all(by.className('running-app-name')).filter(filterFunc).first()
+         firstItem.getText().then(function(text) {
+            console.log(text)
+         })
          let item = Util.wait(firstItem)
          return item
       }

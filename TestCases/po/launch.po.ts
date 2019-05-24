@@ -9,9 +9,9 @@ export class LaunchPage {
    defaultItem: string = 'win2019'
    loginPage: LoginPage
 
-   navigateTo() {
+   navigateTo(disclaimer: boolean = false) {
       this.loginPage = new LoginPage()
-      this.loginPage.navigateTo()
+      this.loginPage.navigateTo(disclaimer)
       this.loginPage.loginOption.login(this.loginPage.aValidUser)
    }
 
@@ -47,7 +47,7 @@ export class LaunchPage {
 
       getItem(itemName: string) {
          const filterFunc = Util.itemFilter(itemName)
-         const firstItem = element.all(by.className('ui-desktop-name')).filter(filterFunc).first()
+         const firstItem = Util.wait(element.all(by.className('ui-desktop-name')).filter(filterFunc).first())
          let item = Util.wait(firstItem)
          return item
       }

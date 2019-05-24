@@ -7,8 +7,6 @@ interface UserInfo {
 }
 export class PreLogonPage {
 
-   RSAurl: string = 'https://joe-cs-2016.view.era'
-
    VASCOuser: UserInfo = {
       username: 'otpuser',
       password: 'vmwaremail'

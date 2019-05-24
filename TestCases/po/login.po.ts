@@ -1,12 +1,13 @@
 import { browser, element, by } from 'protractor'
 import { Util } from '../helper/module'
-
+import { PreLogonPage } from './module'
 interface UserInfo {
    subject?: string,
    username: string,
    password: string
 }
 
+let prelogonPage: PreLogonPage
 export class LoginPage {
 
    url: string = browser.baseUrl + '/portal/webclient/index.html#/'
@@ -25,8 +26,12 @@ export class LoginPage {
       password: 'ca$hc0w'
    }
 
-   navigateTo() {
+   navigateTo(disclaimer: boolean = false) {
       browser.get(this.url)
+      if (disclaimer) {
+         prelogonPage = new PreLogonPage()
+         prelogonPage.getAcceptDisclaimerBtn().click()
+      }
    }
 
    getCurrentUrl() {
