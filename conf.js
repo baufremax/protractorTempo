@@ -30,8 +30,6 @@ exports.config = {
 
    baseUrl: 'https://10.117.163.92',  // default value for baseUrl.
 
-   noMockUrl: 'https://10.117.161.109',  // url for normal conditions.(no mock xml)
-
    onPrepare: function(){
       switch(browser.params.baseUrl) {
          case 'firsturl':

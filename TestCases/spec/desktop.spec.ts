@@ -31,7 +31,11 @@ describe('access apps in launch page: ', function() {
    it('[Desktop and Applcaiton- launch desktoop and apps] Verify desktop is able to be launched from Launcher', function() {
       page.navigateTo(true)
       page.searchOption.clickItem(page.defaultItem)
-      // sidebarPage.getToggler().click()
+      sidebarPage.getToggler().click()
+      /** NOTE: the sidebar elements are hidden when toggler not clicked, but even if the toggler is clikced,
+       * sometimes the elements in the sidebar are still hidden.
+       * THUS, this case might fail when the sidebar were not unfolded.
+       * NEED alternative method to deal with this test case, i.e., how to get items when they are hidden. **/
       let runningApp = sidebarPage.searchOption.getAvailableItem(page.defaultItem)
       expect(runningApp.getAttribute('innerHTML')).to.eventually.equal(page.defaultItem)
    })
