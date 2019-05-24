@@ -29,6 +29,8 @@ will overwrite the baseUrl with the firsturl set in *conf.js*.
 To check the screenshot report, open *./REPORTS/screenshot/index.html* in browser.
 
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
+## Test Cases
+Test cases can be found at [HTML5 client automation](https://confluence.eng.vmware.com/display/CNVDES/HTML5+client+automation)
 ## Debug
 ### Capture Console.log
 see usage in file *./launch/launch.spec.ts*
