@@ -54,7 +54,6 @@ export class Util {
       return function (elem) {
          return elem.getAttribute('innerHTML').then(function (itemText) {
             // remove space from itemText
-            // console.log('ss'+ itemText + ' ' + itemName)
             return itemText.replace(/\s/g, '') === itemName
          })
       }

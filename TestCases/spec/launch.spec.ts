@@ -68,7 +68,6 @@ describe('access apps in launch page: ', function() {
       page.navigateTo()
       Util.setCookie('1004-0008')
       browser.getCurrentUrl().then(function(url: string) {
-         // console.log(url)
          browser.get(url)
       })
       expect(page.getPageIdText()).to.eventually.equal('Log Out')

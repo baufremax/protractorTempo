@@ -33,7 +33,6 @@ If there are npm or package errors, try delete *node_modules* and *package-lock.
 Test cases can be found at [HTML5 client automation](https://confluence.eng.vmware.com/display/CNVDES/HTML5+client+automation)
 ## Debug
 ### Capture Console.log
-see usage in file *./launch/launch.spec.ts*
 ```javascript
 browser.manage().logs().get('browser').then(function(browserLog) {
     // browserLogs is an array of objects with level and message fields
