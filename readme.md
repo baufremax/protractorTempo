@@ -102,6 +102,7 @@ If you need to log data to report or custom screenshots to report, see [mochawes
 run `npm run lint` to lint the typescript files.
 
 ## Resources
+* [MockXML](https://gitlab.eng.vmware.com/horizonweb/mockxml)
 * [Protractor Tutorial](https://www.protractortest.org/#/tutorial)
 * [Protractor Style Guide](https://www.protractortest.org/#/style-guide)
 * [Build your first tests with Protractor](https://blog.cloudboost.io/building-your-first-tests-for-angular5-with-protractor-a48dfc225a75)

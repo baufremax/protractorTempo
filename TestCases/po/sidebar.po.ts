@@ -32,11 +32,11 @@ export class SidebarPage {
       }
 
       closeAboutHorizon() {
-         Util.click_by_id('aboutDialogCloseBtn')
+         Util.clickById('aboutDialogCloseBtn')
       }
 
       clickAboutHorizonHelp() {
-         Util.click_by_id('aboutDialogHelpUrl')
+         Util.clickById('aboutDialogHelpUrl')
       }
    }
 
@@ -75,36 +75,36 @@ export class SidebarPage {
       }
 
       showFullscreen() {
-         Util.click_by_id('sidebar-about-button')
+         Util.clickById('sidebar-about-button')
       }
 
       showAboutInfo() {
-         Util.click_by_id('sidebar-about-button')
+         Util.clickById('sidebar-about-button')
       }
 
       closeAboutInfo() {
-         Util.click_by_id('aboutDialogCloseBtn')
+         Util.clickById('aboutDialogCloseBtn')
       }
 
       showHelpInfo() {
-         Util.click_by_id('aboutDialogHelpUrl')
+         Util.clickById('aboutDialogHelpUrl')
       }
 
       logout() {
-         Util.click_by_id('sidebar-logout-button')
-         Util.click_by_id('okDialogBtn')
+         Util.clickById('sidebar-logout-button')
+         Util.clickById('okDialogBtn')
       }
 
       cancelLogout() {
-         Util.click_by_id('cancelDialogBtn')
+         Util.clickById('cancelDialogBtn')
       }
 
       showSettings() {
-         Util.click_by_id('sidebar-user-info')
+         Util.clickById('sidebar-user-info')
       }
 
       closeSettings() {
-         Util.click_by_id('closeSettingsBtn')
+         Util.clickById('closeSettingsBtn')
       }
 
       resetSettings() {
