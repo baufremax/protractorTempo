@@ -9,7 +9,7 @@
       "pretest": "npm run tsc",
       "test": "protractor conf.js --suite smoke",
       "tsc": "tsc",
-      "webdriver-update": "npm run webdriver-manager update --standalone=false --gecko=false",
+      "webdriver-update": "npx webdriver-manager update --standalone=false --proxy http://proxy.vmware.com:3128 --gecko=false",
       "lint": "eslint TestCases/**/*.ts --fix"
    },
    "dependencies": {
