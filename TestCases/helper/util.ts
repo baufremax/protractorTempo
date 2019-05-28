@@ -23,7 +23,7 @@ export class Util {
       browser.executeScript('window.localStorage.clear();');
    }
 
-   static addCookie(cookieName: string, cookieValue: string) {
+   private static addCookie(cookieName: string, cookieValue: string) {
       let cookie = {
          name: cookieName,
          value: cookieValue
@@ -46,7 +46,7 @@ export class Util {
      Util.addCookie('TestValue', funcValue)
    }
 
-   static click_by_id(idName: string) {
+   static clickById(idName: string) {
       Util.wait(element(by.id(idName))).click();
    }
 

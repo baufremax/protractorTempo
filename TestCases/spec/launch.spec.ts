@@ -89,10 +89,6 @@ describe('access apps in launch page: ', function() {
 describe('setting button in launch page', function() {
    this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LaunchPage
-   let loginPage: LoginPage
-   const fs = require('fs')
-   const baseLogUrl: string = './REPORTS/log'
-
    beforeEach(function() {
       page = new LaunchPage()
       page.navigateTo()
