@@ -1,13 +1,8 @@
 ## Set Up
 use `npm install` to install all dependencies.
 
-The `webdriver-manager` is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
-`npx webdriver-manager update --standalone=false --gecko=false`
-
-You can start up a server with:
-`webdriver-manager start`
-This will start up a Selenium Server and will output a bunch of info logs.
-Or you can change the *directConnect* in *conf.js* to *true* which will enable connection to server directly.
+The *webdriver-manager* is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
+`npm run webdriver-updatee`
 
 ## Test
 Run the tests with

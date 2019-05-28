@@ -30,7 +30,8 @@ describe('[1000] access public page: ', function() {
 
    it('[1000-0002] by click the access area should access to login page', function() {
       page.clientOption.accessClient()
-      expect(page.getCurrentUrl()).to.eventually.equal(loginPage.url)
+      loginPage = new LoginPage()
+      expect(loginPage.getPageIdText()).to.eventually.equal('Login')
    })
 
    it('[1000-0003] Verify pre-login dialog box can be shown as expected', function() {
