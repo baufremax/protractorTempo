@@ -25,13 +25,13 @@ describe('[1000] access public page: ', function() {
    })
 
    it('[1000-0001] when browse homepage should see the default page', function() {
-      expect(page.getPageIdText()).to.eventually.equal('Install VMware Horizon Client')
+      expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
    it('[1000-0002] by click the access area should access to login page', function() {
       page.clientOption.accessClient()
       loginPage = new LoginPage()
-      expect(loginPage.getPageIdText()).to.eventually.equal('Login')
+      expect(loginPage.getPageIdText()).to.eventually.equal(loginPage.idText)
    })
 
    it('[1000-0003] Verify pre-login dialog box can be shown as expected', function() {

@@ -3,6 +3,8 @@ import { Util } from '../helper/module'
 export class PublicPage {
 
    url: string = browser.baseUrl + '/'
+   
+   idText: string = 'Install VMware Horizon Client'
 
    navigateTo() {
       browser.waitForAngularEnabled(false)

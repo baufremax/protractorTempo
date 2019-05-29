@@ -11,8 +11,8 @@ let prelogonPage: PreLogonPage
 export class LoginPage {
 
    url: string = browser.baseUrl + '/portal/webclient/index.html#/'
-
    
+   idText: string = 'Login'
 
    anInvalidUser: UserInfo = {
       subject: 'this is an invalid user credential',

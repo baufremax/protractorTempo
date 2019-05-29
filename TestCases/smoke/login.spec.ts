@@ -26,18 +26,18 @@ describe('[1003] login as a user: ', function() {
    })
 
    it('[1003-0001] page is login page', function() {
-      expect(page.getPageIdText()).to.eventually.equal('Login')
+      expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
    it('[1003-0002] user login with wrong credentials, should stay on login page and see error msg', function() {
       Util.setCookie('1003-0002')
       page.loginOption.login(page.anInvalidUser)
-      expect(page.getPageIdText()).to.eventually.equal('Login')
+      expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
    it('[1003-0003] user login successfully, should go to the launch page', function() {
       page.loginOption.login(page.aValidUser)
-      expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
+      expect(launchPage.getPageIdText()).to.eventually.equal(launchPage.idText)
    })
 
    it('[1003-0004] user login failures reach 3 times, should pop up error', function() {
@@ -107,6 +107,6 @@ describe('[1003] prelogin: ', function() {
       loginPage.loginOption.login(null)
       // now we have navigated to the normal launch page.
       launchPage = new LaunchPage()
-      expect(launchPage.getPageIdText()).to.eventually.equal('Log Out')
+      expect(launchPage.getPageIdText()).to.eventually.equal(launchPage.idText)
    })
 })

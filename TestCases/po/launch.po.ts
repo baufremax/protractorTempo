@@ -5,7 +5,8 @@ import { LoginPage } from './module'
 export class LaunchPage {
 
    url: string = browser.baseUrl + '/portal/webclient/index.html#/launchitems'
-
+   idText: string = 'Log Out'
+   
    defaultItem: string = 'win2019'
    loginPage: LoginPage
 

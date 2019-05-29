@@ -26,7 +26,7 @@ describe('access apps in launch page: ', function() {
 
    it('[1004-0001] page is a launch page after login', function() {
       page.navigateTo()
-      expect(page.getPageIdText()).to.eventually.equal('Log Out')
+      expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
    it('[1004-0003] help panel is clickable and closable', function() {
@@ -42,14 +42,14 @@ describe('access apps in launch page: ', function() {
       page.logoutOption.logout()
       page.logoutOption.confirmLogout()
       let publicPage = new PublicPage()
-      expect(publicPage.getPageIdText()).to.eventually.equal('Install VMware Horizon Client')
+      expect(publicPage.getPageIdText()).to.eventually.equal(publicPage.idText)
    })
 
    it('[1004-0005] logout can be canceled', function() {
       page.navigateTo()
       page.logoutOption.logout()
       page.logoutOption.cancelLogout()
-      expect(page.getPageIdText()).to.eventually.equal('Log Out')
+      expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
    it('[1004-0006] search bar is available and no item is present when type in strange word', function() {
@@ -70,7 +70,7 @@ describe('access apps in launch page: ', function() {
       browser.getCurrentUrl().then(function(url: string) {
          browser.get(url)
       })
-      expect(page.getPageIdText()).to.eventually.equal('Log Out')
+      expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
    it('[Forcibly disconnect users] Verify session is timeout after 1 hour and reauthentication is required after broker session is timeout', function(){
@@ -82,7 +82,7 @@ describe('access apps in launch page: ', function() {
       browser.sleep(6000)
       browser.refresh()
       loginPage = new LoginPage()
-      expect(loginPage.getPageIdText()).to.eventually.equal('Login')
+      expect(loginPage.getPageIdText()).to.eventually.equal(loginPage.idText)
    })
 })
 
