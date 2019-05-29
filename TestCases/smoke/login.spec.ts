@@ -75,7 +75,7 @@ describe('[1003] login as a user: ', function() {
       let passcode = page.preLogonOption.getPasscodeElement()
       let btn = page.loginOption.getLoginButtonBtn()
       expect(passcode.isDisplayed()).to.eventually.equal(true)
-      expect(btn.getText()).to.eventually.equal('Continue')
+      expect(btn.getText()).to.eventually.equal('继续') // 'Continue'
       expect(page.preLogonOption.getLogonHint().getText()).to.eventually.equal('Please enroll at https://api-d987d56d.duosecurity.com/portal?code=fdf6c930fd9cfb74&akey=DA0V9XJXLZI2OVKGZIWO')
    })
 })

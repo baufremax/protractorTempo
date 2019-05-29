@@ -12,7 +12,7 @@ export class LoginPage {
 
    url: string = browser.baseUrl + '/portal/webclient/index.html#/'
    
-   idText: string = 'Login'
+   idText: string = '登录' // 'Login'
 
    anInvalidUser: UserInfo = {
       subject: 'this is an invalid user credential',

@@ -4,7 +4,7 @@ export class PublicPage {
 
    url: string = browser.baseUrl + '/'
    
-   idText: string = 'Install VMware Horizon Client'
+   idText: string = '安装 VMware Horizon Client' // 'Install VMware Horizon Client'
 
    navigateTo() {
       browser.waitForAngularEnabled(false)
