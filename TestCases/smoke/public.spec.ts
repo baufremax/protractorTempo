@@ -40,11 +40,6 @@ describe('[1000] access public page: ', function() {
       let preLogOnPage = new PreLogonPage()
       expect(preLogOnPage.getAcceptDisclaimerBtn().isDisplayed()).to.eventually.equal(true)
       expect(preLogOnPage.getCancelDisclaimerBtn().isDisplayed()).to.eventually.equal(true)
-      const disclaimerText = "The alpaca (Vicugna pacos) is a species of South American camelid. " +
-      "It is similar to, and often confused with, the llama. However, alpacas are often noticeably " +
-      "smaller than llamas. The two animals are closely related and can successfully cross-breed. " +
-      "Alpacas and llamas are also closely related to the vicuña, which is believed to be the alpaca's wild ancestor, " +
-      "and to the guanaco. There are two breeds of alpaca: the Suri alpaca and the Huacaya alpaca."
-      expect(preLogOnPage.getDisclaimerText()).to.eventually.equal(disclaimerText)
+      expect(preLogOnPage.getDisclaimerText()).to.eventually.equal(preLogOnPage.disclaimerText)
    })
 })
