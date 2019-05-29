@@ -39,12 +39,8 @@ exports.config = {
             browser.params.baseUrl = 'http://www.secondurl.com'
             break
          default: // set params.baseUrl to empty string, so it will not change baseUrl.
-            browser.params.baseUrl = ''
+            browser.params.baseUrl = 'https://10.117.161.109'
             break
-      }
-      if (browser.params.baseUrl) {
-         // if params.baseUrl is valid, use params.baseUrl rather than baseUrl.
-         browser.baseUrl = browser.params.baseUrl
       }
    },
 

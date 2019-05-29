@@ -2,11 +2,11 @@
 use `npm install` to install all dependencies.
 
 The *webdriver-manager* is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
-`npm run webdriver-updatee`
+`npm run webdriver-update`
 
 ## Test
 Run the tests with
-`npm run test` which will automatically call `npm run tsc` before testing.
+`npm run test` which will automatically call *npm run tsc* before testing.
 
 You can run tests specifically with
 `protractor conf.js --suite [which you want to run]`
@@ -19,7 +19,9 @@ Protractor has default feature where you are allowed to pass some parameters fro
 can overwrite the *baseUrl* set in *conf.js*.
 You can store different urls in *conf.js - onPrepare* by adding cases in switch, and then pass *--**params**.baseUrl* to command. For e.g
 `protractor conf.js --params.baseUrl firsturl --suite smoke`
-will overwrite the baseUrl with the firsturl set in *conf.js*.
+will overwrite the params.baseUrl with the firsturl set in *conf.js*.
+
+*browser.baseUrl* represents the url for the nginx server, and *browser.params.baseUrl* represents the url for real htmlaccess server.
 
 To check the screenshot report, open *./REPORTS/screenshot/index.html* in browser.
 

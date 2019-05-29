@@ -18,7 +18,7 @@ describe('access apps in launch page: ', function() {
 
    beforeEach(function() {
       originUrl = browser.baseUrl
-      browser.baseUrl = 'https://10.117.161.109'
+      browser.baseUrl = browser.params.baseUrl
       page = new LaunchPage()
       sidebarPage = new SidebarPage()
    })
