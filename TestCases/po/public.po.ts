@@ -1,9 +1,8 @@
 import { browser, by, element } from 'protractor'
 import { Util } from '../helper/module'
 export class PublicPage {
-
    url: string = browser.baseUrl + '/'
-   
+
    idText: string = '安装 VMware Horizon Client' // 'Install VMware Horizon Client'
 
    navigateTo() {
@@ -11,7 +10,8 @@ export class PublicPage {
       return browser.get(this.url)
    }
 
-   getPageIdText() {   // equals 'Install VMware Horizon Client'.
+   getPageIdText() {
+      // equals 'Install VMware Horizon Client'.
       let itemText = Util.wait(element.all(by.className('portal-list-title')).first())
       return itemText.getText()
    }
@@ -20,7 +20,7 @@ export class PublicPage {
       return browser.getCurrentUrl()
    }
 
-   clientOption = new class {
+   clientOption = new (class {
       installClient() {
          return element(by.id('nativeClient')).click()
       }
@@ -28,5 +28,5 @@ export class PublicPage {
       accessClient() {
          return element(by.id('webClient')).click()
       }
-   }
+   })()
 }

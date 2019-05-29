@@ -25,7 +25,7 @@ export class SidebarPage {
       searchInput.sendKeys(item)
    }
 
-   aboutHorizonOption = new class {
+   aboutHorizonOption = new (class {
       clickHorizonLogo() {
          let logo = Util.wait(element(by.className('horizon-logo-image')))
          logo.click()
@@ -38,9 +38,9 @@ export class SidebarPage {
       clickAboutHorizonHelp() {
          Util.clickById('aboutDialogHelpUrl')
       }
-   }
+   })()
 
-   searchOption = new class {
+   searchOption = new (class {
       searchItem(itemName: string) {
          let searchBar = Util.wait(element(by.id('search-input')))
          searchBar.sendKeys(itemName)
@@ -48,23 +48,29 @@ export class SidebarPage {
 
       getRunningItem(itemName: string) {
          const filterFunc = Util.itemFilter(itemName)
-         const firstItem = element.all(by.className('running-app-name')).filter(filterFunc).first()
+         const firstItem = element
+            .all(by.className('running-app-name'))
+            .filter(filterFunc)
+            .first()
          let item = Util.wait(firstItem)
          return item
       }
 
       getAvailableItem(itemName: string) {
          let filterFunc = Util.itemFilter(itemName)
-         let firstItem = element.all(by.css('.available-app-name')).filter(filterFunc).first()
+         let firstItem = element
+            .all(by.css('.available-app-name'))
+            .filter(filterFunc)
+            .first()
          return firstItem
       }
 
       clickItem(itemName: string) {
          this.getAvailableItem(itemName).click()
       }
-   }
+   })()
 
-   contextMenuOption = new class {
+   contextMenuOption = new (class {
       clickMenu() {
          Util.wait(element(by.id('contextMenu'))).click()
       }
@@ -110,6 +116,5 @@ export class SidebarPage {
       resetSettings() {
          Util.wait(element(by.css('.modal-button-reset'))).click()
       }
-   }
-
+   })()
 }

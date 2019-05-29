@@ -6,7 +6,7 @@ import { LoginPage, LaunchPage, PreLogonPage, PublicPage } from '../po/module'
 import { Util } from '../helper/module'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-import { browser } from 'protractor';
+import { browser } from 'protractor'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
@@ -76,7 +76,9 @@ describe('[1003] login as a user: ', function() {
       let btn = page.loginOption.getLoginButtonBtn()
       expect(passcode.isDisplayed()).to.eventually.equal(true)
       expect(btn.getText()).to.eventually.equal('继续') // 'Continue'
-      expect(page.preLogonOption.getLogonHint().getText()).to.eventually.equal('Please enroll at https://api-d987d56d.duosecurity.com/portal?code=fdf6c930fd9cfb74&akey=DA0V9XJXLZI2OVKGZIWO')
+      expect(page.preLogonOption.getLogonHint().getText()).to.eventually.equal(
+         'Please enroll at https://api-d987d56d.duosecurity.com/portal?code=fdf6c930fd9cfb74&akey=DA0V9XJXLZI2OVKGZIWO',
+      )
    })
 })
 

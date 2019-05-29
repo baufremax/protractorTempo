@@ -2,28 +2,27 @@ import { browser, element, by } from 'protractor'
 import { Util } from '../helper/module'
 import { PreLogonPage } from './module'
 interface UserInfo {
-   subject?: string,
-   username: string,
+   subject?: string
+   username: string
    password: string
 }
 
 let prelogonPage: PreLogonPage
 export class LoginPage {
-
    url: string = browser.baseUrl + '/portal/webclient/index.html#/'
-   
+
    idText: string = '登录' // 'Login'
 
    anInvalidUser: UserInfo = {
       subject: 'this is an invalid user credential',
       username: 'lol',
-      password: 'lmao'
+      password: 'lmao',
    }
 
    aValidUser: UserInfo = {
       subject: 'this is a valid user credential',
       username: 'pcoip2',
-      password: 'ca$hc0w'
+      password: 'ca$hc0w',
    }
 
    navigateTo(disclaimer: boolean = false) {
@@ -38,20 +37,22 @@ export class LoginPage {
       return browser.getCurrentUrl()
    }
 
-   getPageIdText() {   // equals 'Login'
+   getPageIdText() {
+      // equals 'Login'
       let loginFormElem = Util.wait(element(by.css('[ng-click="login(loginForm)"]')))
       return loginFormElem.getText()
    }
 
-   getErrorMsg() {     // equals 'Unknown user name or bad password.'
-      let errorMsgElem =  Util.wait(element(by.css('[ng-click="cancel()"]')))
+   getErrorMsg() {
+      // equals 'Unknown user name or bad password.'
+      let errorMsgElem = Util.wait(element(by.css('[ng-click="cancel()"]')))
       return errorMsgElem.getText()
    }
-   
-   loginOption = new class {
+
+   loginOption = new (class {
       defaultUserInfo: UserInfo = {
          username: 'pcoip2',
-         password: 'ca$hc0w'
+         password: 'ca$hc0w',
       }
       login(userinfo: UserInfo | null) {
          userinfo = userinfo || this.defaultUserInfo
@@ -59,14 +60,15 @@ export class LoginPage {
          let usernameElem = Util.wait(element(by.model('credential.username')))
          let passwordElem = Util.wait(element(by.model('credential.password')))
          let loginFormElem = Util.wait(element(by.css('[ng-click="login(loginForm)"]')))
-         
+
          usernameElem.sendKeys(userinfo.username)
          passwordElem.sendKeys(userinfo.password)
-         
+
          loginFormElem.click()
       }
 
-      getExceedAttempErr() {  // equals 'Maximum login attempts exceeded.'
+      getExceedAttempErr() {
+         // equals 'Maximum login attempts exceeded.'
          let exceedAttempErr = Util.wait(element(by.className('session-ops-window-text')))
          return exceedAttempErr.getText()
       }
@@ -74,9 +76,9 @@ export class LoginPage {
       getLoginButtonBtn() {
          return Util.wait(element(by.id('loginButton')))
       }
-   }
+   })()
 
-   domainListOption = new class {
+   domainListOption = new (class {
       getDomainList() {
          let domainListButton = Util.wait(element(by.id('domain-button')))
          return domainListButton
@@ -86,9 +88,9 @@ export class LoginPage {
          let btn = Util.waitInvisible(element(by.id('domain-button')))
          return btn
       }
-   }
+   })()
 
-   passwordOption = new class {
+   passwordOption = new (class {
       getOldPasswordElement() {
          return Util.wait(element(by.id('oldpassword')))
       }
@@ -100,9 +102,9 @@ export class LoginPage {
       getConfirmPasswordElement() {
          return Util.wait(element(by.id('newpassword2')))
       }
-   }
+   })()
 
-   preLogonOption = new class {
+   preLogonOption = new (class {
       getSecurUsernameElement() {
          return Util.wait(element(by.id('securUsername')))
       }
@@ -118,7 +120,7 @@ export class LoginPage {
       getLogonHint() {
          return Util.wait(element(by.className('ui-login-hint-text')))
       }
-      
+
       RADISLogin(userinfo: UserInfo | null) {
          let secureUserName = this.getSecurUsernameElement()
          let passcode = this.getPasscodeElement()
@@ -127,5 +129,5 @@ export class LoginPage {
          passcode.sendKeys(userinfo.password)
          btn.click()
       }
-   }
+   })()
 }

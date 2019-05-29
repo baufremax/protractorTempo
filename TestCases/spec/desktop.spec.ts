@@ -5,8 +5,8 @@
 import { SidebarPage, LaunchPage } from '../po/module'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-import { browser } from 'protractor';
-import { Util } from '../helper/util';
+import { browser } from 'protractor'
+import { Util } from '../helper/util'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 

@@ -3,7 +3,6 @@ import { Util } from '../helper/module'
 import { LoginPage } from './module'
 
 export class LaunchPage {
-
    url: string = browser.baseUrl + '/portal/webclient/index.html#/launchitems'
    idText: string = '注销' // 'Log Out'
 
@@ -20,7 +19,8 @@ export class LaunchPage {
       return browser.getCurrentUrl()
    }
 
-   getPageIdText() {    // equals 'Log Out'
+   getPageIdText() {
+      // equals 'Log Out'
       let logoutBtn = Util.wait(element(by.id('logoutBtn')))
       return logoutBtn.getText()
    }
@@ -35,7 +35,7 @@ export class LaunchPage {
       favorBtn.click()
    }
 
-   searchOption = new class {
+   searchOption = new (class {
       searchItem(item: string) {
          let searchBar = Util.wait(element(by.id('header-search')))
          searchBar.sendKeys(item)
@@ -48,7 +48,12 @@ export class LaunchPage {
 
       getItem(itemName: string) {
          const filterFunc = Util.itemFilter(itemName)
-         const firstItem = Util.wait(element.all(by.className('ui-desktop-name')).filter(filterFunc).first())
+         const firstItem = Util.wait(
+            element
+               .all(by.className('ui-desktop-name'))
+               .filter(filterFunc)
+               .first(),
+         )
          let item = Util.wait(firstItem)
          return item
       }
@@ -56,10 +61,11 @@ export class LaunchPage {
       clickItem(itemName: string) {
          this.getItem(itemName).click()
       }
-   }
+   })()
 
-   settingOption = new class {
-      getSettingInfo() {   // equals 'settings'
+   settingOption = new (class {
+      getSettingInfo() {
+         // equals 'settings'
          let settingBtn = Util.wait(element(by.className('dialog-title')))
          return settingBtn.getText()
       }
@@ -83,10 +89,11 @@ export class LaunchPage {
          let closeSetBtn = Util.wait(element(by.id('closeSettingsBtn')))
          closeSetBtn.click()
       }
-   }
+   })()
 
-   helpOption = new class {
-      getHelpInfo() {   // equals 'About VMware Horizon Client'
+   helpOption = new (class {
+      getHelpInfo() {
+         // equals 'About VMware Horizon Client'
          let helpBtn = Util.wait(element(by.className('dialog-title')))
          return helpBtn.getText()
       }
@@ -105,9 +112,9 @@ export class LaunchPage {
          let closeBtn = Util.wait(element(by.id('aboutDialogCloseBtn')))
          closeBtn.click()
       }
-   }
+   })()
 
-   logoutOption = new class {
+   logoutOption = new (class {
       logout() {
          let logoutBtn = Util.wait(element(by.id('logoutBtn')))
          logoutBtn.click()
@@ -122,5 +129,5 @@ export class LaunchPage {
          let cancelBtn = Util.wait(element(by.id('cancelDialogBtn')))
          cancelBtn.click()
       }
-   }
+   })()
 }

@@ -5,8 +5,8 @@
 import { PublicPage, LoginPage, LaunchPage } from '../po/module'
 import * as chai from 'chai'
 import * as chaiAsPromised from 'chai-as-promised'
-import { browser } from 'protractor';
-import { Util } from '../helper/util';
+import { browser } from 'protractor'
+import { Util } from '../helper/util'
 chai.use(chaiAsPromised)
 let expect = chai.expect
 
@@ -73,7 +73,7 @@ describe('access apps in launch page: ', function() {
       expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
 
-   it('[Forcibly disconnect users] Verify session is timeout after 1 hour and reauthentication is required after broker session is timeout', function(){
+   it('[Forcibly disconnect users] Verify session is timeout after 1 hour and reauthentication is required after broker session is timeout', function() {
       // in our test we set the timeout to 5 seconds.
       publicPage = new PublicPage()
       publicPage.navigateTo()

@@ -23,7 +23,7 @@ describe('[1002] test for DomainList in login page: ', function() {
       Util.clearCookie()
    })
 
-   it ('[1002-0001] domainList is invisible when clientHideDomainList = true', function() {
+   it('[1002-0001] domainList is invisible when clientHideDomainList = true', function() {
       this.retries(2)
       page.navigateTo()
       Util.setCookie('1002-0001')
