@@ -11,7 +11,7 @@ chai.use(chaiAsPromised)
 let expect = chai.expect
 
 describe('access apps in launch page: ', function() {
-   this.timeout(2000000) // all tests in this suite get 20 seconds before timeout
+   this.timeout(20000) // all tests in this suite get 20 seconds before timeout
    let page: LaunchPage
    let publicPage: PublicPage
    let loginPage: LoginPage
