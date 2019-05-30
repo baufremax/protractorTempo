@@ -7,9 +7,9 @@ exports.config = {
    capabilities: {
       browserName: 'chrome',
       loggingPrefs: {
-         'driver': 'INFO',
-         'browser': 'INFO'
-      }
+         driver: 'INFO',
+         browser: 'INFO',
+      },
    },
 
    suites: {
@@ -25,21 +25,20 @@ exports.config = {
    noGlobals: false,
 
    params: {
-      baseUrl: ''
+      baseUrl: 'https://10.117.161.109',
    },
 
-   baseUrl: 'https://10.117.163.92',  // default value for baseUrl.
+   baseUrl: 'https://10.117.163.92', // default value for baseUrl.
 
-   onPrepare: function(){
-      switch(browser.params.baseUrl) {
+   onPrepare: function() {
+      switch (browser.params.baseUrl) {
          case 'firsturl':
-            browser.params.baseUrl = 'https://10.117.161.109'  //replace firsturl with your actual url
+            browser.params.baseUrl = 'https://10.117.161.109' //replace firsturl with your actual url
             break
          case 'secondurl':
             browser.params.baseUrl = 'http://www.secondurl.com'
             break
-         default: // set params.baseUrl to empty string, so it will not change baseUrl.
-            browser.params.baseUrl = 'https://10.117.161.109'
+         default:
             break
       }
    },
@@ -57,10 +56,10 @@ exports.config = {
          clearOldScreenshots: true,
          shortScrFileNames: false,
          jsonReport: false,
-         multiReport: false
+         multiReport: false,
       },
-      timeout: 600000
+      timeout: 600000,
    },
 
-   plugins: []
-};
+   plugins: [],
+}
