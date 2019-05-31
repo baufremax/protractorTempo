@@ -1,6 +1,7 @@
 import { browser, by, element } from 'protractor'
 import { Util } from '../helper/module'
-import { LaunchPage } from './module'
+import { LaunchPage, HelpMenu, LogoutMenu, SettingMenu } from './module'
+
 export class SidebarPage {
    url: string = browser.baseUrl + '/portal/webclient/index.html#/desktop'
 
@@ -25,24 +26,16 @@ export class SidebarPage {
       searchInput.sendKeys(item)
    }
 
-   aboutHorizonOption = new (class {
-      clickHorizonLogo() {
-         let logo = Util.wait(element(by.className('horizon-logo-image')))
-         logo.click()
-      }
+   showHelp() {
+      let logo = Util.wait(element(by.className('horizon-logo-image')))
+      logo.click()
+   }
 
-      closeAboutHorizon() {
-         Util.clickById('aboutDialogCloseBtn')
-      }
-
-      clickAboutHorizonHelp() {
-         Util.clickById('aboutDialogHelpUrl')
-      }
-   })()
+   helpOption = new HelpMenu()
 
    searchOption = new (class {
       searchItem(itemName: string) {
-         let searchBar = Util.wait(element(by.id('search-input')))
+         let searchBar = Util.wait(element(by.className('search-input')))
          searchBar.sendKeys(itemName)
       }
 
@@ -84,37 +77,22 @@ export class SidebarPage {
          Util.clickById('sidebar-about-button')
       }
 
-      showAboutInfo() {
+      showHelp() {
          Util.clickById('sidebar-about-button')
       }
 
-      closeAboutInfo() {
-         Util.clickById('aboutDialogCloseBtn')
-      }
+      helpOption = new HelpMenu()
 
-      showHelpInfo() {
-         Util.clickById('aboutDialogHelpUrl')
-      }
-
-      logout() {
+      showLogout() {
          Util.clickById('sidebar-logout-button')
-         Util.clickById('okDialogBtn')
       }
 
-      cancelLogout() {
-         Util.clickById('cancelDialogBtn')
-      }
+      logoutOption = new LogoutMenu()
 
       showSettings() {
          Util.clickById('sidebar-user-info')
       }
 
-      closeSettings() {
-         Util.clickById('closeSettingsBtn')
-      }
-
-      resetSettings() {
-         Util.wait(element(by.css('.modal-button-reset'))).click()
-      }
+      settingOption = new SettingMenu()
    })()
 }

@@ -21,7 +21,7 @@ You can store different urls in *conf.js - onPrepare* by adding cases in switch,
 `protractor conf.js --params.baseUrl firsturl --suite smoke`
 will overwrite the params.baseUrl with the firsturl set in *conf.js*.
 
-*browser.baseUrl* represents the url for the nginx server, and *browser.params.baseUrl* represents the url for real htmlaccess server.
+*browser.baseUrl* represents the url for the nginx server, and *browser.params.baseUrl* represents the url for real htmlaccess server. **NOTE:** if you want to use *browser.params.baseUrl* as the server address instead of *browser.baseUrl*, please set *browser.baseUrl* equal to *browser.params.baseUrl* before each test case and before a page object is created. Example of this usage can be found at *desktop.spec.ts* file.
 
 To overwrite the default url for *browser.baseUrl* and *browser.params.baseUrl* through npm command line, try *npm run test -- --baseUrl=[your url]* and *npm run test -- --params.baseUrl=[your url]*. see [this](https://stackoverflow.com/questions/38729791/how-to-pass-parameters-from-npm-command-to-protractor-config-file)
 
@@ -30,6 +30,10 @@ To check the screenshot report, open *./REPORTS/screenshot/index.html* in browse
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
 ## Test Cases
 Test cases can be found at [HTML5 client automation](https://confluence.eng.vmware.com/display/CNVDES/HTML5+client+automation)
+
+### Spec Setting
+If you want to run a spec without launching new page for each case, you might want to move the `new Page()` and `navigateTo()` script from `beforeEach` to `beforeAll` and set other scripts accordingly to run the cases in one page instance. Remember to logout or navigate again if you want to enter the login page in the next case when you only use one page object for different cases.
+
 ## Debug
 ### Capture Console.log
 ```javascript

@@ -31,7 +31,7 @@ describe('access apps in launch page: ', function() {
 
    it('[1004-0003] help panel is clickable and closable', function() {
       page.navigateTo()
-      page.helpOption.showHelp()
+      page.showHelp()
       expect(page.helpOption.getHelpInfo()).to.eventually.equal('About VMware Horizon Client')
       page.helpOption.closeHelp()
       expect(page.helpOption.getHelpInvisible().isPresent()).to.become(false)
@@ -39,7 +39,7 @@ describe('access apps in launch page: ', function() {
 
    it('[1004-0004] logout works well', function() {
       page.navigateTo()
-      page.logoutOption.logout()
+      page.showLogout()
       page.logoutOption.confirmLogout()
       let publicPage = new PublicPage()
       expect(publicPage.getPageIdText()).to.eventually.equal(publicPage.idText)
@@ -47,7 +47,7 @@ describe('access apps in launch page: ', function() {
 
    it('[1004-0005] logout can be canceled', function() {
       page.navigateTo()
-      page.logoutOption.logout()
+      page.showLogout()
       page.logoutOption.cancelLogout()
       expect(page.getPageIdText()).to.eventually.equal(page.idText)
    })
