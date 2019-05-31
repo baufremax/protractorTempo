@@ -8,4 +8,9 @@
    {"language":  "typescript",  "autoFix":  true  },
    {"language":  "typescriptreact",  "autoFix":  true  }
    ],
+   "search.exclude": {
+      "**/node_modules": true,
+      "**/build": true,
+      "**/REPORTS": true
+	},
 }
