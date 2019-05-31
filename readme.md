@@ -23,6 +23,8 @@ will overwrite the params.baseUrl with the firsturl set in *conf.js*.
 
 *browser.baseUrl* represents the url for the nginx server, and *browser.params.baseUrl* represents the url for real htmlaccess server.
 
+To overwrite the default url for *browser.baseUrl* and *browser.params.baseUrl* through npm command line, try *npm run test -- --baseUrl=[your url]* and *npm run test -- --params.baseUrl=[your url]*. see [this](https://stackoverflow.com/questions/38729791/how-to-pass-parameters-from-npm-command-to-protractor-config-file)
+
 To check the screenshot report, open *./REPORTS/screenshot/index.html* in browser.
 
 If there are npm or package errors, try delete *node_modules* and *package-lock.json* and reinstall the packages through `npm install`.
