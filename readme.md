@@ -4,6 +4,8 @@ use `npm install` to install all dependencies.
 The *webdriver-manager* is a helper tool to easily get an instance of a Selenium Server running. Use it to download the necessary binaries with:
 `npm run webdriver-update`
 
+Please run the above scripts successfully before running the tests.
+
 ## Test
 Run the tests with
 `npm run test` which will automatically call *npm run tsc* before testing.
@@ -33,6 +35,13 @@ Test cases can be found at [HTML5 client automation](https://confluence.eng.vmwa
 
 ### Spec Setting
 If you want to run a spec without launching new page for each case, you might want to move the `new Page()` and `navigateTo()` script from `beforeEach` to `beforeAll` and set other scripts accordingly to run the cases in one page instance. Remember to logout or navigate again if you want to enter the login page in the next case when you only use one page object for different cases.
+
+### Expected Conditions
+[ExpectedConditions](http://www.protractortest.org/#/api?view=ProtractorExpectedConditions) represents a library of expected conditions that are useful for protractor.
+
+- [ExpectedConditions.not](http://www.protractortest.org/#/api?view=ProtractorExpectedConditions.prototype.not) Negates the result of a promise.
+- [ExpectedConditions.invisibilityOf](http://www.protractortest.org/#/api?view=ProtractorExpectedConditions.prototype.invisibilityOf) An expectation for checking that an element is either invisible or not present on the DOM. **This is the opposite of 'visibilityOf'.**
+- [ExpectedConditions.stalenessOf](https://www.protractortest.org/#/api?view=ProtractorExpectedConditions.prototype.stalenessOf) An expectation for checking that an element is not attached to the DOM of a page. **This is the opposite of 'presenceOf'.**
 
 ## Debug
 ### Capture Console.log
