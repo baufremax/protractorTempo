@@ -54,6 +54,7 @@ export class LoginPage {
          username: 'pcoip2',
          password: 'ca$hc0w',
       }
+
       login(userinfo: UserInfo | null) {
          userinfo = userinfo || this.defaultUserInfo
          // wait for the elements being visible

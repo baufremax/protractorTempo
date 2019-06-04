@@ -64,13 +64,13 @@ export class SidebarPage {
    })()
 
    contextMenuOption = new (class {
-      clickMenu() {
-         Util.wait(element(by.id('contextMenu'))).click()
-      }
-
       getUserInfo() {
          let userInfo = Util.wait(element(by.css('.menu-item-title.unselectable.ng-binding')))
          return userInfo.getText()
+      }
+
+      showMenu() {
+         Util.wait(element(by.id('contextMenu'))).click()
       }
 
       showFullscreen() {
