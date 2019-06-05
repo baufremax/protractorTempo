@@ -40,11 +40,6 @@ export class SettingMenu {
       return resetBtn
    }
 
-   showSettings() {
-      let settingBtn = Util.wait(element(by.id('settingsBtn')))
-      settingBtn.click()
-   }
-
    closeSettings() {
       let closeSetBtn = Util.wait(element(by.id('closeSettingsBtn')))
       closeSetBtn.click()

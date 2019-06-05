@@ -99,14 +99,14 @@ describe('setting button in launch page', function() {
    })
 
    it('[1004-0002] setting panel is clickable and closable', function() {
-      page.settingOption.showSettings()
+      page.showSettings()
       expect(page.settingOption.getSettingInfo()).to.eventually.equal('Settings')
       page.settingOption.closeSettings()
       expect(page.settingOption.getSettingInvisible().isPresent()).to.become(false)
    })
 
    it('[Setting - applications reset - confirm] Check the function to reset application from Settings dialog box', function() {
-      page.settingOption.showSettings()
+      page.showSettings()
       expect(page.settingOption.getResetButton().isEnabled()).to.become(false)
    })
 })
