@@ -23,7 +23,7 @@ You can store different urls in *conf.js - onPrepare* by adding cases in switch,
 `protractor conf.js --params.baseUrl firsturl --suite smoke`
 will overwrite the params.baseUrl with the firsturl set in *conf.js*.
 
-*browser.baseUrl* represents the url for the nginx server, and *browser.params.baseUrl* represents the url for real htmlaccess server. **NOTE:** if you want to use *browser.params.baseUrl* as the server address instead of *browser.baseUrl*, please set *browser.baseUrl* equal to *browser.params.baseUrl* before each test case and before a page object is created. Example of this usage can be found at *desktop.spec.ts* file.
+Currently, *browser.baseUrl* represents the url for the nginx server, and *browser.params.baseUrl* represents the url for real htmlaccess server. **NOTE:** if you want to use *browser.params.baseUrl* as the server address instead of *browser.baseUrl*, you can set *browser.baseUrl* equal to *browser.params.baseUrl* before each test case and before a page object is created. Example of this usage can be found at *desktop.spec.ts* file.
 
 To overwrite the default url for *browser.baseUrl* and *browser.params.baseUrl* through npm command line, try *npm run test -- --baseUrl=[your url]* and *npm run test -- --params.baseUrl=[your url]*. see [this](https://stackoverflow.com/questions/38729791/how-to-pass-parameters-from-npm-command-to-protractor-config-file)
 

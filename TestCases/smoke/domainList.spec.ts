@@ -24,7 +24,7 @@ describe('[1002] test for DomainList in login page: ', function() {
    })
 
    it('[1002-0001] domainList is invisible when clientHideDomainList = true', function() {
-      this.retries(2)
+      this.retries(2) // run twice until this case is passed. This is set because it is a little unstable.
       page.navigateTo()
       Util.setCookie('1002-0001')
       expect(page.domainListOption.getDomainListInvisible().isPresent()).to.become(false)
